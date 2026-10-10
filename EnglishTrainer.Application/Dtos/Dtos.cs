@@ -15,7 +15,23 @@ public sealed record RegisterRequestDto(
     string? TimeZoneId,
     string? Username = null);
 
-public sealed record LoginRequestDto(string Email, string Password);
+/// <summary>Вход в приложение.</summary>
+/// <param name="Login">
+/// Email или ник. Человек помнит ник, который сам придумал, а email под рукой
+/// не всегда, поэтому принимается и то и другое: оба хранятся в нижнем регистре,
+/// и приведение у них одинаковое.
+/// </param>
+public sealed record LoginRequestDto(string Login, string Password);
+
+/// <summary>Запрос ссылки для сброса пароля.</summary>
+/// <param name="Login">Email или ник — то, что человек помнит.</param>
+public sealed record ForgotPasswordRequestDto(string Login);
+
+/// <summary>Установка нового пароля по ссылке из письма.</summary>
+public sealed record ResetPasswordRequestDto(string Token, string NewPassword);
+
+/// <summary>Смена пароля изнутри приложения.</summary>
+public sealed record ChangePasswordRequestDto(string CurrentPassword, string NewPassword);
 
 public sealed record AuthResponseDto(string AccessToken, DateTime ExpiresAtUtc, UserDto User);
 
@@ -127,7 +143,16 @@ public sealed record StudySessionDto(
     int Remaining,
     int DueCount,
     int NewCount,
-    DateOnly LocalDate);
+    DateOnly LocalDate,
+    /// <summary>
+    /// Когда наступит ближайшее повторение — заполняется только тогда, когда
+    /// сейчас повторять нечего. Для непустой очереди остаётся <c>null</c>.
+    /// </summary>
+    /// <remarks>
+    /// Без этой даты ответ «карточек нет» бесполезен: человек не понимает,
+    /// ждать ему минуту или сутки, и решает, что приложение сломалось.
+    /// </remarks>
+    DateTime? NextDueAtUtc = null);
 
 /// <summary>Отправка ответа на карточку.</summary>
 /// <param name="ItemId">Идентификатор карточки, которую проверяем.</param>

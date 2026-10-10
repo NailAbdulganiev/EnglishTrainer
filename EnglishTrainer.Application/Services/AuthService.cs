@@ -15,15 +15,12 @@ public sealed class AuthService(
     IPasswordHasher passwordHasher,
     ITokenIssuer tokenIssuer)
 {
-    public const int MinimumPasswordLength = 8;
-
     public async Task<AuthResponseDto> RegisterAsync(RegisterRequestDto request, CancellationToken ct = default)
     {
-        var email = NormalizeEmail(request.Email);
+        var email = NormalizeIdentifier(request.Email);
         ValidateEmail(email);
 
-        if (request.Password is null || request.Password.Length < MinimumPasswordLength)
-            throw new ValidationException($"Пароль должен быть не короче {MinimumPasswordLength} символов.");
+        var password = PasswordPolicy.Require(request.Password);
 
         if (await users.EmailExistsAsync(email, ct))
             throw new ConflictException("Пользователь с таким email уже зарегистрирован.");
@@ -32,7 +29,7 @@ public sealed class AuthService(
         {
             Email = email,
             Username = await ReserveUsernameAsync(request.Username, email, ct),
-            PasswordHash = passwordHasher.Hash(request.Password),
+            PasswordHash = passwordHasher.Hash(password),
             DisplayName = string.IsNullOrWhiteSpace(request.DisplayName)
                 ? email.Split('@')[0]
                 : request.DisplayName.Trim(),
@@ -46,17 +43,57 @@ public sealed class AuthService(
         return BuildAuthResponse(user);
     }
 
+    /// <summary>
+    /// Вход по email или нику.
+    /// </summary>
+    /// <remarks>
+    /// Человек помнит ник, который сам придумал, а email под рукой не всегда —
+    /// и наоборот. Поэтому в одном поле принимается и то и другое: сначала поиск
+    /// по email, затем по нику. Оба хранятся в нижнем регистре, приведение общее,
+    /// так что дополнительной неоднозначности это не создаёт.
+    /// </remarks>
     public async Task<AuthResponseDto> LoginAsync(LoginRequestDto request, CancellationToken ct = default)
     {
-        var email = NormalizeEmail(request.Email);
-        var user = await users.GetByEmailAsync(email, ct);
+        var identifier = NormalizeIdentifier(request.Login);
+
+        var user = await users.GetByEmailAsync(identifier, ct)
+                   ?? await users.GetByUsernameAsync(identifier, ct);
 
         // Одна и та же ошибка на «нет пользователя» и «неверный пароль»:
         // иначе можно перебором выяснять, какие адреса зарегистрированы.
         if (user is null || !passwordHasher.Verify(request.Password ?? string.Empty, user.PasswordHash))
-            throw new UnauthorizedException("Неверный email или пароль.");
+            throw new UnauthorizedException("Неверный email, ник или пароль.");
 
         return BuildAuthResponse(user);
+    }
+
+    /// <summary>
+    /// Смена пароля изнутри приложения.
+    /// </summary>
+    /// <remarks>
+    /// Текущий пароль обязателен даже при действующем токене: иначе украденный
+    /// токен превращается в полный захват аккаунта — достаточно сменить пароль
+    /// и не дать владельцу войти.
+    /// </remarks>
+    public async Task ChangePasswordAsync(
+        int userId, ChangePasswordRequestDto request, CancellationToken ct = default)
+    {
+        var user = await users.GetByIdAsync(userId, ct)
+            ?? throw NotFoundException.For("Пользователь", userId);
+
+        if (!passwordHasher.Verify(request.CurrentPassword ?? string.Empty, user.PasswordHash))
+            throw new ValidationException("Текущий пароль указан неверно.");
+
+        var newPassword = PasswordPolicy.Require(request.NewPassword);
+
+        // Смысла в смене пароля на тот же самый нет, а ошибка в поле «новый пароль»
+        // иначе осталась бы незамеченной: пользователь решил бы, что сменил его.
+        if (passwordHasher.Verify(newPassword, user.PasswordHash))
+            throw new ValidationException("Новый пароль совпадает с текущим.");
+
+        user.PasswordHash = passwordHasher.Hash(newPassword);
+
+        await unitOfWork.SaveChangesAsync(ct);
     }
 
     public async Task<UserSettingsDto> UpdateSettingsAsync(
@@ -158,8 +195,15 @@ public sealed class AuthService(
         return new AuthResponseDto(token.Value, token.ExpiresAtUtc, user.ToDto());
     }
 
-    /// <summary>Email приводится к нижнему регистру: иначе один адрес можно завести дважды.</summary>
-    public static string NormalizeEmail(string? email) => (email ?? string.Empty).Trim().ToLowerInvariant();
+    /// <summary>
+    /// Приводит логин к каноническому виду.
+    /// </summary>
+    /// <remarks>
+    /// Работает и для email, и для ника: оба хранятся в нижнем регистре, поэтому
+    /// «Ivan@Mail.ru» и «ivan@mail.ru», как и «Ivan» и «ivan», — один и тот же вход.
+    /// </remarks>
+    public static string NormalizeIdentifier(string? value) =>
+        (value ?? string.Empty).Trim().ToLowerInvariant();
 
     private static void ValidateEmail(string email)
     {

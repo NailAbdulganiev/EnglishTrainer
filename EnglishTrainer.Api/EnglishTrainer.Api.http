@@ -24,13 +24,40 @@ Content-Type: application/json
   "timeZoneId": "Europe/Moscow"
 }
 
-### Вход
+### Вход. Поле login принимает и email, и ник
 POST {{EnglishTrainer.Api_HostAddress}}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "{{email}}",
+  "login": "{{email}}",
   "password": "{{password}}"
+}
+
+### Запросить ссылку для сброса пароля (письмо выводится в журнал сервера)
+POST {{EnglishTrainer.Api_HostAddress}}/api/auth/forgot-password
+Content-Type: application/json
+
+{
+  "login": "{{email}}"
+}
+
+### Установить новый пароль по токену из ссылки
+POST {{EnglishTrainer.Api_HostAddress}}/api/auth/reset-password
+Content-Type: application/json
+
+{
+  "token": "<токен из письма>",
+  "newPassword": "New-Password-123"
+}
+
+### Сменить пароль, будучи авторизованным
+PUT {{EnglishTrainer.Api_HostAddress}}/api/me/password
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "currentPassword": "{{password}}",
+  "newPassword": "New-Password-123"
 }
 
 ### Профиль и настройки

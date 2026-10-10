@@ -1,15 +1,18 @@
 /*
- * Оболочка приложения: вход, навигация и роутер.
+ * Оболочка приложения: вход, регистрация, восстановление пароля, навигация
+ * и роутер.
  *
  * Страницы — отдельные модули, каждая умеет только отрисоваться в контейнер.
  * Оболочка отвечает за то, что вокруг: сеанс, меню, выбор страницы по адресу.
  * Роутинг на хеше выбран потому, что не требует настройки сервера: любой
  * адрес вида /#/friends открывается без правки маршрутов на стороне API.
+ * Экраны авторизации живут вне оболочки и показываются вместо неё, поэтому
+ * в routes их нет: адреса #/forgot и #/reset перехватывает роутер.
  */
 
 import { api, getToken, setToken, onUnauthorized } from './api.js';
 import { state, refreshFavorites, setUser } from './state.js';
-import { esc, icon, toast, setLoading, avatar } from './ui.js';
+import { esc, icon, setLoading, avatar } from './ui.js';
 import { stopSession } from './session.js';
 
 import * as study from './pages/study.js';
@@ -26,19 +29,25 @@ const routes = [
     { path: 'profile', title: 'Профиль', icon: 'user', page: profile }
 ];
 
+/** Элементы разметки адресуются по id, поэтому короткая ссылка читается легче. */
+const $ = (id) => document.getElementById(id);
+
 const elements = {
-    auth: document.getElementById('screen-auth'),
-    app: document.getElementById('app'),
-    nav: document.getElementById('nav'),
-    foot: document.getElementById('sidebar-foot'),
-    title: document.getElementById('page-title'),
-    content: document.getElementById('content')
+    auth: $('screen-auth'),
+    forgot: $('screen-forgot'),
+    reset: $('screen-reset'),
+    app: $('app'),
+    nav: $('nav'),
+    foot: $('sidebar-foot'),
+    title: $('page-title'),
+    content: $('content')
 };
 
 const context = { navigate, refreshShell };
 
 let currentPath = null;
 let authMode = 'login';
+let resetToken = '';
 
 /* ── Запуск ─────────────────────────────────────────────────────────────── */
 
@@ -52,7 +61,23 @@ boot();
 
 async function boot() {
     bindAuthForm();
+    bindForgotForm();
+    bindResetForm();
+    bindPasswordToggles();
     window.addEventListener('hashchange', route);
+
+    // Ссылки восстановления приходят письмом и открываются по прямому адресу:
+    // в браузере при этом мог остаться действующий токен другого человека,
+    // и показать вместо формы сброса чужой аккаунт было бы худшим решением.
+    if (isResetHash()) {
+        showReset();
+        return;
+    }
+
+    if (isForgotHash()) {
+        showForgot();
+        return;
+    }
 
     if (!getToken()) {
         showAuth();
@@ -72,81 +97,436 @@ async function boot() {
     }
 }
 
-/* ── Вход ───────────────────────────────────────────────────────────────── */
+/* ── Вход и регистрация ─────────────────────────────────────────────────── */
 
 function bindAuthForm() {
-    document.getElementById('auth-form').addEventListener('submit', (event) => {
+    $('auth-form').addEventListener('submit', (event) => {
         event.preventDefault();
         authenticate();
     });
 
-    document.getElementById('register-toggle').addEventListener('click', () => {
+    $('register-toggle').addEventListener('click', () => {
         setAuthMode(authMode === 'login' ? 'register' : 'login');
     });
+
+    // Обычно экран отрисует hashchange, но при переходе по адресу, который уже
+    // стоит в строке, событие не придёт — тогда показываем экран вручную.
+    $('forgot-link').addEventListener('click', (event) => {
+        event.preventDefault();
+        goToAuthScreen('#/forgot', showForgot);
+    });
+}
+
+/** Переход на экран вне оболочки: хеш остаётся источником истины. */
+function goToAuthScreen(hash, show) {
+    if (location.hash.startsWith(hash)) {
+        show();
+        return;
+    }
+
+    location.hash = hash;
 }
 
 function setAuthMode(mode) {
     authMode = mode;
 
-    document.getElementById('username-field').hidden = mode !== 'register';
-    document.getElementById('login').textContent = mode === 'register' ? 'Зарегистрироваться' : 'Войти';
-    document.getElementById('register-toggle').textContent =
-        mode === 'register' ? 'У меня уже есть аккаунт' : 'Регистрация';
+    const isRegistration = mode === 'register';
+
+    // При входе принимается и email, и ник, при регистрации — только email:
+    // без смены подписи человек с ником не понимает, что от него хотят.
+    $('identifier-label').textContent = isRegistration ? 'Email' : 'Email или ник';
+    $('email').placeholder = isRegistration ? 'you@example.com' : 'you@example.com или ваш ник';
+    $('identifier-hint').hidden = isRegistration;
+
+    // Менеджер паролей смотрит на autocomplete: с current-password при
+    // регистрации он подставляет пароль от старого аккаунта и мешает задать новый.
+    $('password').autocomplete = isRegistration ? 'new-password' : 'current-password';
+
+    toggleAuthField('username-field', 'username', isRegistration);
+    toggleAuthField('password2-field', 'password2', isRegistration);
+
+    $('forgot-hint').hidden = isRegistration;
+    $('login').textContent = authSubmitText();
+    $('register-toggle').textContent = isRegistration ? 'У меня уже есть аккаунт' : 'Регистрация';
+
+    // Сообщение относилось к другому набору полей: после переключения режима
+    // оно только сбивает с толку.
+    clearNotice('auth-alert');
+    hidePasswords();
+}
+
+function authSubmitText() {
+    return authMode === 'register' ? 'Зарегистрироваться' : 'Войти';
+}
+
+/**
+ * Показывает или прячет поле вместе с его вводом. Скрытый ввод отключается:
+ * иначе браузер отправил бы оставшееся значение и подставил его из
+ * автозаполнения вопреки выбранному режиму формы.
+ */
+function toggleAuthField(fieldId, inputId, visible) {
+    const field = $(fieldId);
+    const input = $(inputId);
+
+    field.hidden = !visible;
+    input.disabled = !visible;
+
+    if (!visible) {
+        input.value = '';
+    }
 }
 
 function showAuth(message) {
     stopSession();
 
-    elements.app.hidden = true;
-    elements.auth.hidden = false;
+    showAuthScreen('auth');
+
+    // Режим выставляется до сообщения: setAuthMode очищает прошлую ошибку,
+    // а новый текст должен остаться на экране.
     setAuthMode('login');
 
     if (message) {
-        toast(message, 'error');
+        setNotice('auth-alert', message, 'error');
     }
 }
 
-async function authenticate() {
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value;
-    const username = document.getElementById('username').value.trim();
-    const isRegistration = authMode === 'register';
+/** Показывает один экран вне оболочки и прячет остальные. */
+function showAuthScreen(name) {
+    elements.auth.hidden = name !== 'auth';
+    elements.forgot.hidden = name !== 'forgot';
+    elements.reset.hidden = name !== 'reset';
+    elements.app.hidden = true;
+}
 
-    if (!email || password.length < 8) {
-        toast('Укажите email и пароль не короче 8 символов.', 'error');
+async function authenticate() {
+    const submit = $('login');
+
+    // Кнопка блокируется на время запроса: без этого двойное нажатие успевает
+    // создать два аккаунта, и второй запрос падает на «email занят».
+    if (submit.disabled) {
         return;
     }
 
-    const body = { email, password };
+    const isRegistration = authMode === 'register';
+    const identifier = $('email').value.trim();
+    const password = $('password').value;
+    const repeated = $('password2').value;
+    // Ник иногда набирают с собачкой, как в адресе профиля: сервер её не ждёт.
+    const username = isRegistration ? $('username').value.trim().replace(/^@+/, '') : '';
+
+    clearNotice('auth-alert');
+
+    if (!identifier) {
+        failAuth('Укажите email или ник.', 'email');
+        return;
+    }
+
+    if (password.length < 8) {
+        failAuth('Пароль должен быть не короче 8 символов.', 'password');
+        return;
+    }
+
+    if (isRegistration && password !== repeated) {
+        // Сервер видит только один пароль и о расхождении не скажет, а опечатка
+        // во втором поле делает свежий аккаунт недоступным — сверяем до запроса.
+        failAuth('Пароли не совпадают.', 'password2');
+        return;
+    }
+
+    let body;
 
     if (isRegistration) {
-        body.displayName = email.split('@')[0];
-        // Часовой пояс определяется у браузера: от него зависят дневная статистика
-        // и серия дней, и угадывать его на сервере незачем.
-        body.timeZoneId = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        body = {
+            email: identifier,
+            password,
+            displayName: identifier.split('@')[0],
+            // Часовой пояс определяется у браузера: от него зависят дневная
+            // статистика и серия дней, и угадывать его на сервере незачем.
+            timeZoneId: Intl.DateTimeFormat().resolvedOptions().timeZone
+        };
 
         if (username) {
             body.username = username;
         }
+    } else {
+        // Поле называется login: сервер принимает и email, и ник.
+        body = { login: identifier, password };
     }
 
-    setLoading(true);
+    setButtonBusy(submit, true, authSubmitText());
 
     try {
         const response = await api(
             isRegistration ? '/api/auth/register' : '/api/auth/login',
             { method: 'POST', body, anonymous: true });
 
+        // Сервер уже выдал токен, поэтому после регистрации отдельного шага
+        // входа нет: сразу собираем оболочку.
         setToken(response.accessToken);
         setUser(response.user);
 
+        // Индикатор загрузки показывается только на сборке оболочки: на форме
+        // он закрывал бы и кнопку, и текст ошибки.
+        setLoading(true);
         await loadShell();
         await enterApp();
     } catch (error) {
-        toast(error.message, 'error');
+        setNotice('auth-alert', error.message, 'error');
+
+        if (!isRegistration) {
+            // Email или ник остаётся на месте, а пароль очищается: переписывают
+            // обычно именно его, и курсор сразу оказывается в нужном поле.
+            $('password').value = '';
+            hidePasswords();
+            $('password').focus();
+        }
     } finally {
         setLoading(false);
+        setButtonBusy(submit, false, authSubmitText());
     }
+}
+
+/** Ошибка формы: текст остаётся в форме, фокус уходит в поле, которое правят. */
+function failAuth(message, focusId) {
+    setNotice('auth-alert', message, 'error');
+    $(focusId).focus();
+}
+
+/* ── Забыли пароль ──────────────────────────────────────────────────────── */
+
+function bindForgotForm() {
+    $('forgot-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+        sendResetLink();
+    });
+
+    $('forgot-back').addEventListener('click', backToAuth);
+}
+
+async function sendResetLink() {
+    const submit = $('forgot-submit');
+
+    if (submit.disabled) {
+        return;
+    }
+
+    const login = $('forgot-login').value.trim();
+
+    clearNotice('forgot-alert');
+
+    if (!login) {
+        setNotice('forgot-alert', 'Укажите email или ник.', 'error');
+        $('forgot-login').focus();
+        return;
+    }
+
+    setButtonBusy(submit, true, 'Отправить ссылку');
+
+    try {
+        // Ответ всегда 204: сервер намеренно не говорит, есть такой
+        // пользователь или нет, поэтому и текст не зависит от наличия аккаунта.
+        await api('/api/auth/forgot-password',
+            { method: 'POST', body: { login }, anonymous: true });
+
+        setNotice('forgot-alert',
+            'Если такой пользователь есть, ссылка для сброса отправлена. ' +
+            'В этой сборке письмо пишется в лог сервера — посмотрите окно, где запущен API.',
+            'ok');
+    } catch (error) {
+        setNotice('forgot-alert', error.message, 'error');
+    } finally {
+        setButtonBusy(submit, false, 'Отправить ссылку');
+    }
+}
+
+/* ── Сброс пароля по ссылке ─────────────────────────────────────────────── */
+
+function bindResetForm() {
+    $('reset-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+        saveNewPassword();
+    });
+
+    $('reset-back').addEventListener('click', backToAuth);
+}
+
+function showReset() {
+    stopSession();
+
+    showAuthScreen('reset');
+
+    resetToken = readResetToken();
+
+    if (!resetToken) {
+        // Запрос без токена всё равно вернёт 400, поэтому форма сразу объясняет
+        // причину и не предлагает заведомо провальную отправку.
+        setResetFormEnabled(false);
+        setNotice('reset-alert', 'Ссылка неполная: в ней нет токена', 'error');
+        return;
+    }
+
+    setResetFormEnabled(true);
+    clearNotice('reset-alert');
+}
+
+function setResetFormEnabled(on) {
+    ['reset-password', 'reset-password2', 'reset-submit',
+     'reset-password-eye', 'reset-password2-eye']
+        .forEach((id) => { $(id).disabled = !on; });
+
+    if (!on) {
+        $('reset-password').value = '';
+        $('reset-password2').value = '';
+    }
+}
+
+/**
+ * Токен из адреса вида #/reset?token=… Читаем строку вручную, а не через
+ * URLSearchParams: тот превращает «+» в пробел и испортил бы токен в base64.
+ */
+function readResetToken() {
+    const match = /[?&]token=([^&]*)/.exec(location.hash);
+
+    if (!match) {
+        return '';
+    }
+
+    try {
+        return decodeURIComponent(match[1]).trim();
+    } catch {
+        // Битую percent-последовательность разбирать нечем: отдаём как есть,
+        // сервер сам ответит, что ссылка недействительна.
+        return match[1].trim();
+    }
+}
+
+async function saveNewPassword() {
+    const submit = $('reset-submit');
+
+    if (submit.disabled || !resetToken) {
+        return;
+    }
+
+    const password = $('reset-password').value;
+    const repeated = $('reset-password2').value;
+
+    clearNotice('reset-alert');
+
+    if (password.length < 8) {
+        setNotice('reset-alert', 'Пароль должен быть не короче 8 символов.', 'error');
+        $('reset-password').focus();
+        return;
+    }
+
+    if (password !== repeated) {
+        setNotice('reset-alert', 'Пароли не совпадают.', 'error');
+        $('reset-password2').focus();
+        return;
+    }
+
+    setButtonBusy(submit, true, 'Сохранить пароль');
+
+    try {
+        await api('/api/auth/reset-password',
+            { method: 'POST', body: { token: resetToken, newPassword: password }, anonymous: true });
+
+        // Ссылка одноразовая: повторная отправка той же формы получит 400,
+        // поэтому экран закрывается, а сообщение переезжает на форму входа.
+        resetToken = '';
+        location.hash = '';
+        showAuth();
+        setNotice('auth-alert', 'Пароль изменён, войдите с новым паролем', 'ok');
+    } catch (error) {
+        // 400 приходит с понятным detail: «Ссылка недействительна или устарела».
+        setNotice('reset-alert', error.message, 'error');
+    } finally {
+        setButtonBusy(submit, false, 'Сохранить пароль');
+    }
+}
+
+/** Возврат на форму входа: экраны восстановления следов в адресе не оставляют. */
+function backToAuth(event) {
+    event.preventDefault();
+
+    location.hash = '';
+    showAuth();
+}
+
+/* ── Сообщения и поля пароля ────────────────────────────────────────────── */
+
+/**
+ * Сообщение внутри формы. В отличие от уведомления оно остаётся на экране,
+ * пока пользователь не исправит ввод и не отправит форму снова.
+ */
+function setNotice(elementId, text, kind = 'error') {
+    const element = $(elementId);
+
+    element.textContent = text;
+    element.className = `form-alert form-alert--${kind}`;
+    element.hidden = false;
+}
+
+function clearNotice(elementId) {
+    const element = $(elementId);
+
+    element.textContent = '';
+    element.hidden = true;
+}
+
+/**
+ * Кнопка на время запроса: текст меняется, повторное нажатие не проходит.
+ * Иначе двойной клик по «Зарегистрироваться» создаёт вторую попытку, которая
+ * падает на «email занят», хотя аккаунт уже создан.
+ */
+function setButtonBusy(button, busy, idleText) {
+    button.disabled = busy;
+    button.textContent = busy ? 'Отправляем…' : idleText;
+}
+
+function bindPasswordToggles() {
+    // Скрытый пароль выглядит одинаково и при верном наборе, и при опечатке
+    // в одном символе, поэтому возможность посмотреть ввод обязательна.
+    bindPasswordToggle('password-eye', 'password');
+    bindPasswordToggle('password2-eye', 'password2');
+    bindPasswordToggle('reset-password-eye', 'reset-password');
+    bindPasswordToggle('reset-password2-eye', 'reset-password2');
+}
+
+function bindPasswordToggle(buttonId, inputId) {
+    const button = $(buttonId);
+    const input = $(inputId);
+
+    button.addEventListener('click', () => {
+        const reveal = input.type === 'password';
+
+        input.type = reveal ? 'text' : 'password';
+        setEyeState(button, reveal);
+
+        // Фокус остаётся в поле: переключение не должно прерывать набор.
+        input.focus();
+    });
+}
+
+/** Кнопка-глаз сообщает своё состояние и голосом, и иконкой. */
+function setEyeState(button, revealed) {
+    const label = revealed ? 'Скрыть пароль' : 'Показать пароль';
+
+    button.setAttribute('aria-label', label);
+    button.setAttribute('aria-pressed', String(revealed));
+    button.title = label;
+    button.querySelector('use').setAttribute('href', revealed ? '#i-eye-off' : '#i-eye');
+}
+
+/** Пароли снова прячутся: значение очищено или форма переключена. */
+function hidePasswords() {
+    [['password-eye', 'password'],
+     ['password2-eye', 'password2'],
+     ['reset-password-eye', 'reset-password'],
+     ['reset-password2-eye', 'reset-password2']]
+        .forEach(([buttonId, inputId]) => {
+            $(inputId).type = 'password';
+            setEyeState($(buttonId), false);
+        });
 }
 
 /* ── Оболочка ───────────────────────────────────────────────────────────── */
@@ -167,7 +547,10 @@ async function loadShell() {
 }
 
 async function enterApp() {
+    // Экраны авторизации прячутся: после входа оболочка показывается вместо них.
     elements.auth.hidden = true;
+    elements.forgot.hidden = true;
+    elements.reset.hidden = true;
     elements.app.hidden = false;
 
     if (!location.hash) {
@@ -236,7 +619,34 @@ function navigate(path) {
     location.hash = target;
 }
 
+function isResetHash() {
+    return location.hash.startsWith('#/reset');
+}
+
+function isForgotHash() {
+    return location.hash.startsWith('#/forgot');
+}
+
 async function route() {
+    // Экраны восстановления пароля живут вне оболочки, но приходят обычным
+    // хешем: их нужно перехватить до выбора страницы, иначе роутер отрисует
+    // «Тренировку» вместо формы сброса.
+    if (isResetHash()) {
+        showReset();
+        return;
+    }
+
+    if (isForgotHash()) {
+        showForgot();
+        return;
+    }
+
+    // Пока оболочка скрыта, страницы не отрисовываются: иначе смена хеша на
+    // экране входа втихую готовила бы страницу в скрытом контейнере.
+    if (elements.app.hidden) {
+        return;
+    }
+
     const requested = location.hash.replace(/^#\/?/, '').split('?')[0];
     const matched = routes.find((route) => route.path === requested) ?? routes[0];
 

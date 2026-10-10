@@ -25,6 +25,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<DailyStat> DailyStats => Set<DailyStat>();
     public DbSet<FavoriteWord> FavoriteWords => Set<FavoriteWord>();
     public DbSet<Friendship> Friendships => Set<Friendship>();
+    public DbSet<PasswordResetToken> PasswordResetTokens => Set<PasswordResetToken>();
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {

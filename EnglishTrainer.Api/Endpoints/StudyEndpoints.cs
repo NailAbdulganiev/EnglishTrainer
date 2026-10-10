@@ -22,17 +22,23 @@ public static class StudyEndpoints
         group.MapGet("/session", async (
             HttpContext context,
             int? deckId,
+            bool? cram,
             StudySessionService service,
             CancellationToken ct) =>
         {
-            var session = await service.GetOrCreateSessionAsync(context.User.GetUserId(), deckId, ct);
+            var session = await service.GetOrCreateSessionAsync(
+                context.User.GetUserId(), deckId, cram ?? false, ct);
+
             return Results.Ok(session);
         })
         .WithSummary("Текущая сессия или новая очередь карточек")
         .WithDescription(
             "Возвращает активную сессию, если она есть. Иначе собирает новую: " +
             "просроченные повторения плюс новые слова в пределах дневного лимита. " +
-            "Правильного ответа в ответе нет — он проверяется на сервере.");
+            "Правильного ответа в ответе нет — он проверяется на сервере. " +
+            "Если повторять нечего, сессия не создаётся: приходит пустая очередь " +
+            "с датой ближайшего повторения. Параметр cram=true собирает очередь " +
+            "вне расписания — карточки с самым близким сроком.");
 
         group.MapGet("/session/active", async (
             HttpContext context,

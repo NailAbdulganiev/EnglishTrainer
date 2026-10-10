@@ -45,6 +45,23 @@
 
 * { box-sizing: border-box; }
 
+/*
+ * Атрибут hidden обязан побеждать любой display, заданный классом.
+ *
+ * Селектор атрибута [hidden] и селектор класса имеют одинаковый вес, поэтому
+ * без этого правила видимость экранов зависела бы от порядка строк в файле:
+ * у .auth-screen задан display: grid, у .app — display: flex, и они перебивали
+ * hidden просто потому, что объявлены ниже. На практике это выглядело так:
+ * после успешного входа приложение открывалось, но экран логина оставался
+ * поверх него, и переход не был виден вообще.
+ *
+ * !important здесь уместен: правило задаёт смысл атрибута hidden, а не оформление,
+ * и не должно зависеть от места в файле.
+ */
+[hidden] {
+    display: none !important;
+}
+
 html, body { height: 100%; }
 
 body {
@@ -604,3 +621,57 @@ audio { width: 100%; margin-bottom: 18px; }
     .friend-row { flex-wrap: wrap; }
     .friend-row__stats { width: 100%; justify-content: flex-start; text-align: left; }
 }
+
+/* ── Экраны авторизации: сообщения, подсказки, показ пароля ─────────────── */
+
+/*
+ * Добавлено для переработанных экранов входа, регистрации и восстановления
+ * пароля. Правила выше не менялись: сообщение об ошибке должно оставаться
+ * в форме, а не исчезать вместе с уведомлением внизу экрана.
+ */
+
+/* Сообщение внутри формы: красное при ошибке, зелёное при успехе. */
+.form-alert {
+    border: 1px solid transparent;
+    border-radius: var(--r);
+    padding: 11px 13px;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.form-alert--error { background: var(--no-soft); border-color: rgba(214, 69, 93, .25); color: var(--no); }
+.form-alert--ok { background: var(--ok-soft); border-color: rgba(18, 145, 90, .22); color: var(--ok); }
+
+/* Подсказка прямо под полем: складывать её собственный отступ с gap сетки
+   .stack не нужно, иначе форма разъезжается. */
+.field-hint { margin-top: 0; }
+
+/* Поле пароля с кнопкой-глазом: кнопка лежит поверх правого края поля,
+   поэтому у input появляется запас справа и текст не уезжает под иконку. */
+.field--password { position: relative; }
+.field--password input { padding-right: 46px; }
+
+.field__eye {
+    position: absolute;
+    right: 6px;
+    bottom: 4px;
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    padding: 7px;
+    border-radius: var(--r-sm);
+    line-height: 0;
+    cursor: pointer;
+}
+
+.field__eye:hover:not(:disabled) { background: var(--surface-2); color: var(--ink-2); }
+.field__eye:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
+.field__eye:disabled { cursor: default; opacity: .5; }
+
+/*
+ * Атрибут hidden сам по себе слабее авторского display из классов выше
+ * (.field задаёт display: block, .form-alert рисуется в потоке), поэтому
+ * скрытые поля и сообщения подстраховываем явно.
+ */
+.field[hidden],
+.form-alert[hidden] { display: none; }

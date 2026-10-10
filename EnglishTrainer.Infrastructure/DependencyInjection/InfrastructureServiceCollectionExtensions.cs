@@ -38,6 +38,10 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddSingleton<IClock, SystemClock>();
         services.AddSingleton<IPasswordHasher, Pbkdf2PasswordHasher>();
 
+        // Письма пока уходят в журнал: своего почтового провайдера у приложения нет,
+        // а ссылку для сброса пароля администратору видно в консоли запуска.
+        services.AddSingleton<IEmailSender, LogEmailSender>();
+
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IWordRepository, WordRepository>();
         services.AddScoped<IDeckRepository, DeckRepository>();
@@ -47,6 +51,7 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddScoped<IDailyStatRepository, DailyStatRepository>();
         services.AddScoped<IFavoriteWordRepository, FavoriteWordRepository>();
         services.AddScoped<IFriendshipRepository, FriendshipRepository>();
+        services.AddScoped<IPasswordResetTokenRepository, PasswordResetTokenRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddScoped<VocabularySeeder>();

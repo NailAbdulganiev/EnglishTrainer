@@ -13,6 +13,11 @@
     Совместим с Windows PowerShell 5.1 (в нём нет -SkipHttpErrorCheck,
     а строковое тело запроса искажает кириллицу, поэтому тело кодируется в байты).
 
+    ВАЖНО: файл должен оставаться в UTF-8 с BOM. Без BOM Windows PowerShell 5.1
+    читает его как ANSI, кириллица превращается в мусор, и скрипт перестаёт
+    разбираться — падает с «Unexpected token» на ровном месте. Редакторы
+    и утилиты, снимающие BOM, ломают запуск: проверяйте первые три байта (EF BB BF).
+
 .PARAMETER BaseUrl
     Адрес запущенного API. По умолчанию совпадает с профилем http из launchSettings.json.
 
@@ -151,7 +156,7 @@ $duplicate = Get-StatusCode -Method POST -Path '/api/auth/register' -Anonymous -
 Assert-That ($duplicate -eq 409) "Повторная регистрация того же email отклонена (код $duplicate)"
 
 $badPassword = Get-StatusCode -Method POST -Path '/api/auth/login' -Anonymous -Body @{
-    email    = $Email
+    login    = $Email
     password = 'NeverRightPassword-1'
 }
 Assert-That ($badPassword -eq 401) "Неверный пароль даёт 401 (код $badPassword)"
@@ -163,10 +168,70 @@ $shortPassword = Get-StatusCode -Method POST -Path '/api/auth/register' -Anonymo
 Assert-That ($shortPassword -eq 400) "Слишком короткий пароль отклонён (код $shortPassword)"
 
 $login = Invoke-Api -Method POST -Path '/api/auth/login' -Anonymous -Body @{
-    email    = $Email
+    login    = $Email
     password = $Password
 }
-Assert-That ($login.accessToken.Length -gt 20) 'Вход по паролю вернул токен'
+Assert-That ($login.accessToken.Length -gt 20) 'Вход по email вернул токен'
+
+$byNickname = Invoke-Api -Method POST -Path '/api/auth/login' -Anonymous -Body @{
+    login    = $registration.user.username
+    password = $Password
+}
+Assert-That ($byNickname.accessToken.Length -gt 20) "Вход по нику @$($registration.user.username) работает"
+
+# --- Восстановление пароля -------------------------------------------------
+Write-Step 'Восстановление пароля'
+
+$forgotKnown = Get-StatusCode -Method POST -Path '/api/auth/forgot-password' -Anonymous -Body @{ login = $Email }
+$forgotUnknown = Get-StatusCode -Method POST -Path '/api/auth/forgot-password' -Anonymous -Body @{ login = "no-such-$Email" }
+
+Assert-That ($forgotKnown -eq 204) "Ссылка запрошена для существующего пользователя (код $forgotKnown)"
+Assert-That ($forgotUnknown -eq 204) "Ответ для несуществующего тот же (код $forgotUnknown) — адреса не раскрываются"
+
+$forgedToken = Get-StatusCode -Method POST -Path '/api/auth/reset-password' -Anonymous -Body @{
+    token       = 'поддельный-токен'
+    newPassword = 'Another-Password-1'
+}
+Assert-That ($forgedToken -eq 400) "Поддельный токен отклонён (код $forgedToken)"
+
+$shortNewPassword = Get-StatusCode -Method POST -Path '/api/auth/reset-password' -Anonymous -Body @{
+    token       = 'поддельный-токен'
+    newPassword = '123'
+}
+Assert-That ($shortNewPassword -eq 400) "Короткий новый пароль отклонён (код $shortNewPassword)"
+
+# --- Смена пароля ----------------------------------------------------------
+Write-Step 'Смена пароля'
+
+$wrongCurrent = Get-StatusCode -Method PUT -Path '/api/me/password' -Body @{
+    currentPassword = 'Not-The-Password'
+    newPassword     = 'Another-Password-1'
+}
+Assert-That ($wrongCurrent -eq 400) "Неверный текущий пароль отклонён (код $wrongCurrent)"
+
+$samePassword = Get-StatusCode -Method PUT -Path '/api/me/password' -Body @{
+    currentPassword = $Password
+    newPassword     = $Password
+}
+Assert-That ($samePassword -eq 400) "Пароль, совпадающий с текущим, отклонён (код $samePassword)"
+
+$changed = Get-StatusCode -Method PUT -Path '/api/me/password' -Body @{
+    currentPassword = $Password
+    newPassword     = 'New-Password-2026'
+}
+Assert-That ($changed -eq 204) "Пароль изменён (код $changed)"
+
+$oldPasswordFails = Get-StatusCode -Method POST -Path '/api/auth/login' -Anonymous -Body @{
+    login    = $Email
+    password = $Password
+}
+Assert-That ($oldPasswordFails -eq 401) "Старый пароль больше не подходит (код $oldPasswordFails)"
+
+$newPasswordWorks = Invoke-Api -Method POST -Path '/api/auth/login' -Anonymous -Body @{
+    login    = $Email
+    password = 'New-Password-2026'
+}
+Assert-That ($newPasswordWorks.accessToken.Length -gt 20) 'Вход с новым паролем работает'
 
 # --- Профиль и настройки ---------------------------------------------------
 Write-Step 'Профиль и настройки'
@@ -267,6 +332,36 @@ while ($null -ne $card -and $answered -lt $MaxCards) {
 Assert-That ($answered -gt 0) "Отправлено ответов: $answered"
 Assert-That ($correct -gt 0) "Верных ответов распознано: $correct"
 Assert-That ($requeued -gt 0) "Ответ «не помню» вернул карточку в сессию: $requeued"
+
+# --- Пустая очередь --------------------------------------------------------
+Write-Step 'Пустая очередь'
+
+# Воспроизводим ситуацию, в которую попал живой пользователь: очередь пуста,
+# потому что повторения назначены на будущее, а дневной лимит новых слов
+# израсходован. Раньше сервер и в этом случае создавал сессию, оставлял её
+# активной и потом возвращал её же — человек навсегда упирался в «сессия
+# закончена» и не мог учиться, хотя просроченные карточки копились.
+Invoke-Api -Method PUT -Path '/api/me/settings' -Body @{ newWordsPerDay = 0 } | Out-Null
+
+$empty = Invoke-Api -Method GET -Path '/api/study/session'
+Assert-That ($empty.totalItems -eq 0) "Повторять нечего: карточек $($empty.totalItems)"
+Assert-That ($empty.sessionId -eq 0) 'Пустая сессия не сохраняется в базу (sessionId = 0)'
+Assert-That ($null -ne $empty.nextDueAtUtc) "Указано ближайшее повторение: $($empty.nextDueAtUtc)"
+
+$stillActive = Get-StatusCode -Method GET -Path '/api/study/session/active'
+Assert-That ($stillActive -eq 204) "Активной сессии не осталось (код $stillActive)"
+
+$cram = Invoke-Api -Method GET -Path '/api/study/session?cram=true'
+Assert-That ($cram.totalItems -gt 0) "Тренировка вне расписания даёт карточки: $($cram.totalItems)"
+Assert-That ($cram.sessionId -gt 0) 'Вне расписания создаётся настоящая сессия'
+
+$abandoned = Get-StatusCode -Method DELETE -Path '/api/study/session'
+Assert-That ($abandoned -eq 204) "Сессия вне расписания закрыта (код $abandoned)"
+
+# Лимит возвращаем с запасом: следующие разделы проверок должны получать
+# настоящие карточки, а не пустую очередь.
+Invoke-Api -Method PUT -Path '/api/me/settings' -Body @{ newWordsPerDay = 20 } | Out-Null
+
 
 # --- Статистика ------------------------------------------------------------
 Write-Step 'Статистика'

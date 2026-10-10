@@ -359,3 +359,26 @@ public sealed class FriendshipConfiguration : IEntityTypeConfiguration<Friendshi
             .OnDelete(DeleteBehavior.Cascade);
     }
 }
+
+public sealed class PasswordResetTokenConfiguration : IEntityTypeConfiguration<PasswordResetToken>
+{
+    public void Configure(EntityTypeBuilder<PasswordResetToken> builder)
+    {
+        builder.ToTable("password_reset_tokens");
+        builder.HasKey(t => t.Id);
+
+        builder.Property(t => t.TokenHash).IsRequired().HasMaxLength(64);
+
+        // Поиск идёт строго по хешу токена, поэтому индекс уникальный:
+        // совпадение хешей означало бы, что два человека получили одну ссылку.
+        builder.HasIndex(t => t.TokenHash).IsUnique();
+
+        // Погашение действующих токенов пользователя при сбросе пароля.
+        builder.HasIndex(t => new { t.UserId, t.ExpiresAt });
+
+        builder.HasOne(t => t.User)
+            .WithMany()
+            .HasForeignKey(t => t.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+    }
+}

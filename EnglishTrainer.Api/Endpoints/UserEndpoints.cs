@@ -38,6 +38,20 @@ public static class UserEndpoints
         .WithSummary("Сменить ник или отображаемое имя")
         .WithDescription("Занятый ник отклоняется: подменять выбранный ник «похожим» нельзя.");
 
+        group.MapPut("/password", async (
+            HttpContext context,
+            ChangePasswordRequestDto request,
+            AuthService auth,
+            CancellationToken ct) =>
+        {
+            await auth.ChangePasswordAsync(context.User.GetUserId(), request, ct);
+            return Results.NoContent();
+        })
+        .WithSummary("Сменить пароль")
+        .WithDescription(
+            "Текущий пароль обязателен: иначе украденный токен превращался бы " +
+            "в полный захват аккаунта — достаточно сменить пароль и не пустить владельца.");
+
         group.MapPut("/settings", async (
             HttpContext context,
             UpdateSettingsRequestDto request,

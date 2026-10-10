@@ -32,6 +32,29 @@ public sealed class CardStateRepository(AppDbContext context) : ICardStateReposi
     public Task<int> CountDueAsync(int userId, DateTime nowUtc, CancellationToken ct = default) =>
         context.CardStates.CountAsync(c => c.UserId == userId && c.DueAt <= nowUtc, ct);
 
+    public async Task<DateTime?> GetNextDueAtAsync(
+        int userId, DateTime nowUtc, CancellationToken ct = default) =>
+        await context.CardStates
+            .Where(c => c.UserId == userId && c.DueAt > nowUtc)
+            .OrderBy(c => c.DueAt)
+            .Select(c => (DateTime?)c.DueAt)
+            .FirstOrDefaultAsync(ct);
+
+    public async Task<IReadOnlyList<CardState>> GetSoonestAsync(
+        int userId, int limit, CancellationToken ct = default)
+    {
+        if (limit <= 0)
+            return [];
+
+        // Тот же индекс (UserId, DueAt), что и у выборки просроченных: отличается
+        // только отсутствие условия на срок.
+        return await context.CardStates
+            .Where(c => c.UserId == userId)
+            .OrderBy(c => c.DueAt)
+            .Take(limit)
+            .ToListAsync(ct);
+    }
+
     public async Task<IReadOnlyList<CardState>> GetForWordsAsync(
         int userId, IReadOnlyCollection<int> wordIds, CancellationToken ct = default)
     {

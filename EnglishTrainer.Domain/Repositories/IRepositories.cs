@@ -143,6 +143,25 @@ public interface ICardStateRepository
 
     Task<int> CountDueAsync(int userId, DateTime nowUtc, CancellationToken ct = default);
 
+    /// <summary>
+    /// Ближайший срок повторения в будущем, если прямо сейчас повторять нечего.
+    /// </summary>
+    /// <remarks>
+    /// Нужен, чтобы ответ «карточек нет» был содержательным: человеку важно знать,
+    /// ждать минуту или сутки.
+    /// </remarks>
+    Task<DateTime?> GetNextDueAtAsync(int userId, DateTime nowUtc, CancellationToken ct = default);
+
+    /// <summary>
+    /// Карточки с самым близким сроком, включая ещё не наступивший.
+    /// </summary>
+    /// <remarks>
+    /// Для тренировки вне расписания. Интервалы специально разносят повторения
+    /// во времени, но человеку иногда нужно заниматься именно сейчас, и запрещать
+    /// ему это было бы странно.
+    /// </remarks>
+    Task<IReadOnlyList<CardState>> GetSoonestAsync(int userId, int limit, CancellationToken ct = default);
+
     Task<IReadOnlyList<CardState>> GetForWordsAsync(
         int userId, IReadOnlyCollection<int> wordIds, CancellationToken ct = default);
 
@@ -206,6 +225,22 @@ public interface IDailyStatRepository
 
     /// <summary>Последние <paramref name="days"/> дней, свежие первыми — для серии дней.</summary>
     Task<IReadOnlyList<DailyStat>> GetRecentAsync(int userId, int days, CancellationToken ct = default);
+}
+
+/// <summary>Хранилище токенов сброса пароля.</summary>
+public interface IPasswordResetTokenRepository
+{
+    /// <summary>
+    /// Токен по хешу. Возвращается отслеживаемым: при использовании меняется
+    /// его состояние, и это изменение должно попасть в базу.
+    /// </summary>
+    Task<PasswordResetToken?> GetByHashAsync(string tokenHash, CancellationToken ct = default);
+
+    /// <summary>Действующие токены пользователя — нужны, чтобы погасить их после сброса.</summary>
+    Task<IReadOnlyList<PasswordResetToken>> GetActiveAsync(
+        int userId, DateTime nowUtc, CancellationToken ct = default);
+
+    Task AddAsync(PasswordResetToken token, CancellationToken ct = default);
 }
 
 /// <summary>

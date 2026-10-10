@@ -53,19 +53,33 @@ public sealed class StudySessionService(
     /// Возвращает активную сессию, а если её нет — собирает новую.
     /// </summary>
     public async Task<StudySessionDto> GetOrCreateSessionAsync(
-        int userId, int? deckId, CancellationToken ct = default)
+        int userId, int? deckId, bool cram = false, CancellationToken ct = default)
     {
         var user = await users.GetWithSettingsAsync(userId, ct)
             ?? throw NotFoundException.For("Пользователь", userId);
 
         var existing = await sessions.GetActiveWithItemsAsync(userId, ct);
-        if (existing is not null)
-            return await BuildSessionDtoAsync(existing, user, ct);
 
-        return await CreateSessionAsync(user, deckId, ct);
+        if (existing is not null)
+        {
+            if (existing.Items.Count > 0)
+                return await BuildSessionDtoAsync(existing, user, ct);
+
+            // Пустая активная сессия — след прежней ошибки: сервер сохранял сессию
+            // даже тогда, когда очередь оказывалась пустой. Такая запись перекрывала
+            // собой всё остальное: следующий запрос возвращал её же, интерфейс видел
+            // «карточек нет» и снова показывал «сессия закончена». Закрываем её,
+            // чтобы человек не оказался заперт в этом круге.
+            existing.Status = StudySessionStatus.Abandoned;
+            existing.CompletedAt = clock.UtcNow;
+            await unitOfWork.SaveChangesAsync(ct);
+        }
+
+        return await CreateSessionAsync(user, deckId, cram, ct);
     }
 
-    private async Task<StudySessionDto> CreateSessionAsync(User user, int? deckId, CancellationToken ct)
+    private async Task<StudySessionDto> CreateSessionAsync(
+        User user, int? deckId, bool cram, CancellationToken ct)
     {
         var userId = user.Id;
         var settings = user.Settings ?? new UserSettings();
@@ -76,7 +90,12 @@ public sealed class StudySessionService(
             throw NotFoundException.For("Колода", deckId.Value);
 
         // 1. Повторения: самые просроченные первыми — они «горячие», их забывают быстрее.
-        var due = await cardStates.GetDueAsync(userId, nowUtc, settings.MaxCardsPerSession, ct);
+        // Вне расписания берутся карточки с самым близким сроком, даже если он ещё
+        // не наступил: это осознанное желание заниматься сейчас, а не сбой алгоритма,
+        // и интервалы при ответе всё равно пересчитаются.
+        var due = cram
+            ? await cardStates.GetSoonestAsync(userId, settings.MaxCardsPerSession, ct)
+            : await cardStates.GetDueAsync(userId, nowUtc, settings.MaxCardsPerSession, ct);
 
         // Избранные слова поднимаются в начало очереди. Алгоритм расставляет
         // приоритеты по вероятности забывания, но не знает, что завтра собеседование
@@ -117,8 +136,21 @@ public sealed class StudySessionService(
             });
         }
 
-        // 2. Новые слова в пределах дневного лимита.
-        var newWords = await SelectNewWordsAsync(user, settings, localDate, deckId, ct);
+        // 2. Новые слова в пределах дневного лимита. Вне расписания они не подмешиваются:
+        // дополнительная тренировка не должна расходовать дневной лимит, иначе
+        // «позанимаюсь ещё» съедало бы программу на завтра.
+        IReadOnlyList<Word> newWords = cram
+            ? []
+            : await SelectNewWordsAsync(user, settings, localDate, deckId, ct);
+
+        // Пустую сессию не сохраняем.
+        //
+        // Сессия без единой карточки ничего не значит, но, оставшись активной, она
+        // перекрывает все последующие запуски: следующий запрос вернул бы её же,
+        // интерфейс увидел бы «карточек нет» и снова показал «сессия закончена».
+        // Вместо записи в базу отвечаем состоянием «сейчас повторять нечего».
+        if (session.Items.Count == 0 && newWords.Count == 0)
+            return await BuildNothingToStudyAsync(user, ct);
 
         var newCards = new List<CardState>();
         foreach (var word in newWords)
@@ -504,6 +536,33 @@ public sealed class StudySessionService(
             },
             _ => ExerciseKind.Typing
         };
+    }
+
+    /// <summary>
+    /// Ответ на запрос тренировки, когда повторять нечего.
+    /// </summary>
+    /// <remarks>
+    /// Сессия намеренно не создаётся: хранить пустую очередь нечего, а её наличие
+    /// ломало бы последующие запуски. Вместо этого отдаётся ближайший срок
+    /// повторения — интерфейсу нужно уметь сказать «на сегодня всё, следующее
+    /// повторение в 18:40». Это не то же самое, что «сессия закончена»:
+    /// во втором случае человек поработал, а в первом ещё ничего не сделал.
+    /// </remarks>
+    private async Task<StudySessionDto> BuildNothingToStudyAsync(User user, CancellationToken ct)
+    {
+        var nextDueAt = await cardStates.GetNextDueAtAsync(user.Id, clock.UtcNow, ct);
+
+        return new StudySessionDto(
+            SessionId: 0,
+            Status: StudySessionStatus.Active,
+            CurrentCard: null,
+            Position: 0,
+            TotalItems: 0,
+            Remaining: 0,
+            DueCount: 0,
+            NewCount: 0,
+            LocalDate: clock.TodayFor(user.TimeZoneId),
+            NextDueAtUtc: nextDueAt);
     }
 
     private async Task<StudySessionDto> BuildSessionDtoAsync(

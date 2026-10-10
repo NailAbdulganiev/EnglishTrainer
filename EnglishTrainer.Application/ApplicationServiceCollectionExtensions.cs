@@ -21,6 +21,7 @@ public static class ApplicationServiceCollectionExtensions
         services.AddScoped<DeckService>();
         services.AddScoped<FavoriteService>();
         services.AddScoped<FriendService>();
+        services.AddScoped<PasswordResetService>();
         services.AddScoped<ProfileService>();
         services.AddScoped<StudySessionService>();
         services.AddScoped<StatsService>();

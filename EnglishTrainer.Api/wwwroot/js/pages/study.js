@@ -210,17 +210,98 @@ async function toggleStar(button, rawWordId) {
 
 /* ── Сессия ─────────────────────────────────────────────────────────────── */
 
-async function startSession(container, context, deckId) {
+async function startSession(container, context, deckId, cram = false) {
     container.innerHTML = '<p class="hint">Собираем очередь…</p>';
 
+    // Параметры собираются через URLSearchParams, а не склейкой строки: пустой
+    // deckId превратился бы в «deckId=null», и сервер не смог бы разобрать число.
+    const params = new URLSearchParams();
+    if (deckId) {
+        params.set('deckId', deckId);
+    }
+    if (cram) {
+        params.set('cram', 'true');
+    }
+
+    const query = params.toString();
+
     try {
-        const session = await api(`/api/study/session?deckId=${deckId}`);
+        const session = await api(`/api/study/session${query ? `?${query}` : ''}`);
+
+        // Пустая очередь — это не «сессия закончена». Человек ничего не прошёл,
+        // и говорить ему «прогресс сохранён» было бы неправдой: раньше именно
+        // так и получался замкнутый круг из «сессии закончена» и «ещё сессию».
+        if (session.totalItems === 0) {
+            showNothingToStudy(container, context, session);
+            return;
+        }
 
         runSession(container, session, (reason) => afterSession(container, context, reason));
     } catch (error) {
         toast(error.message, 'error');
         await showDecks(container, context);
     }
+}
+
+/*
+ * Экран «повторять нечего»: показывает, когда придёт следующее повторение,
+ * и даёт возможность заниматься вне расписания. Без этого человек упирается
+ * в тупик: карточек нет, а почему и что делать — непонятно.
+ */
+function showNothingToStudy(container, context, session) {
+    stopSession();
+
+    const next = session.nextDueAtUtc ? formatNextDue(session.nextDueAtUtc) : null;
+
+    container.innerHTML = `
+        <div class="card" style="text-align: center; padding: 32px">
+            <div class="empty__icon" style="margin-bottom: 16px">${icon('check')}</div>
+            <h2>На сегодня всё</h2>
+            <p class="hint" style="margin-bottom: 22px">
+                ${next
+                    ? `Повторять пока нечего: следующее повторение — ${esc(next)}.`
+                    : 'В изучении ещё нет ни одного слова.'}
+            </p>
+            <div class="row" style="justify-content: center">
+                <button type="button" class="btn btn--primary" id="cram">
+                    ${icon('play', 'icon--sm')} Учить вне расписания
+                </button>
+                <button type="button" class="btn btn--ghost" id="to-decks">К колодам</button>
+            </div>
+            <p class="hint" style="margin-top: 16px">
+                Интервалы расставлены так, чтобы повторения не скапливались в один день.
+                Тренировка вне расписания берёт слова с самым близким сроком; ответы
+                учитываются в прогрессе как обычные.
+            </p>
+        </div>`;
+
+    container.querySelector('#cram').addEventListener('click', () => startSession(container, context, null, true));
+    container.querySelector('#to-decks').addEventListener('click', () => showDecks(container, context));
+}
+
+/* «Сегодня в 18:40», «завтра в 09:15» или полная дата — как понятнее человеку. */
+function formatNextDue(isoUtc) {
+    const due = new Date(isoUtc);
+
+    if (Number.isNaN(due.getTime())) {
+        return 'скоро';
+    }
+
+    const now = new Date();
+    const time = due.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+
+    if (due.toDateString() === now.toDateString()) {
+        return `сегодня в ${time}`;
+    }
+
+    const tomorrow = new Date(now);
+    tomorrow.setDate(now.getDate() + 1);
+
+    if (due.toDateString() === tomorrow.toDateString()) {
+        return `завтра в ${time}`;
+    }
+
+    return `${due.toLocaleDateString('ru-RU')} в ${time}`;
 }
 
 async function afterSession(container, context, reason) {

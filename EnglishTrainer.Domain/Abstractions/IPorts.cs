@@ -37,3 +37,22 @@ public interface ITokenIssuer
 /// <param name="Value">Сам токен.</param>
 /// <param name="ExpiresAtUtc">Момент истечения.</param>
 public readonly record struct AccessToken(string Value, DateTime ExpiresAtUtc);
+
+/// <summary>Письмо к отправке.</summary>
+/// <param name="To">Адрес получателя.</param>
+/// <param name="Subject">Тема.</param>
+/// <param name="Body">Текст письма.</param>
+public readonly record struct EmailMessage(string To, string Subject, string Body);
+
+/// <summary>
+/// Отправка писем.
+/// </summary>
+/// <remarks>
+/// Порт, а не прямая работа с SMTP: приложение должно работать и без почтового
+/// провайдера — например, когда оно развёрнуто для одного человека на его машине.
+/// Куда именно уходит письмо, решает реализация.
+/// </remarks>
+public interface IEmailSender
+{
+    Task SendAsync(EmailMessage message, CancellationToken ct = default);
+}

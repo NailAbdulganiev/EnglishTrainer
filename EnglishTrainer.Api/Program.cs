@@ -59,9 +59,26 @@ if (MaintenanceCommands.IsMaintenanceCommand(args))
 
 // ── Интерфейс тренировки ─────────────────────────────────────────────────────
 // Страница из wwwroot обращается к тем же эндпоинтам, что и любой другой клиент.
-// Отдельная сборка фронтенда не нужна: три статических файла отдаются как есть.
+// Отдельная сборка фронтенда не нужна: статические файлы отдаются как есть.
 app.UseDefaultFiles();
-app.UseStaticFiles();
+
+// Решение принимается один раз при настройке, а не на каждый файл.
+var revalidateStaticFiles = app.Environment.IsDevelopment();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = context =>
+    {
+        // В разработке браузер обязан перепроверять файлы у сервера.
+        //
+        // Иначе получается так: стили или скрипт исправлены, сервер перезапущен,
+        // а в браузере остаётся старая копия из кеша — и правка выглядит как
+        // «ничего не изменилось». Отдача при этом дешёвая: сервер отвечает 304,
+        // если файл не менялся.
+        if (revalidateStaticFiles)
+            context.Context.Response.Headers.CacheControl = "no-cache, must-revalidate";
+    }
+});
 
 app.UseExceptionHandler();
 
