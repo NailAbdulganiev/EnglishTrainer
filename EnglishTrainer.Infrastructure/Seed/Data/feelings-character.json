@@ -1,0 +1,410 @@
+{
+  "slug": "feelings-character",
+  "title": "Эмоции и характер",
+  "description": "Как описать настроение, характер и отношение",
+  "sortOrder": 13,
+  "words": [
+    {
+      "lemma": "happy",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈhæpi/",
+      "ipaUs": "/ˈhæpi/",
+      "level": "A1",
+      "translations": [
+        { "text": "счастливый, довольный", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "She looks really happy when she plays with her dog.", "textRu": "Она выглядит очень счастливой, когда играет со своей собакой.", "audioUrl": null, "attribution": null },
+        { "textEn": "I am happy to help you with your homework tonight.", "textRu": "Я с радостью помогу тебе с домашним заданием сегодня вечером.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "joy",
+      "partOfSpeech": "noun",
+      "ipaUk": "/dʒɔɪ/",
+      "ipaUs": "/dʒɔɪ/",
+      "level": "A2",
+      "translations": [
+        { "text": "радость", "sense": null, "isPrimary": true },
+        { "text": "веселье, оживление", "sense": "о бурном проявлении радости", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Her face was full of joy when she opened the gift.", "textRu": "Её лицо светилось радостью, когда она открывала подарок.", "audioUrl": null, "attribution": null },
+        { "textEn": "The children shouted with joy when the snow started falling.", "textRu": "Дети закричали от радости, когда пошёл снег.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "excited",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ɪkˈsaɪtɪd/",
+      "ipaUs": "/ɪkˈsaɪtɪd/",
+      "level": "A2",
+      "translations": [
+        { "text": "взволнованный, воодушевлённый", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We are excited about our trip to Italy next month.", "textRu": "Мы с воодушевлением ждём поездки в Италию в следующем месяце.", "audioUrl": null, "attribution": null },
+        { "textEn": "He got excited when he heard the good news.", "textRu": "Он обрадовался, когда услышал хорошие новости.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "anxious",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈæŋkʃəs/",
+      "ipaUs": "/ˈæŋkʃəs/",
+      "level": "B1",
+      "translations": [
+        { "text": "тревожный, взволнованный", "sense": null, "isPrimary": true },
+        { "text": "стремящийся, желающий", "sense": "в конструкции anxious to do something", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I feel anxious before every job interview.", "textRu": "Я волнуюсь перед каждым собеседованием.", "audioUrl": null, "attribution": null },
+        { "textEn": "She was anxious about her exam results all week.", "textRu": "Она всю неделю тревожилась из-за результатов экзамена.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "worried",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈwʌrid/",
+      "ipaUs": "/ˈwɜːrid/",
+      "level": "A2",
+      "translations": [
+        { "text": "обеспокоенный, встревоженный", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "My mother is worried because I never answer my phone.", "textRu": "Мама беспокоится, потому что я никогда не отвечаю на звонки.", "audioUrl": null, "attribution": null },
+        { "textEn": "Do not be worried, everything will be fine tomorrow.", "textRu": "Не волнуйся, завтра всё будет хорошо.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "nervous",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈnɜːvəs/",
+      "ipaUs": "/ˈnɜːrvəs/",
+      "level": "B1",
+      "translations": [
+        { "text": "нервный, взволнованный", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "He feels nervous when he speaks in front of people.", "textRu": "Он нервничает, когда говорит перед людьми.", "audioUrl": null, "attribution": null },
+        { "textEn": "I was too nervous to say a single word.", "textRu": "Я так нервничал, что не мог вымолвить ни слова.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "tired",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈtaɪəd/",
+      "ipaUs": "/ˈtaɪərd/",
+      "level": "A1",
+      "translations": [
+        { "text": "усталый, уставший", "sense": null, "isPrimary": true },
+        { "text": "уставший от чего-то", "sense": "в конструкции tired of", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I am tired after a long day at work.", "textRu": "Я устал после долгого рабочего дня.", "audioUrl": null, "attribution": null },
+        { "textEn": "The children were tired and fell asleep quickly.", "textRu": "Дети устали и быстро заснули.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "exhausted",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ɪɡˈzɔːstɪd/",
+      "ipaUs": "/ɪɡˈzɔːstɪd/",
+      "level": "B2",
+      "translations": [
+        { "text": "измотанный, обессиленный", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "After the marathon she was completely exhausted.", "textRu": "После марафона она была совершенно без сил.", "audioUrl": null, "attribution": null },
+        { "textEn": "We felt exhausted after moving furniture all day.", "textRu": "Мы вымотались, весь день перетаскивая мебель.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "annoyed",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/əˈnɔɪd/",
+      "ipaUs": "/əˈnɔɪd/",
+      "level": "B1",
+      "translations": [
+        { "text": "раздражённый, недовольный", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "He was annoyed because the train was late again.", "textRu": "Он раздражался, потому что поезд снова опоздал.", "audioUrl": null, "attribution": null },
+        { "textEn": "I get annoyed when people talk during the film.", "textRu": "Меня раздражает, когда люди разговаривают во время фильма.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "irritated",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈɪrɪteɪtɪd/",
+      "ipaUs": "/ˈɪrɪteɪtɪd/",
+      "level": "B2",
+      "translations": [
+        { "text": "раздражённый, рассерженный", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Her loud music made me irritated and I left.", "textRu": "От её громкой музыки я разозлился и ушёл.", "audioUrl": null, "attribution": null },
+        { "textEn": "He sounded irritated on the phone this morning.", "textRu": "Утром он говорил по телефону раздражённо.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "angry",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈæŋɡri/",
+      "ipaUs": "/ˈæŋɡri/",
+      "level": "A2",
+      "translations": [
+        { "text": "сердитый, злой", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "My father was angry about the broken window.", "textRu": "Отец сердился из-за разбитого окна.", "audioUrl": null, "attribution": null },
+        { "textEn": "Please do not be angry with me for being late.", "textRu": "Пожалуйста, не сердись на меня за опоздание.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "upset",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ʌpˈset/",
+      "ipaUs": "/ʌpˈset/",
+      "level": "B1",
+      "translations": [
+        { "text": "расстроенный, огорчённый", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "She was upset when her best friend forgot her birthday.", "textRu": "Она расстроилась, когда лучшая подруга забыла о её дне рождения.", "audioUrl": null, "attribution": null },
+        { "textEn": "He looked upset, so I asked him what happened.", "textRu": "Он выглядел расстроенным, и я спросил, что случилось.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "hurt",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/hɜːt/",
+      "ipaUs": "/hɜːrt/",
+      "level": "B1",
+      "translations": [
+        { "text": "обиженный, задетый", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I felt hurt when they did not invite me.", "textRu": "Мне было обидно, что меня не пригласили.", "audioUrl": null, "attribution": null },
+        { "textEn": "She looked hurt by his cold answer.", "textRu": "Она выглядела обиженной его холодным ответом.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "surprised",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/səˈpraɪzd/",
+      "ipaUs": "/sərˈpraɪzd/",
+      "level": "A2",
+      "translations": [
+        { "text": "удивлённый", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We were surprised to see snow in early October.", "textRu": "Мы удивились, увидев снег в начале октября.", "audioUrl": null, "attribution": null },
+        { "textEn": "I was surprised by how quickly she agreed.", "textRu": "Я удивился, как быстро она согласилась.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "amazed",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/əˈmeɪzd/",
+      "ipaUs": "/əˈmeɪzd/",
+      "level": "B1",
+      "translations": [
+        { "text": "изумлённый, поражённый", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We were amazed by the view from the mountain.", "textRu": "Мы были поражены видом с горы.", "audioUrl": null, "attribution": null },
+        { "textEn": "She was amazed at how well he spoke Russian.", "textRu": "Она изумилась тому, как хорошо он говорит по-русски.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "calm",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/kɑːm/",
+      "ipaUs": "/kɑːm/",
+      "level": "B1",
+      "translations": [
+        { "text": "спокойный, невозмутимый", "sense": null, "isPrimary": true },
+        { "text": "тихий, безветренный", "sense": "о море или погоде", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Try to stay calm and breathe slowly.", "textRu": "Постарайся оставаться спокойным и дышать медленно.", "audioUrl": null, "attribution": null },
+        { "textEn": "The sea was calm and the sky was clear.", "textRu": "Море было спокойным, а небо ясным.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "relaxed",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/rɪˈlækst/",
+      "ipaUs": "/rɪˈlækst/",
+      "level": "B1",
+      "translations": [
+        { "text": "расслабленный, отдохнувший", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "After the holiday I felt relaxed and happy.", "textRu": "После отпуска я чувствовал себя отдохнувшим и счастливым.", "audioUrl": null, "attribution": null },
+        { "textEn": "Everyone looked relaxed at the summer party.", "textRu": "На летней вечеринке все выглядели расслабленными.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "confident",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈkɒnfɪdənt/",
+      "ipaUs": "/ˈkɑːnfɪdənt/",
+      "level": "B1",
+      "translations": [
+        { "text": "уверенный в себе", "sense": null, "isPrimary": true },
+        { "text": "самоуверенный", "sense": "иногда с оттенком самоуверенности", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "She is confident about her English speaking skills.", "textRu": "Она уверена в своих навыках разговорного английского.", "audioUrl": null, "attribution": null },
+        { "textEn": "He walked into the room with a confident smile.", "textRu": "Он вошёл в комнату с уверенной улыбкой.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "proud",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/praʊd/",
+      "ipaUs": "/praʊd/",
+      "level": "B1",
+      "translations": [
+        { "text": "гордый, испытывающий гордость", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "My parents are proud of my university results.", "textRu": "Родители гордятся моими университетскими результатами.", "audioUrl": null, "attribution": null },
+        { "textEn": "I am proud that I finished the project alone.", "textRu": "Я горжусь тем, что закончил проект один.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "stubborn",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈstʌbən/",
+      "ipaUs": "/ˈstʌbərn/",
+      "level": "B2",
+      "translations": [
+        { "text": "упрямый", "sense": null, "isPrimary": true },
+        { "text": "настойчивый, упорный", "sense": "о сопротивлении или болезни", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "My little brother is too stubborn to say sorry.", "textRu": "Мой младший брат слишком упрям, чтобы извиниться.", "audioUrl": null, "attribution": null },
+        { "textEn": "She is stubborn and never changes her mind.", "textRu": "Она упряма и никогда не меняет своего решения.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "generous",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈdʒenərəs/",
+      "ipaUs": "/ˈdʒenərəs/",
+      "level": "B1",
+      "translations": [
+        { "text": "щедрый", "sense": null, "isPrimary": true },
+        { "text": "великодушный", "sense": "о прощении или благородном поступке", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Our neighbour is generous and always helps everyone.", "textRu": "Наш сосед щедрый и всегда всем помогает.", "audioUrl": null, "attribution": null },
+        { "textEn": "It was generous of you to pay for dinner.", "textRu": "Было очень щедро с вашей стороны оплатить ужин.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "reliable",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/rɪˈlaɪəbl/",
+      "ipaUs": "/rɪˈlaɪəbl/",
+      "level": "B2",
+      "translations": [
+        { "text": "надёжный", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "He is a reliable friend who never breaks promises.", "textRu": "Он надёжный друг, который никогда не нарушает обещаний.", "audioUrl": null, "attribution": null },
+        { "textEn": "We need a reliable car for long journeys.", "textRu": "Нам нужна надёжная машина для долгих поездок.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "absent-minded",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˌæbsənt ˈmaɪndɪd/",
+      "ipaUs": "/ˌæbsənt ˈmaɪndɪd/",
+      "level": "B2",
+      "translations": [
+        { "text": "рассеянный, забывчивый", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "My absent-minded uncle forgot his keys again.", "textRu": "Мой рассеянный дядя снова забыл ключи.", "audioUrl": null, "attribution": null },
+        { "textEn": "I am so absent-minded that I lose my umbrella.", "textRu": "Я настолько рассеянный, что теряю свой зонт.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "shy",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ʃaɪ/",
+      "ipaUs": "/ʃaɪ/",
+      "level": "A2",
+      "translations": [
+        { "text": "стеснительный, застенчивый", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The shy boy did not say a word.", "textRu": "Стеснительный мальчик не сказал ни слова.", "audioUrl": null, "attribution": null },
+        { "textEn": "She was too shy to ask for help.", "textRu": "Она стеснялась попросить о помощи.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "mood",
+      "partOfSpeech": "noun",
+      "ipaUk": "/muːd/",
+      "ipaUs": "/muːd/",
+      "level": "B1",
+      "translations": [
+        { "text": "настроение", "sense": null, "isPrimary": true },
+        { "text": "атмосфера, настрой", "sense": "об общей атмосфере группы или места", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "He is in a good mood this morning.", "textRu": "Сегодня утром у него хорошее настроение.", "audioUrl": null, "attribution": null },
+        { "textEn": "Her mood changed quickly after the phone call.", "textRu": "Её настроение быстро изменилось после звонка.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "i'm tired",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/aɪm ˈtaɪəd/",
+      "ipaUs": "/aɪm ˈtaɪərd/",
+      "level": "A2",
+      "translations": [
+        { "text": "я устал, я устала", "sense": null, "isPrimary": true },
+        { "text": "мне надоело", "sense": "с предлогом of — устал от чего-то", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I'm tired, so I am going to bed early.", "textRu": "Я устал, поэтому лягу спать пораньше.", "audioUrl": null, "attribution": null },
+        { "textEn": "I'm tired of doing the same thing every day.", "textRu": "Мне надоело делать одно и то же каждый день.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "it bothers me",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ɪt ˈbɒðəz mi/",
+      "ipaUs": "/ɪt ˈbɑːðərz mi/",
+      "level": "B1",
+      "translations": [
+        { "text": "меня это беспокоит, меня это раздражает", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "It bothers me when my neighbours play loud music.", "textRu": "Меня беспокоит, когда соседи включают громкую музыку.", "audioUrl": null, "attribution": null },
+        { "textEn": "It bothers me that he never calls me back.", "textRu": "Меня беспокоит, что он никогда не перезванивает.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "i don't care",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/aɪ dəʊnt ˈkeə/",
+      "ipaUs": "/aɪ doʊnt ˈker/",
+      "level": "B1",
+      "translations": [
+        { "text": "мне всё равно", "sense": null, "isPrimary": true },
+        { "text": "мне безразлично, меня не волнует", "sense": "о полном безразличии", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I don't care what other people think about me.", "textRu": "Мне всё равно, что обо мне думают другие.", "audioUrl": null, "attribution": null },
+        { "textEn": "I don't care about the weather, we are still going.", "textRu": "Мне всё равно на погоду, мы всё равно идём.", "audioUrl": null, "attribution": null }
+      ]
+    }
+  ]
+}

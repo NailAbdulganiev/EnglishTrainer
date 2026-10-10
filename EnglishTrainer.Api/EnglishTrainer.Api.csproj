@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <!-- Слой API: HTTP-слой. Тонкий: маршрутизация, валидация входа, коды ответов.
+       Бизнес-логики здесь нет — только вызовы Application-сервисов.
+       Общие свойства (целевая платформа, Nullable, ImplicitUsings,
+       TreatWarningsAsErrors) заданы один раз в Directory.Build.props. -->
+
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);NU1701</NoWarn>
+
+    <!--
+      Хранилище секретов разработчика. Строка подключения к базе и секрет подписи
+      токенов держатся вне репозитория. Записать секрет:
+
+        dotnet user-secrets set "ConnectionStrings:Postgres" "Host=...;Password=..."
+
+      Команда выполняется из каталога проекта EnglishTrainer.Api.
+      В Development этот файл подхватывается автоматически и переопределяет appsettings.
+    -->
+    <UserSecretsId>english-trainer-api</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EnglishTrainer.Application\EnglishTrainer.Application.csproj" />
+    <ProjectReference Include="..\EnglishTrainer.Domain\EnglishTrainer.Domain.csproj" />
+    <ProjectReference Include="..\EnglishTrainer.Infrastructure\EnglishTrainer.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

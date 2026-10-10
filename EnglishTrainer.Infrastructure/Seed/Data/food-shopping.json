@@ -1,0 +1,405 @@
+{
+  "slug": "food-shopping",
+  "title": "Еда и покупки",
+  "description": "Продукты, магазин, касса, приготовление еды",
+  "sortOrder": 8,
+  "words": [
+    {
+      "lemma": "groceries",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈɡrəʊsəriz/",
+      "ipaUs": "/ˈɡroʊsəriz/",
+      "level": "A2",
+      "translations": [
+        { "text": "продукты, продукты питания", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I need to buy some groceries after work today.", "textRu": "Мне нужно купить продукты после работы сегодня.", "audioUrl": null, "attribution": null },
+        { "textEn": "She carried two heavy bags of groceries upstairs.", "textRu": "Она подняла наверх две тяжёлые сумки с продуктами.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "bread",
+      "partOfSpeech": "noun",
+      "ipaUk": "/bred/",
+      "ipaUs": "/bred/",
+      "level": "A1",
+      "translations": [
+        { "text": "хлеб", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Could you pick up some fresh bread on your way?", "textRu": "Не мог бы ты купить свежий хлеб по дороге?", "audioUrl": null, "attribution": null },
+        { "textEn": "This bread smells wonderful, where did you buy it?", "textRu": "Этот хлеб чудесно пахнет, где ты его купил?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "milk",
+      "partOfSpeech": "noun",
+      "ipaUk": "/mɪlk/",
+      "ipaUs": "/mɪlk/",
+      "level": "A1",
+      "translations": [
+        { "text": "молоко", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We are almost out of milk again.", "textRu": "У нас опять почти закончилось молоко.", "audioUrl": null, "attribution": null },
+        { "textEn": "Add a little milk to make the sauce softer.", "textRu": "Добавь немного молока, чтобы соус был мягче.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "cheese",
+      "partOfSpeech": "noun",
+      "ipaUk": "/tʃiːz/",
+      "ipaUs": "/tʃiːz/",
+      "level": "A1",
+      "translations": [
+        { "text": "сыр", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "This cheese melts perfectly on warm toast.", "textRu": "Этот сыр идеально плавится на тёплом тосте.", "audioUrl": null, "attribution": null },
+        { "textEn": "He cut a thin slice of cheese for the sandwich.", "textRu": "Он отрезал тонкий ломтик сыра для бутерброда.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "vegetables",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈvedʒtəblz/",
+      "ipaUs": "/ˈvedʒtəblz/",
+      "level": "A1",
+      "translations": [
+        { "text": "овощи", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Wash the vegetables well before you cook them.", "textRu": "Хорошо промой овощи перед приготовлением.", "audioUrl": null, "attribution": null },
+        { "textEn": "Fresh vegetables from the market taste much better.", "textRu": "Свежие овощи с рынка гораздо вкуснее.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "fruit",
+      "partOfSpeech": "noun",
+      "ipaUk": "/fruːt/",
+      "ipaUs": "/fruːt/",
+      "level": "A1",
+      "translations": [
+        { "text": "фрукты", "sense": null, "isPrimary": true },
+        { "text": "плод", "sense": "ботаническое значение", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "She always keeps some fruit in her bag.", "textRu": "Она всегда держит немного фруктов в сумке.", "audioUrl": null, "attribution": null },
+        { "textEn": "This fruit is too sour for the children.", "textRu": "Эти фрукты слишком кислые для детей.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "meat",
+      "partOfSpeech": "noun",
+      "ipaUk": "/miːt/",
+      "ipaUs": "/miːt/",
+      "level": "A1",
+      "translations": [
+        { "text": "мясо", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The meat needs another ten minutes in the oven.", "textRu": "Мясу нужно ещё десять минут в духовке.", "audioUrl": null, "attribution": null },
+        { "textEn": "He does not eat meat, so we cooked fish.", "textRu": "Он не ест мясо, поэтому мы приготовили рыбу.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "delicious",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/dɪˈlɪʃəs/",
+      "ipaUs": "/dɪˈlɪʃəs/",
+      "level": "A2",
+      "translations": [
+        { "text": "очень вкусный, восхитительный", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Your soup was absolutely delicious, thank you.", "textRu": "Твой суп был невероятно вкусным, спасибо.", "audioUrl": null, "attribution": null },
+        { "textEn": "We found a small cafe with delicious cakes.", "textRu": "Мы нашли маленькое кафе с очень вкусными пирожными.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "aisle",
+      "partOfSpeech": "noun",
+      "ipaUk": "/aɪl/",
+      "ipaUs": "/aɪl/",
+      "level": "A2",
+      "translations": [
+        { "text": "проход между полками", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "You will find the rice in aisle four.", "textRu": "Рис вы найдёте в четвёртом проходе.", "audioUrl": null, "attribution": null },
+        { "textEn": "She walked down the aisle looking for coffee.", "textRu": "Она шла по проходу, ища кофе.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "basket",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈbɑːskɪt/",
+      "ipaUs": "/ˈbæskɪt/",
+      "level": "A1",
+      "translations": [
+        { "text": "корзина", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Grab a basket, we only need a few things.", "textRu": "Возьми корзину, нам нужно всего несколько вещей.", "audioUrl": null, "attribution": null },
+        { "textEn": "My basket was full before I reached the till.", "textRu": "Моя корзина наполнилась, прежде чем я дошёл до кассы.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "trolley",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈtrɒli/",
+      "ipaUs": "/ˈtrɑːli/",
+      "level": "A2",
+      "translations": [
+        { "text": "тележка для покупок", "sense": null, "isPrimary": true },
+        { "text": "трамвай", "sense": "британский вариант, городской транспорт", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "The trolley was stuck between two crowded shelves.", "textRu": "Тележка застряла между двумя забитыми полками.", "audioUrl": null, "attribution": null },
+        { "textEn": "Take a trolley if you are buying a lot.", "textRu": "Возьмите тележку, если покупаете много.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "checkout",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈtʃekaʊt/",
+      "ipaUs": "/ˈtʃekaʊt/",
+      "level": "A2",
+      "translations": [
+        { "text": "касса, место оплаты", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "There was a long line at the checkout.", "textRu": "На кассе была длинная очередь.", "audioUrl": null, "attribution": null },
+        { "textEn": "Please pay at the checkout near the exit.", "textRu": "Пожалуйста, оплатите на кассе у выхода.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "cashier",
+      "partOfSpeech": "noun",
+      "ipaUk": "/kæˈʃɪə/",
+      "ipaUs": "/kæˈʃɪr/",
+      "level": "A2",
+      "translations": [
+        { "text": "кассир", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The cashier asked if I needed a bag.", "textRu": "Кассир спросил, нужен ли мне пакет.", "audioUrl": null, "attribution": null },
+        { "textEn": "Ask the cashier to check the price again.", "textRu": "Попросите кассира проверить цену ещё раз.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "receipt",
+      "partOfSpeech": "noun",
+      "ipaUk": "/rɪˈsiːt/",
+      "ipaUs": "/rɪˈsiːt/",
+      "level": "A2",
+      "translations": [
+        { "text": "чек, квитанция", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Keep the receipt in case you want a refund.", "textRu": "Сохраните чек на случай, если захотите вернуть товар.", "audioUrl": null, "attribution": null },
+        { "textEn": "I cannot find the receipt for these shoes.", "textRu": "Я не могу найти чек на эти туфли.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "discount",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈdɪskaʊnt/",
+      "ipaUs": "/ˈdɪskaʊnt/",
+      "level": "A2",
+      "translations": [
+        { "text": "скидка", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "This shop gives a small discount to students.", "textRu": "Этот магазин даёт небольшую скидку студентам.", "audioUrl": null, "attribution": null },
+        { "textEn": "I bought the coat at a big discount.", "textRu": "Я купил пальто с большой скидкой.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "queue",
+      "partOfSpeech": "noun",
+      "ipaUk": "/kjuː/",
+      "ipaUs": "/kjuː/",
+      "level": "B1",
+      "translations": [
+        { "text": "очередь", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The queue at the bakery moved quite fast.", "textRu": "Очередь в пекарне двигалась довольно быстро.", "audioUrl": null, "attribution": null },
+        { "textEn": "We stood in the queue for twenty minutes.", "textRu": "Мы стояли в очереди двадцать минут.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "expiry date",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ɪkˈspaɪəri deɪt/",
+      "ipaUs": "/ɪkˈspaɪəri deɪt/",
+      "level": "A2",
+      "translations": [
+        { "text": "срок годности", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Check the expiry date before you buy the yogurt.", "textRu": "Проверьте срок годности, прежде чем покупать йогурт.", "audioUrl": null, "attribution": null },
+        { "textEn": "This cheese is past its expiry date.", "textRu": "У этого сыра истёк срок годности.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "fresh",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/freʃ/",
+      "ipaUs": "/freʃ/",
+      "level": "A1",
+      "translations": [
+        { "text": "свежий", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The market sells fresh fish every morning.", "textRu": "На рынке каждое утро продают свежую рыбу.", "audioUrl": null, "attribution": null },
+        { "textEn": "I prefer fresh juice to anything from a bottle.", "textRu": "Я предпочитаю свежий сок всему, что в бутылке.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "frozen",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈfrəʊzn/",
+      "ipaUs": "/ˈfroʊzn/",
+      "level": "A2",
+      "translations": [
+        { "text": "замороженный", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We keep frozen berries for winter mornings.", "textRu": "Мы держим замороженные ягоды для зимних утр.", "audioUrl": null, "attribution": null },
+        { "textEn": "Do not refreeze food that was already frozen.", "textRu": "Не замораживайте повторно еду, которая уже была заморожена.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "taste",
+      "partOfSpeech": "verb",
+      "ipaUk": "/teɪst/",
+      "ipaUs": "/teɪst/",
+      "level": "A1",
+      "translations": [
+        { "text": "пробовать на вкус", "sense": null, "isPrimary": true },
+        { "text": "иметь вкус, отдавать", "sense": "о вкусе еды или напитка", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Taste the soup and add some salt.", "textRu": "Попробуй суп и добавь немного соли.", "audioUrl": null, "attribution": null },
+        { "textEn": "This sauce tastes a bit too sweet.", "textRu": "Этот соус на вкус немного слишком сладкий.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "fry",
+      "partOfSpeech": "verb",
+      "ipaUk": "/fraɪ/",
+      "ipaUs": "/fraɪ/",
+      "level": "A2",
+      "translations": [
+        { "text": "жарить, обжаривать", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Fry the onions for two minutes, then add carrots.", "textRu": "Жарьте лук две минуты, затем добавьте морковь.", "audioUrl": null, "attribution": null },
+        { "textEn": "She fried eggs while the coffee was brewing.", "textRu": "Она жарила яйца, пока варился кофе.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "boil",
+      "partOfSpeech": "verb",
+      "ipaUk": "/bɔɪl/",
+      "ipaUs": "/bɔɪl/",
+      "level": "A2",
+      "translations": [
+        { "text": "варить, кипятить", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Boil the potatoes until they are soft.", "textRu": "Варите картофель, пока он не станет мягким.", "audioUrl": null, "attribution": null },
+        { "textEn": "First boil the water, then add the pasta.", "textRu": "Сначала вскипятите воду, затем добавьте макароны.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "chop",
+      "partOfSpeech": "verb",
+      "ipaUk": "/tʃɒp/",
+      "ipaUs": "/tʃɑːp/",
+      "level": "A2",
+      "translations": [
+        { "text": "нарезать, рубить", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Chop the garlic finely and mix it in.", "textRu": "Мелко нарежьте чеснок и перемешайте.", "audioUrl": null, "attribution": null },
+        { "textEn": "He chopped the vegetables while I set the table.", "textRu": "Он нарезал овощи, пока я накрывал на стол.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "bake",
+      "partOfSpeech": "verb",
+      "ipaUk": "/beɪk/",
+      "ipaUs": "/beɪk/",
+      "level": "A2",
+      "translations": [
+        { "text": "печь, запекать", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I want to bake a cake for her birthday.", "textRu": "Я хочу испечь торт на её день рождения.", "audioUrl": null, "attribution": null },
+        { "textEn": "Bake the bread for thirty minutes at high heat.", "textRu": "Пеките хлеб тридцать минут на сильном огне.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "portion",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈpɔːʃn/",
+      "ipaUs": "/ˈpɔːrʃn/",
+      "level": "B1",
+      "translations": [
+        { "text": "порция", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "This portion is too big for one person.", "textRu": "Эта порция слишком большая для одного человека.", "audioUrl": null, "attribution": null },
+        { "textEn": "He ate a small portion of rice and fish.", "textRu": "Он съел небольшую порцию риса и рыбы.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "menu",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈmenjuː/",
+      "ipaUs": "/ˈmenjuː/",
+      "level": "A1",
+      "translations": [
+        { "text": "меню", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Could we see the menu, please?", "textRu": "Не могли бы мы посмотреть меню, пожалуйста?", "audioUrl": null, "attribution": null },
+        { "textEn": "The menu changes every season at this restaurant.", "textRu": "В этом ресторане меню меняется каждый сезон.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "bill",
+      "partOfSpeech": "noun",
+      "ipaUk": "/bɪl/",
+      "ipaUs": "/bɪl/",
+      "level": "A2",
+      "translations": [
+        { "text": "счёт в ресторане", "sense": null, "isPrimary": true },
+        { "text": "купюра, банкнота", "sense": "американский вариант", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Could you bring us the bill, please?", "textRu": "Не могли бы вы принести нам счёт, пожалуйста?", "audioUrl": null, "attribution": null },
+        { "textEn": "We split the bill between four people.", "textRu": "Мы разделили счёт на четверых.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "order",
+      "partOfSpeech": "verb",
+      "ipaUk": "/ˈɔːdə/",
+      "ipaUs": "/ˈɔːrdər/",
+      "level": "A2",
+      "translations": [
+        { "text": "заказывать", "sense": null, "isPrimary": true },
+        { "text": "приказывать, велеть", "sense": "распоряжаться, требовать", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I would like to order a coffee and a cake.", "textRu": "Я хотел бы заказать кофе и пирожное.", "audioUrl": null, "attribution": null },
+        { "textEn": "We ordered pizza because nobody wanted to cook.", "textRu": "Мы заказали пиццу, потому что никто не хотел готовить.", "audioUrl": null, "attribution": null }
+      ]
+    }
+  ]
+}

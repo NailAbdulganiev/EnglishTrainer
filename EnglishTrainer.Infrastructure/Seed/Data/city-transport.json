@@ -1,0 +1,403 @@
+{
+  "slug": "city-transport",
+  "title": "Город и транспорт",
+  "description": "Ориентирование, общественный транспорт, такси и дорога",
+  "sortOrder": 10,
+  "words": [
+    {
+      "lemma": "bus",
+      "partOfSpeech": "noun",
+      "ipaUk": "/bʌs/",
+      "ipaUs": "/bʌs/",
+      "level": "A1",
+      "translations": [
+        { "text": "автобус", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The bus to the centre leaves every ten minutes.", "textRu": "Автобус в центр уходит каждые десять минут.", "audioUrl": null, "attribution": null },
+        { "textEn": "We waited for the bus in the rain.", "textRu": "Мы ждали автобус под дождём.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "tram",
+      "partOfSpeech": "noun",
+      "ipaUk": "/træm/",
+      "ipaUs": "/træm/",
+      "level": "A2",
+      "translations": [
+        { "text": "трамвай", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The tram is faster than the bus in the morning.", "textRu": "Утром трамвай быстрее автобуса.", "audioUrl": null, "attribution": null },
+        { "textEn": "Take tram number five and get off at the square.", "textRu": "Садитесь на пятый трамвай и выходите на площади.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "metro",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈmetrəʊ/",
+      "ipaUs": "/ˈmetroʊ/",
+      "level": "A2",
+      "translations": [
+        { "text": "метро", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The metro is the quickest way to the airport.", "textRu": "Метро — самый быстрый способ добраться до аэропорта.", "audioUrl": null, "attribution": null },
+        { "textEn": "We took the metro because the streets were busy.", "textRu": "Мы поехали на метро, потому что улицы были загружены.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "train",
+      "partOfSpeech": "noun",
+      "ipaUk": "/treɪn/",
+      "ipaUs": "/treɪn/",
+      "level": "A1",
+      "translations": [
+        { "text": "поезд", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The train to the coast leaves from platform two.", "textRu": "Поезд к побережью отправляется со второй платформы.", "audioUrl": null, "attribution": null },
+        { "textEn": "Our train was late, so we missed the show.", "textRu": "Наш поезд опоздал, и мы пропустили представление.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "taxi",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈtæksi/",
+      "ipaUs": "/ˈtæksi/",
+      "level": "A1",
+      "translations": [
+        { "text": "такси", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We took a taxi because we were very tired.", "textRu": "Мы взяли такси, потому что очень устали.", "audioUrl": null, "attribution": null },
+        { "textEn": "The taxi driver knew a shorter way home.", "textRu": "Водитель такси знал более короткую дорогу домой.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "route",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ruːt/",
+      "ipaUs": "/ruːt/",
+      "level": "A2",
+      "translations": [
+        { "text": "маршрут, путь", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "This route goes through the old part of town.", "textRu": "Этот маршрут идёт через старую часть города.", "audioUrl": null, "attribution": null },
+        { "textEn": "The driver changed the route to avoid the jam.", "textRu": "Водитель изменил маршрут, чтобы объехать пробку.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "schedule",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈʃedjuːl/",
+      "ipaUs": "/ˈskedʒuːl/",
+      "level": "A2",
+      "translations": [
+        { "text": "расписание", "sense": null, "isPrimary": true },
+        { "text": "график", "sense": "о плане работы или учёбы", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "The new bus schedule starts on Monday morning.", "textRu": "Новое расписание автобусов начинается в понедельник утром.", "audioUrl": null, "attribution": null },
+        { "textEn": "My schedule is full, so I travel early.", "textRu": "У меня плотный график, поэтому я езжу рано.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "timetable",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈtaɪmteɪbl/",
+      "ipaUs": "/ˈtaɪmteɪbl/",
+      "level": "A2",
+      "translations": [
+        { "text": "расписание (движения или занятий)", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The timetable is on the wall near the entrance.", "textRu": "Расписание висит на стене у входа.", "audioUrl": null, "attribution": null },
+        { "textEn": "Check the timetable before you leave the station.", "textRu": "Проверьте расписание, прежде чем выходить со станции.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "transfer",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈtrænsfɜː/",
+      "ipaUs": "/ˈtrænsfɜːr/",
+      "level": "B1",
+      "translations": [
+        { "text": "пересадка", "sense": null, "isPrimary": true },
+        { "text": "трансфер", "sense": "о перевозке пассажира к отелю", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "The ticket includes one free transfer in the city.", "textRu": "Билет включает одну бесплатную пересадку по городу.", "audioUrl": null, "attribution": null },
+        { "textEn": "A fast transfer is possible at the central stop.", "textRu": "Быстрая пересадка возможна на центральной остановке.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "traffic jam",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈtræfɪk dʒæm/",
+      "ipaUs": "/ˈtræfɪk dʒæm/",
+      "level": "A2",
+      "translations": [
+        { "text": "пробка, затор", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We were stuck in a traffic jam for an hour.", "textRu": "Мы застряли в пробке на час.", "audioUrl": null, "attribution": null },
+        { "textEn": "There is always a traffic jam near the bridge.", "textRu": "Возле моста всегда пробка.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "intersection",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˌɪntəˈsekʃn/",
+      "ipaUs": "/ˌɪntəˈsekʃn/",
+      "level": "B1",
+      "translations": [
+        { "text": "перекрёсток", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Turn left at the next intersection and go straight.", "textRu": "На следующем перекрёстке поверните налево и идите прямо.", "audioUrl": null, "attribution": null },
+        { "textEn": "The accident happened at a busy intersection downtown.", "textRu": "Авария произошла на оживлённом перекрёстке в центре.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "traffic lights",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈtræfɪk laɪts/",
+      "ipaUs": "/ˈtræfɪk laɪts/",
+      "level": "A2",
+      "translations": [
+        { "text": "светофор", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Wait for the green light at the traffic lights.", "textRu": "Дождитесь зелёного сигнала на светофоре.", "audioUrl": null, "attribution": null },
+        { "textEn": "The traffic lights were not working this morning.", "textRu": "Сегодня утром светофор не работал.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "parking",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈpɑːkɪŋ/",
+      "ipaUs": "/ˈpɑːrkɪŋ/",
+      "level": "A2",
+      "translations": [
+        { "text": "парковка, стоянка", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Parking near the station is expensive on weekdays.", "textRu": "Парковка возле станции дорогая по будням.", "audioUrl": null, "attribution": null },
+        { "textEn": "We found free parking behind the shopping centre.", "textRu": "Мы нашли бесплатную парковку за торговым центром.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "ticket",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈtɪkɪt/",
+      "ipaUs": "/ˈtɪkɪt/",
+      "level": "A1",
+      "translations": [
+        { "text": "билет, талон", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Buy a ticket before you get on the bus.", "textRu": "Купите билет, прежде чем войти в автобус.", "audioUrl": null, "attribution": null },
+        { "textEn": "My monthly ticket works on buses and trams.", "textRu": "Мой месячный билет действует в автобусах и трамваях.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "fare",
+      "partOfSpeech": "noun",
+      "ipaUk": "/feə/",
+      "ipaUs": "/feər/",
+      "level": "B1",
+      "translations": [
+        { "text": "стоимость проезда", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The fare to the airport is about ten euros.", "textRu": "Стоимость проезда до аэропорта — около десяти евро.", "audioUrl": null, "attribution": null },
+        { "textEn": "Drivers often ask for the exact fare in cash.", "textRu": "Водители часто просят точную сумму проезда наличными.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "platform",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈplætfɔːm/",
+      "ipaUs": "/ˈplætfɔːrm/",
+      "level": "A2",
+      "translations": [
+        { "text": "платформа, перрон", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The train leaves from platform six in five minutes.", "textRu": "Поезд отправляется с шестой платформы через пять минут.", "audioUrl": null, "attribution": null },
+        { "textEn": "We ran to the platform and caught the train.", "textRu": "Мы побежали на платформу и успели на поезд.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "station",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈsteɪʃn/",
+      "ipaUs": "/ˈsteɪʃn/",
+      "level": "A1",
+      "translations": [
+        { "text": "станция, вокзал", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The nearest station is ten minutes from here.", "textRu": "Ближайшая станция в десяти минутах отсюда.", "audioUrl": null, "attribution": null },
+        { "textEn": "I will meet you at the station at six.", "textRu": "Я встречу тебя на вокзале в шесть.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "direction",
+      "partOfSpeech": "noun",
+      "ipaUk": "/dəˈrekʃn/",
+      "ipaUs": "/dəˈrekʃn/",
+      "level": "A2",
+      "translations": [
+        { "text": "направление", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We walked in the wrong direction for twenty minutes.", "textRu": "Мы шли не в том направлении двадцать минут.", "audioUrl": null, "attribution": null },
+        { "textEn": "Could you tell me the direction of the museum?", "textRu": "Не подскажете, в каком направлении находится музей?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "crosswalk",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈkrɒswɔːk/",
+      "ipaUs": "/ˈkrɔːswɔːk/",
+      "level": "B1",
+      "translations": [
+        { "text": "пешеходный переход", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Always cross the street at the crosswalk.", "textRu": "Всегда переходите улицу по пешеходному переходу.", "audioUrl": null, "attribution": null },
+        { "textEn": "The crosswalk near the school is brightly painted.", "textRu": "Переход возле школы ярко покрашен.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "sidewalk",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈsaɪdwɔːk/",
+      "ipaUs": "/ˈsaɪdwɔːk/",
+      "level": "A2",
+      "translations": [
+        { "text": "тротуар", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The sidewalk was icy, so we walked slowly.", "textRu": "Тротуар был скользким, и мы шли медленно.", "audioUrl": null, "attribution": null },
+        { "textEn": "Cyclists should not ride on the busy sidewalk.", "textRu": "Велосипедистам не стоит ехать по оживлённому тротуару.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "driver",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈdraɪvə/",
+      "ipaUs": "/ˈdraɪvər/",
+      "level": "A2",
+      "translations": [
+        { "text": "водитель", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The driver stopped and opened the doors for us.", "textRu": "Водитель остановился и открыл нам двери.", "audioUrl": null, "attribution": null },
+        { "textEn": "Our driver knew every street in the old town.", "textRu": "Наш водитель знал каждую улицу в старом городе.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "passenger",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈpæsɪndʒə/",
+      "ipaUs": "/ˈpæsɪndʒər/",
+      "level": "A2",
+      "translations": [
+        { "text": "пассажир", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Every passenger must show a ticket during the trip.", "textRu": "Каждый пассажир должен показать билет во время поездки.", "audioUrl": null, "attribution": null },
+        { "textEn": "The last passenger got off at the final stop.", "textRu": "Последний пассажир вышел на конечной остановке.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "get on",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌget ˈɒn/",
+      "ipaUs": "/ˌget ˈɑːn/",
+      "level": "A2",
+      "translations": [
+        { "text": "садиться (в транспорт)", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Get on the bus at the front door.", "textRu": "Садитесь в автобус через переднюю дверь.", "audioUrl": null, "attribution": null },
+        { "textEn": "We got on the wrong train and had to return.", "textRu": "Мы сели не в тот поезд и вынуждены были вернуться.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "get off",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌget ˈɒf/",
+      "ipaUs": "/ˌget ˈɔːf/",
+      "level": "A2",
+      "translations": [
+        { "text": "выходить (из транспорта)", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Get off at the third stop and turn right.", "textRu": "Выйдите на третьей остановке и поверните направо.", "audioUrl": null, "attribution": null },
+        { "textEn": "She got off the tram near the market.", "textRu": "Она вышла из трамвая рядом с рынком.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "how do i get there",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/haʊ duː aɪ get ðeə/",
+      "ipaUs": "/haʊ duː aɪ get ðeər/",
+      "level": "A2",
+      "translations": [
+        { "text": "как туда добраться", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Excuse me, how do I get there by metro?", "textRu": "Извините, как туда добраться на метро?", "audioUrl": null, "attribution": null },
+        { "textEn": "How do I get there? Is it far from here?", "textRu": "Как туда добраться? Это далеко отсюда?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "where is the nearest station",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/weə ɪz ðə ˈnɪərɪst ˈsteɪʃn/",
+      "ipaUs": "/weər ɪz ðə ˈnɪrɪst ˈsteɪʃn/",
+      "level": "A2",
+      "translations": [
+        { "text": "где ближайшая станция", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Excuse me, where is the nearest station, please?", "textRu": "Извините, где ближайшая станция?", "audioUrl": null, "attribution": null },
+        { "textEn": "Where is the nearest station? I need a train.", "textRu": "Где ближайшая станция? Мне нужен поезд.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "i'm lost",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/aɪm lɒst/",
+      "ipaUs": "/aɪm lɔːst/",
+      "level": "A2",
+      "translations": [
+        { "text": "я заблудился", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I'm lost and my phone has no battery.", "textRu": "Я заблудился, и в телефоне села батарея.", "audioUrl": null, "attribution": null },
+        { "textEn": "I'm lost, could you show me the way?", "textRu": "Я заблудился, не покажете дорогу?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "stop",
+      "partOfSpeech": "noun",
+      "ipaUk": "/stɒp/",
+      "ipaUs": "/stɑːp/",
+      "level": "A1",
+      "translations": [
+        { "text": "остановка", "sense": null, "isPrimary": true },
+        { "text": "остановка, прекращение", "sense": "о прекращении какого-либо действия", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "The bus stop is just around the corner.", "textRu": "Автобусная остановка прямо за углом.", "audioUrl": null, "attribution": null },
+        { "textEn": "We waited at the stop for fifteen minutes.", "textRu": "Мы ждали на остановке пятнадцать минут.", "audioUrl": null, "attribution": null }
+      ]
+    }
+  ]
+}

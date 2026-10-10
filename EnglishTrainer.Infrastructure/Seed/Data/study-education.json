@@ -1,0 +1,406 @@
+{
+  "slug": "study-education",
+  "title": "Учёба и образование",
+  "description": "Курсы, экзамены, конспекты и языковая практика",
+  "sortOrder": 12,
+  "words": [
+    {
+      "lemma": "course",
+      "partOfSpeech": "noun",
+      "ipaUk": "/kɔːs/",
+      "ipaUs": "/kɔːrs/",
+      "level": "A2",
+      "translations": [
+        { "text": "курс, учебный курс", "sense": null, "isPrimary": true },
+        { "text": "блюдо", "sense": "часть обеда", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I signed up for an English course in September.", "textRu": "Я записался на курс английского в сентябре.", "audioUrl": null, "attribution": null },
+        { "textEn": "This course has twelve lessons and a final test.", "textRu": "В этом курсе двенадцать уроков и итоговый тест.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "lecture",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈlektʃə/",
+      "ipaUs": "/ˈlektʃər/",
+      "level": "B1",
+      "translations": [
+        { "text": "лекция", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The lecture about grammar starts at nine o'clock.", "textRu": "Лекция о грамматике начинается в девять часов.", "audioUrl": null, "attribution": null },
+        { "textEn": "I recorded the lecture so I can listen again.", "textRu": "Я записал лекцию, чтобы послушать её снова.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "seminar",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈsemɪnɑː/",
+      "ipaUs": "/ˈsemɪnɑːr/",
+      "level": "B1",
+      "translations": [
+        { "text": "семинар", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "At the seminar we discussed our small research projects.", "textRu": "На семинаре мы обсуждали наши небольшие исследования.", "audioUrl": null, "attribution": null },
+        { "textEn": "The seminar was useful because everyone asked questions.", "textRu": "Семинар был полезен, потому что все задавали вопросы.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "homework",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈhəʊmwɜːk/",
+      "ipaUs": "/ˈhoʊmwɜːrk/",
+      "level": "A1",
+      "translations": [
+        { "text": "домашнее задание", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I do my homework every evening after dinner.", "textRu": "Я делаю домашнее задание каждый вечер после ужина.", "audioUrl": null, "attribution": null },
+        { "textEn": "Our teacher gave us a lot of homework today.", "textRu": "Наш учитель дал нам сегодня много домашнего задания.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "notes",
+      "partOfSpeech": "noun",
+      "ipaUk": "/nəʊts/",
+      "ipaUs": "/noʊts/",
+      "level": "A2",
+      "translations": [
+        { "text": "конспект, записи", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I always take notes during the grammar lecture.", "textRu": "Я всегда делаю конспект во время лекции по грамматике.", "audioUrl": null, "attribution": null },
+        { "textEn": "Her notes helped me prepare for the exam.", "textRu": "Её конспект помог мне подготовиться к экзамену.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "exam",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ɪgˈzæm/",
+      "ipaUs": "/ɪgˈzæm/",
+      "level": "A2",
+      "translations": [
+        { "text": "экзамен", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The English exam lasts two hours and a half.", "textRu": "Экзамен по английскому длится два с половиной часа.", "audioUrl": null, "attribution": null },
+        { "textEn": "I passed the exam with a very good result.", "textRu": "Я сдал экзамен с очень хорошим результатом.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "grade",
+      "partOfSpeech": "noun",
+      "ipaUk": "/greɪd/",
+      "ipaUs": "/greɪd/",
+      "level": "B1",
+      "translations": [
+        { "text": "оценка, балл", "sense": null, "isPrimary": true },
+        { "text": "класс, ступень", "sense": "уровень обучения", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I got a good grade for my English essay.", "textRu": "Я получил хорошую оценку за сочинение по английскому.", "audioUrl": null, "attribution": null },
+        { "textEn": "She was upset about her grade in maths.", "textRu": "Она расстроилась из-за своей оценки по математике.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "credit",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈkredɪt/",
+      "ipaUs": "/ˈkredɪt/",
+      "level": "B1",
+      "translations": [
+        { "text": "зачёт", "sense": null, "isPrimary": true },
+        { "text": "кредит", "sense": "финансовое значение", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I need one more credit to finish this course.", "textRu": "Мне нужен ещё один зачёт, чтобы закончить этот курс.", "audioUrl": null, "attribution": null },
+        { "textEn": "Students get a credit after the final seminar.", "textRu": "Студенты получают зачёт после последнего семинара.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "certificate",
+      "partOfSpeech": "noun",
+      "ipaUk": "/səˈtɪfɪkət/",
+      "ipaUs": "/səˈtɪfɪkət/",
+      "level": "B1",
+      "translations": [
+        { "text": "сертификат, свидетельство", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "After the course I received a language certificate.", "textRu": "После курса я получил языковой сертификат.", "audioUrl": null, "attribution": null },
+        { "textEn": "The certificate shows my level of English.", "textRu": "Сертификат показывает мой уровень английского.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "tutor",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈtjuːtə/",
+      "ipaUs": "/ˈtuːtər/",
+      "level": "B1",
+      "translations": [
+        { "text": "репетитор, преподаватель", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "My tutor helps me with pronunciation every week.", "textRu": "Мой репетитор помогает мне с произношением каждую неделю.", "audioUrl": null, "attribution": null },
+        { "textEn": "We found a good tutor for our daughter.", "textRu": "Мы нашли хорошего репетитора для нашей дочери.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "pronunciation",
+      "partOfSpeech": "noun",
+      "ipaUk": "/prəˌnʌnsiˈeɪʃn/",
+      "ipaUs": "/prəˌnʌnsiˈeɪʃn/",
+      "level": "B1",
+      "translations": [
+        { "text": "произношение", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Your pronunciation is getting better every month.", "textRu": "Твоё произношение становится лучше с каждым месяцем.", "audioUrl": null, "attribution": null },
+        { "textEn": "I practise pronunciation with short audio lessons.", "textRu": "Я тренирую произношение с короткими аудиоуроками.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "fluency",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈfluːənsi/",
+      "ipaUs": "/ˈfluːənsi/",
+      "level": "B2",
+      "translations": [
+        { "text": "беглость", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Reading aloud improves fluency in a new language.", "textRu": "Чтение вслух улучшает беглость в новом языке.", "audioUrl": null, "attribution": null },
+        { "textEn": "She reached real fluency after two years abroad.", "textRu": "Она достигла настоящей беглости после двух лет за границей.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "pass an exam",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/pɑːs ən ɪgˈzæm/",
+      "ipaUs": "/pæs ən ɪgˈzæm/",
+      "level": "B1",
+      "translations": [
+        { "text": "сдать экзамен", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I hope to pass the exam on my first try.", "textRu": "Надеюсь сдать экзамен с первой попытки.", "audioUrl": null, "attribution": null },
+        { "textEn": "You need to pass the exam to get the certificate.", "textRu": "Тебе нужно сдать экзамен, чтобы получить сертификат.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "sign up for a course",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌsaɪn ʌp fər ə ˈkɔːs/",
+      "ipaUs": "/ˌsaɪn ʌp fər ə ˈkɔːrs/",
+      "level": "B1",
+      "translations": [
+        { "text": "записаться на курс", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I want to sign up for a course in business English.", "textRu": "Я хочу записаться на курс делового английского.", "audioUrl": null, "attribution": null },
+        { "textEn": "You can sign up for a course on the website.", "textRu": "Ты можешь записаться на курс на сайте.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "revise the material",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/rɪˈvaɪz ðə məˈtɪəriəl/",
+      "ipaUs": "/rɪˈvaɪz ðə məˈtɪriəl/",
+      "level": "B2",
+      "translations": [
+        { "text": "повторить материал", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I revise the material before every Friday test.", "textRu": "Я повторяю материал перед каждым тестом в пятницу.", "audioUrl": null, "attribution": null },
+        { "textEn": "We revise the material together in the library.", "textRu": "Мы вместе повторяем материал в библиотеке.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "assignment",
+      "partOfSpeech": "noun",
+      "ipaUk": "/əˈsaɪnmənt/",
+      "ipaUs": "/əˈsaɪnmənt/",
+      "level": "B1",
+      "translations": [
+        { "text": "задание, работа", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The written assignment is due on Monday morning.", "textRu": "Письменное задание нужно сдать в понедельник утром.", "audioUrl": null, "attribution": null },
+        { "textEn": "Our group finished the assignment before the weekend.", "textRu": "Наша группа закончила задание перед выходными.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "essay",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈeseɪ/",
+      "ipaUs": "/ˈeseɪ/",
+      "level": "B1",
+      "translations": [
+        { "text": "эссе, сочинение", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I wrote a short essay about my home town.", "textRu": "Я написал короткое эссе о своём родном городе.", "audioUrl": null, "attribution": null },
+        { "textEn": "The teacher asked for an essay of five hundred words.", "textRu": "Учитель попросил эссе на пятьсот слов.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "textbook",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈtekstbʊk/",
+      "ipaUs": "/ˈtekstbʊk/",
+      "level": "A2",
+      "translations": [
+        { "text": "учебник", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "This textbook has clear explanations and useful exercises.", "textRu": "В этом учебнике понятные объяснения и полезные упражнения.", "audioUrl": null, "attribution": null },
+        { "textEn": "I left my textbook in the classroom yesterday.", "textRu": "Вчера я оставил свой учебник в аудитории.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "semester",
+      "partOfSpeech": "noun",
+      "ipaUk": "/sɪˈmestə/",
+      "ipaUs": "/sɪˈmestər/",
+      "level": "B1",
+      "translations": [
+        { "text": "семестр", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The new semester begins in the middle of February.", "textRu": "Новый семестр начинается в середине февраля.", "audioUrl": null, "attribution": null },
+        { "textEn": "I am taking four subjects this semester.", "textRu": "В этом семестре я изучаю четыре предмета.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "scholarship",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈskɒləʃɪp/",
+      "ipaUs": "/ˈskɑːlərʃɪp/",
+      "level": "B2",
+      "translations": [
+        { "text": "стипендия", "sense": null, "isPrimary": true },
+        { "text": "научная работа", "sense": "исследование учёного", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "She won a scholarship to study in London.", "textRu": "Она получила стипендию на учёбу в Лондоне.", "audioUrl": null, "attribution": null },
+        { "textEn": "The scholarship covers books and part of the rent.", "textRu": "Стипендия покрывает книги и часть аренды.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "graduate",
+      "partOfSpeech": "verb",
+      "ipaUk": "/ˈgrædʒueɪt/",
+      "ipaUs": "/ˈgrædʒueɪt/",
+      "level": "B1",
+      "translations": [
+        { "text": "оканчивать учебное заведение", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "My brother will graduate from university next June.", "textRu": "Мой брат окончит университет в следующем июне.", "audioUrl": null, "attribution": null },
+        { "textEn": "She graduated with a degree in modern languages.", "textRu": "Она окончила учёбу со степенью по современным языкам.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "revise",
+      "partOfSpeech": "verb",
+      "ipaUk": "/rɪˈvaɪz/",
+      "ipaUs": "/rɪˈvaɪz/",
+      "level": "B1",
+      "translations": [
+        { "text": "повторять, пересматривать", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I revise new words every evening before bed.", "textRu": "Я повторяю новые слова каждый вечер перед сном.", "audioUrl": null, "attribution": null },
+        { "textEn": "We revised the whole unit before the exam.", "textRu": "Мы повторили весь раздел перед экзаменом.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "memorise",
+      "partOfSpeech": "verb",
+      "ipaUk": "/ˈmeməraɪz/",
+      "ipaUs": "/ˈmeməraɪz/",
+      "level": "B1",
+      "translations": [
+        { "text": "запоминать, заучивать", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "It is hard to memorise so many new words.", "textRu": "Трудно запомнить так много новых слов.", "audioUrl": null, "attribution": null },
+        { "textEn": "He memorised the whole dialogue in ten minutes.", "textRu": "Он выучил весь диалог за десять минут.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "fluent",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈfluːənt/",
+      "ipaUs": "/ˈfluːənt/",
+      "level": "B1",
+      "translations": [
+        { "text": "беглый, свободный", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "After a year in Dublin she became fluent in English.", "textRu": "После года в Дублине она стала свободно говорить по-английски.", "audioUrl": null, "attribution": null },
+        { "textEn": "He is fluent in two foreign languages.", "textRu": "Он свободно говорит на двух иностранных языках.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "advanced",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ədˈvɑːnst/",
+      "ipaUs": "/ədˈvænst/",
+      "level": "B1",
+      "translations": [
+        { "text": "продвинутый", "sense": null, "isPrimary": true },
+        { "text": "передовой", "sense": "о технике или науке", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I moved to the advanced group last month.", "textRu": "В прошлом месяце я перешёл в продвинутую группу.", "audioUrl": null, "attribution": null },
+        { "textEn": "This book is too advanced for beginners.", "textRu": "Эта книга слишком сложная для начинающих.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "progress",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈprəʊgres/",
+      "ipaUs": "/ˈprɑːgres/",
+      "level": "B1",
+      "translations": [
+        { "text": "прогресс, успехи", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "My progress in listening is easy to see.", "textRu": "Мой прогресс в аудировании легко заметить.", "audioUrl": null, "attribution": null },
+        { "textEn": "The teacher praised her progress in speaking.", "textRu": "Учитель похвалил её успехи в говорении.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "fluently",
+      "partOfSpeech": "adverb",
+      "ipaUk": "/ˈfluːəntli/",
+      "ipaUs": "/ˈfluːəntli/",
+      "level": "B1",
+      "translations": [
+        { "text": "бегло, свободно", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "She speaks English fluently and without long pauses.", "textRu": "Она говорит по-английски бегло и без долгих пауз.", "audioUrl": null, "attribution": null },
+        { "textEn": "To speak fluently you need regular practice.", "textRu": "Чтобы говорить бегло, нужна регулярная практика.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "practice",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈpræktɪs/",
+      "ipaUs": "/ˈpræktɪs/",
+      "level": "A2",
+      "translations": [
+        { "text": "практика, тренировка", "sense": null, "isPrimary": true },
+        { "text": "практика, обычай", "sense": "принятый порядок", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Daily practice is the key to good pronunciation.", "textRu": "Ежедневная практика — ключ к хорошему произношению.", "audioUrl": null, "attribution": null },
+        { "textEn": "We do speaking practice in small groups.", "textRu": "Мы занимаемся разговорной практикой в маленьких группах.", "audioUrl": null, "attribution": null }
+      ]
+    }
+  ]
+}

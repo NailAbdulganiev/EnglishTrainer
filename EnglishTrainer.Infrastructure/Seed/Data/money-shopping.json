@@ -1,0 +1,402 @@
+{
+  "slug": "money-shopping",
+  "title": "Деньги и покупки",
+  "description": "Цены, скидки, оплата, возврат и гарантия",
+  "sortOrder": 18,
+  "words": [
+    {
+      "lemma": "price",
+      "partOfSpeech": "noun",
+      "ipaUk": "/praɪs/",
+      "ipaUs": "/praɪs/",
+      "level": "A2",
+      "translations": [
+        { "text": "цена", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The price of this jacket is too high.", "textRu": "Цена этой куртки слишком высокая.", "audioUrl": null, "attribution": null },
+        { "textEn": "Can you tell me the price of that bag?", "textRu": "Можете сказать мне цену той сумки?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "discount",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈdɪskaʊnt/",
+      "ipaUs": "/ˈdɪskaʊnt/",
+      "level": "A2",
+      "translations": [
+        { "text": "скидка", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Students get a ten percent discount in this shop.", "textRu": "Студентам дают скидку десять процентов в этом магазине.", "audioUrl": null, "attribution": null },
+        { "textEn": "Is there any discount if I buy two?", "textRu": "Есть ли скидка, если я куплю два?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "sale",
+      "partOfSpeech": "noun",
+      "ipaUk": "/seɪl/",
+      "ipaUs": "/seɪl/",
+      "level": "A2",
+      "translations": [
+        { "text": "распродажа", "sense": null, "isPrimary": true },
+        { "text": "продажа, реализация", "sense": "продажа товара или имущества", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I bought these shoes during the winter sale.", "textRu": "Я купил эти туфли во время зимней распродажи.", "audioUrl": null, "attribution": null },
+        { "textEn": "The old house has been on sale for months.", "textRu": "Старый дом выставлен на продажу уже несколько месяцев.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "checkout",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈtʃekaʊt/",
+      "ipaUs": "/ˈtʃekaʊt/",
+      "level": "A2",
+      "translations": [
+        { "text": "касса, место оплаты", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Please pay for your items at the checkout.", "textRu": "Пожалуйста, оплатите товары на кассе.", "audioUrl": null, "attribution": null },
+        { "textEn": "I left my wallet at the checkout counter.", "textRu": "Я оставил кошелёк на кассе.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "cash",
+      "partOfSpeech": "noun",
+      "ipaUk": "/kæʃ/",
+      "ipaUs": "/kæʃ/",
+      "level": "A2",
+      "translations": [
+        { "text": "наличные", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I paid in cash because my card did not work.", "textRu": "Я заплатил наличными, потому что моя карта не работала.", "audioUrl": null, "attribution": null },
+        { "textEn": "Do you have any cash with you right now?", "textRu": "У тебя есть сейчас с собой наличные?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "card",
+      "partOfSpeech": "noun",
+      "ipaUk": "/kɑːd/",
+      "ipaUs": "/kɑːrd/",
+      "level": "A1",
+      "translations": [
+        { "text": "карта, банковская карта", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Can I pay by card in this small cafe?", "textRu": "Можно оплатить картой в этом маленьком кафе?", "audioUrl": null, "attribution": null },
+        { "textEn": "My card was declined at the till yesterday.", "textRu": "Вчера мою карту отклонили на кассе.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "receipt",
+      "partOfSpeech": "noun",
+      "ipaUk": "/rɪˈsiːt/",
+      "ipaUs": "/rɪˈsiːt/",
+      "level": "B1",
+      "translations": [
+        { "text": "чек, квитанция", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Keep the receipt in case you want a refund.", "textRu": "Сохраните чек на случай, если захотите вернуть товар.", "audioUrl": null, "attribution": null },
+        { "textEn": "I lost the receipt for these headphones.", "textRu": "Я потерял чек на эти наушники.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "refund",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈriːfʌnd/",
+      "ipaUs": "/ˈriːfʌnd/",
+      "level": "B1",
+      "translations": [
+        { "text": "возврат денег", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I asked for a refund because the size was wrong.", "textRu": "Я попросил вернуть деньги, потому что размер не подошёл.", "audioUrl": null, "attribution": null },
+        { "textEn": "The shop gave me a full refund without any questions.", "textRu": "Магазин вернул мне всю сумму без лишних вопросов.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "exchange",
+      "partOfSpeech": "verb",
+      "ipaUk": "/ɪksˈtʃeɪndʒ/",
+      "ipaUs": "/ɪksˈtʃeɪndʒ/",
+      "level": "B1",
+      "translations": [
+        { "text": "обменивать, менять", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Can I exchange this shirt for a larger size?", "textRu": "Можно обменять эту рубашку на размер больше?", "audioUrl": null, "attribution": null },
+        { "textEn": "They exchanged the broken lamp for a new one.", "textRu": "Они обменяли сломанную лампу на новую.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "warranty",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈwɒrənti/",
+      "ipaUs": "/ˈwɔːrənti/",
+      "level": "B1",
+      "translations": [
+        { "text": "гарантия", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "This laptop comes with a two-year warranty.", "textRu": "На этот ноутбук даётся двухлетняя гарантия.", "audioUrl": null, "attribution": null },
+        { "textEn": "The repair is free while the warranty is valid.", "textRu": "Ремонт бесплатный, пока действует гарантия.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "size",
+      "partOfSpeech": "noun",
+      "ipaUk": "/saɪz/",
+      "ipaUs": "/saɪz/",
+      "level": "A2",
+      "translations": [
+        { "text": "размер", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Do you have this dress in a smaller size?", "textRu": "У вас есть это платье меньшего размера?", "audioUrl": null, "attribution": null },
+        { "textEn": "What size shoes do you usually wear?", "textRu": "Какой размер обуви вы обычно носите?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "fitting room",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈfɪtɪŋ ruːm/",
+      "ipaUs": "/ˈfɪtɪŋ ruːm/",
+      "level": "A2",
+      "translations": [
+        { "text": "примерочная", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The fitting rooms are at the back of the store.", "textRu": "Примерочные находятся в глубине магазина.", "audioUrl": null, "attribution": null },
+        { "textEn": "Someone is already waiting for the fitting room.", "textRu": "Кто-то уже ждёт примерочную.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "delivery",
+      "partOfSpeech": "noun",
+      "ipaUk": "/dɪˈlɪvəri/",
+      "ipaUs": "/dɪˈlɪvəri/",
+      "level": "B1",
+      "translations": [
+        { "text": "доставка", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Delivery to your home costs five pounds.", "textRu": "Доставка на дом стоит пять фунтов.", "audioUrl": null, "attribution": null },
+        { "textEn": "The delivery will arrive within three working days.", "textRu": "Доставка придёт в течение трёх рабочих дней.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "how much is it",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌhaʊ ˈmʌtʃ ɪz ɪt/",
+      "ipaUs": "/ˌhaʊ ˈmʌtʃ ɪz ɪt/",
+      "level": "A1",
+      "translations": [
+        { "text": "сколько это стоит", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Excuse me, how much is it in total?", "textRu": "Извините, сколько это стоит всего?", "audioUrl": null, "attribution": null },
+        { "textEn": "How much is it with the discount included?", "textRu": "Сколько это стоит со скидкой?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "can i try it on",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/kən aɪ ˈtraɪ ɪt ɒn/",
+      "ipaUs": "/kən aɪ ˈtraɪ ɪt ɑːn/",
+      "level": "A2",
+      "translations": [
+        { "text": "можно померить", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Can I try it on before I buy it?", "textRu": "Можно померить, прежде чем я куплю?", "audioUrl": null, "attribution": null },
+        { "textEn": "Can I try it on in a different colour?", "textRu": "Можно померить в другом цвете?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "i want to return this",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/aɪ ˌwɒnt tə rɪˈtɜːn ðɪs/",
+      "ipaUs": "/aɪ ˌwɑːnt tə rɪˈtɜːrn ðɪs/",
+      "level": "A2",
+      "translations": [
+        { "text": "я хочу вернуть это", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I want to return this because it does not fit.", "textRu": "Я хочу вернуть это, потому что не подходит по размеру.", "audioUrl": null, "attribution": null },
+        { "textEn": "I want to return this and get my money back.", "textRu": "Я хочу вернуть это и получить деньги обратно.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "try on",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌtraɪ ˈɒn/",
+      "ipaUs": "/ˌtraɪ ˈɑːn/",
+      "level": "A2",
+      "translations": [
+        { "text": "примерять, мерить", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "You should try on both pairs before deciding.", "textRu": "Тебе стоит померить обе пары перед выбором.", "audioUrl": null, "attribution": null },
+        { "textEn": "She tried on five dresses but bought none.", "textRu": "Она померила пять платьев, но ничего не купила.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "pay",
+      "partOfSpeech": "verb",
+      "ipaUk": "/peɪ/",
+      "ipaUs": "/peɪ/",
+      "level": "A1",
+      "translations": [
+        { "text": "платить, оплачивать", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I would like to pay for these two books.", "textRu": "Я хотел бы оплатить эти две книги.", "audioUrl": null, "attribution": null },
+        { "textEn": "We paid too much for that old sofa.", "textRu": "Мы заплатили слишком много за тот старый диван.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "buy",
+      "partOfSpeech": "verb",
+      "ipaUk": "/baɪ/",
+      "ipaUs": "/baɪ/",
+      "level": "A1",
+      "translations": [
+        { "text": "покупать, купить", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I need to buy a present for my mother.", "textRu": "Мне нужно купить подарок для мамы.", "audioUrl": null, "attribution": null },
+        { "textEn": "She bought a new coat at half price.", "textRu": "Она купила новое пальто за полцены.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "expensive",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ɪkˈspensɪv/",
+      "ipaUs": "/ɪkˈspensɪv/",
+      "level": "A2",
+      "translations": [
+        { "text": "дорогой, дорогостоящий", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "This restaurant is too expensive for a weekday lunch.", "textRu": "Этот ресторан слишком дорогой для обеда в будний день.", "audioUrl": null, "attribution": null },
+        { "textEn": "The tickets were more expensive than I expected.", "textRu": "Билеты оказались дороже, чем я ожидал.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "cheap",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/tʃiːp/",
+      "ipaUs": "/tʃiːp/",
+      "level": "A2",
+      "translations": [
+        { "text": "дешёвый, недорогой", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I found a cheap flight to Berlin in May.", "textRu": "Я нашёл дешёвый билет в Берлин на май.", "audioUrl": null, "attribution": null },
+        { "textEn": "These headphones look cheap but sound quite good.", "textRu": "Эти наушники выглядят дешёвыми, но звучат неплохо.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "afford",
+      "partOfSpeech": "verb",
+      "ipaUk": "/əˈfɔːd/",
+      "ipaUs": "/əˈfɔːrd/",
+      "level": "B1",
+      "translations": [
+        { "text": "позволить себе", "sense": "иметь достаточно денег на что-либо", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We cannot afford a new car this year.", "textRu": "Мы не можем позволить себе новую машину в этом году.", "audioUrl": null, "attribution": null },
+        { "textEn": "He saved for months to afford that guitar.", "textRu": "Он копил месяцами, чтобы позволить себе ту гитару.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "cost",
+      "partOfSpeech": "verb",
+      "ipaUk": "/kɒst/",
+      "ipaUs": "/kɔːst/",
+      "level": "A2",
+      "translations": [
+        { "text": "стоить", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "How much does this coat cost in your shop?", "textRu": "Сколько стоит это пальто в вашем магазине?", "audioUrl": null, "attribution": null },
+        { "textEn": "The repair cost me almost half the price.", "textRu": "Ремонт обошёлся мне почти в половину цены.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "change",
+      "partOfSpeech": "noun",
+      "ipaUk": "/tʃeɪndʒ/",
+      "ipaUs": "/tʃeɪndʒ/",
+      "level": "A2",
+      "translations": [
+        { "text": "сдача, мелочь", "sense": null, "isPrimary": true },
+        { "text": "перемена, изменение", "sense": "изменение в ситуации или поведении", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Here is your change, five pounds in coins.", "textRu": "Вот ваша сдача, пять фунтов монетами.", "audioUrl": null, "attribution": null },
+        { "textEn": "Keep the change and have a nice day.", "textRu": "Оставьте сдачу себе и хорошего дня.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "total",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈtəʊtl/",
+      "ipaUs": "/ˈtoʊtl/",
+      "level": "A2",
+      "translations": [
+        { "text": "итог, общая сумма", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The total comes to forty-two pounds.", "textRu": "Итого получается сорок два фунта.", "audioUrl": null, "attribution": null },
+        { "textEn": "Please check the total before you pay.", "textRu": "Пожалуйста, проверьте сумму перед оплатой.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "bill",
+      "partOfSpeech": "noun",
+      "ipaUk": "/bɪl/",
+      "ipaUs": "/bɪl/",
+      "level": "A2",
+      "translations": [
+        { "text": "счёт", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Could we have the bill, please?", "textRu": "Можно нам счёт, пожалуйста?", "audioUrl": null, "attribution": null },
+        { "textEn": "The bill was higher than we expected.", "textRu": "Счёт оказался выше, чем мы ожидали.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "queue",
+      "partOfSpeech": "noun",
+      "ipaUk": "/kjuː/",
+      "ipaUs": "/kjuː/",
+      "level": "B1",
+      "translations": [
+        { "text": "очередь", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "There was a long queue outside the new shop.", "textRu": "У нового магазина была длинная очередь.", "audioUrl": null, "attribution": null },
+        { "textEn": "We waited in the queue for almost an hour.", "textRu": "Мы простояли в очереди почти час.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "shop assistant",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈʃɒp əˌsɪstənt/",
+      "ipaUs": "/ˈʃɑːp əˌsɪstənt/",
+      "level": "A2",
+      "translations": [
+        { "text": "продавец-консультант", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The shop assistant helped me choose the right size.", "textRu": "Продавец помог мне выбрать правильный размер.", "audioUrl": null, "attribution": null },
+        { "textEn": "Ask a shop assistant if you need another colour.", "textRu": "Спросите продавца, если нужен другой цвет.", "audioUrl": null, "attribution": null }
+      ]
+    }
+  ]
+}

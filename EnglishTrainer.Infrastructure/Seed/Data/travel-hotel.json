@@ -1,0 +1,407 @@
+{
+  "slug": "travel-hotel",
+  "title": "Путешествия и отель",
+  "description": "Аэропорт, бронь, заселение, экскурсии и багаж",
+  "sortOrder": 9,
+  "words": [
+    {
+      "lemma": "book",
+      "partOfSpeech": "verb",
+      "ipaUk": "/bʊk/",
+      "ipaUs": "/bʊk/",
+      "level": "A2",
+      "translations": [
+        { "text": "бронировать", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I would like to book a room for two nights.", "textRu": "Я хотел бы забронировать номер на две ночи.", "audioUrl": null, "attribution": null },
+        { "textEn": "We booked our tickets online and paid by card.", "textRu": "Мы забронировали билеты онлайн и оплатили картой.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "booking",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈbʊkɪŋ/",
+      "ipaUs": "/ˈbʊkɪŋ/",
+      "level": "A2",
+      "translations": [
+        { "text": "бронь, бронирование", "sense": null, "isPrimary": true },
+        { "text": "заказ", "sense": "о заказе места или билета заранее", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Please show me your booking number at the desk.", "textRu": "Пожалуйста, покажите номер брони на стойке.", "audioUrl": null, "attribution": null },
+        { "textEn": "Our booking includes breakfast and a free transfer.", "textRu": "Наша бронь включает завтрак и бесплатный трансфер.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "check-in",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈtʃek ɪn/",
+      "ipaUs": "/ˈtʃek ɪn/",
+      "level": "A2",
+      "translations": [
+        { "text": "регистрация (в отеле или аэропорту)", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Online check-in opens two days before your flight.", "textRu": "Онлайн-регистрация открывается за два дня до рейса.", "audioUrl": null, "attribution": null },
+        { "textEn": "The hotel check-in took only a few minutes.", "textRu": "Регистрация в отеле заняла всего несколько минут.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "check out",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌtʃek ˈaʊt/",
+      "ipaUs": "/ˌtʃek ˈaʊt/",
+      "level": "A2",
+      "translations": [
+        { "text": "выселяться (из отеля)", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We need to check out before eleven tomorrow morning.", "textRu": "Нам нужно выселиться до одиннадцати утра.", "audioUrl": null, "attribution": null },
+        { "textEn": "They checked out early and left their bags at reception.", "textRu": "Они выселились рано и оставили сумки на ресепшене.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "check-out",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈtʃek aʊt/",
+      "ipaUs": "/ˈtʃek aʊt/",
+      "level": "B1",
+      "translations": [
+        { "text": "выселение", "sense": null, "isPrimary": true },
+        { "text": "время выселения", "sense": "об установленном часе выезда", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Check-out is at noon, but you can leave later.", "textRu": "Выселение в полдень, но уехать можно позже.", "audioUrl": null, "attribution": null },
+        { "textEn": "The clerk asked about our check-out time.", "textRu": "Сотрудник спросил о времени нашего выселения.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "luggage",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈlʌgɪdʒ/",
+      "ipaUs": "/ˈlʌgɪdʒ/",
+      "level": "A2",
+      "translations": [
+        { "text": "багаж", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "My luggage did not arrive with the plane.", "textRu": "Мой багаж не прилетел вместе с самолётом.", "audioUrl": null, "attribution": null },
+        { "textEn": "You can leave your luggage in the storage room.", "textRu": "Вы можете оставить багаж в камере хранения.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "suitcase",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈsuːtkeɪs/",
+      "ipaUs": "/ˈsuːtkeɪs/",
+      "level": "A2",
+      "translations": [
+        { "text": "чемодан", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "My suitcase is too heavy for the hand baggage.", "textRu": "Мой чемодан слишком тяжёлый для ручной клади.", "audioUrl": null, "attribution": null },
+        { "textEn": "She packed her suitcase the night before the trip.", "textRu": "Она собрала чемодан накануне поездки.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "flight",
+      "partOfSpeech": "noun",
+      "ipaUk": "/flaɪt/",
+      "ipaUs": "/flaɪt/",
+      "level": "A1",
+      "translations": [
+        { "text": "рейс, полёт", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Our flight to Lisbon leaves at six in the morning.", "textRu": "Наш рейс в Лиссабон вылетает в шесть утра.", "audioUrl": null, "attribution": null },
+        { "textEn": "The flight was comfortable and arrived on time.", "textRu": "Полёт был комфортным, и мы прибыли вовремя.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "layover",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈleɪəʊvə/",
+      "ipaUs": "/ˈleɪoʊvər/",
+      "level": "B2",
+      "translations": [
+        { "text": "пересадка (в аэропорту)", "sense": null, "isPrimary": true },
+        { "text": "вынужденная остановка в пути", "sense": "о долгой стоянке между рейсами", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "We had a three-hour layover in Istanbul.", "textRu": "У нас была трёхчасовая пересадка в Стамбуле.", "audioUrl": null, "attribution": null },
+        { "textEn": "A short layover can be very stressful for passengers.", "textRu": "Короткая пересадка может сильно утомить пассажиров.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "boarding pass",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈbɔːdɪŋ pɑːs/",
+      "ipaUs": "/ˈbɔːrdɪŋ pæs/",
+      "level": "B1",
+      "translations": [
+        { "text": "посадочный талон", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Keep your boarding pass ready before you reach the gate.", "textRu": "Держите посадочный талон наготове, пока не дойдёте до выхода.", "audioUrl": null, "attribution": null },
+        { "textEn": "The agent printed a new boarding pass for me.", "textRu": "Сотрудник распечатал мне новый посадочный талон.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "check-in desk",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈtʃek ɪn desk/",
+      "ipaUs": "/ˈtʃek ɪn desk/",
+      "level": "A2",
+      "translations": [
+        { "text": "стойка регистрации", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The check-in desk for our flight is number twelve.", "textRu": "Стойка регистрации нашего рейса — номер двенадцать.", "audioUrl": null, "attribution": null },
+        { "textEn": "Please go to the check-in desk and show your passport.", "textRu": "Пожалуйста, подойдите к стойке регистрации и покажите паспорт.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "departure",
+      "partOfSpeech": "noun",
+      "ipaUk": "/dɪˈpɑːtʃə/",
+      "ipaUs": "/dɪˈpɑːrtʃər/",
+      "level": "B1",
+      "translations": [
+        { "text": "вылет, отправление", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The departure time changed because of the weather.", "textRu": "Время вылета изменилось из-за погоды.", "audioUrl": null, "attribution": null },
+        { "textEn": "Departure is announced on the screens in the hall.", "textRu": "Об отправлении объявляют на экранах в зале.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "arrival",
+      "partOfSpeech": "noun",
+      "ipaUk": "/əˈraɪvl/",
+      "ipaUs": "/əˈraɪvl/",
+      "level": "A2",
+      "translations": [
+        { "text": "прилёт, прибытие", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Our arrival in Berlin is planned for eight.", "textRu": "Наш прилёт в Берлин запланирован на восемь.", "audioUrl": null, "attribution": null },
+        { "textEn": "The arrival hall was crowded with tired travellers.", "textRu": "Зал прилёта был полон уставших путешественников.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "delay",
+      "partOfSpeech": "noun",
+      "ipaUk": "/dɪˈleɪ/",
+      "ipaUs": "/dɪˈleɪ/",
+      "level": "B1",
+      "translations": [
+        { "text": "задержка", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "There was a two-hour delay before our flight.", "textRu": "Перед нашим рейсом была двухчасовая задержка.", "audioUrl": null, "attribution": null },
+        { "textEn": "The delay was caused by heavy snow in the north.", "textRu": "Задержка была вызвана сильным снегом на севере.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "gate",
+      "partOfSpeech": "noun",
+      "ipaUk": "/geɪt/",
+      "ipaUs": "/geɪt/",
+      "level": "B1",
+      "translations": [
+        { "text": "выход на посадку", "sense": null, "isPrimary": true },
+        { "text": "ворота", "sense": "о воротах в ограде или стене", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Our gate changed, so we had to walk quickly.", "textRu": "Наш выход изменился, и нам пришлось быстро идти.", "audioUrl": null, "attribution": null },
+        { "textEn": "Boarding at gate seven starts in ten minutes.", "textRu": "Посадка у седьмого выхода начинается через десять минут.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "passport",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈpɑːspɔːt/",
+      "ipaUs": "/ˈpæspoʊrt/",
+      "level": "A1",
+      "translations": [
+        { "text": "паспорт", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Please put your passport and ticket on the counter.", "textRu": "Положите, пожалуйста, паспорт и билет на стойку.", "audioUrl": null, "attribution": null },
+        { "textEn": "She lost her passport during a boat trip.", "textRu": "Она потеряла паспорт во время прогулки на лодке.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "visa",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈviːzə/",
+      "ipaUs": "/ˈviːzə/",
+      "level": "A2",
+      "translations": [
+        { "text": "виза", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "You need a visa to enter this country.", "textRu": "Чтобы въехать в эту страну, нужна виза.", "audioUrl": null, "attribution": null },
+        { "textEn": "The visa was ready three weeks before the trip.", "textRu": "Виза была готова за три недели до поездки.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "insurance",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ɪnˈʃʊərəns/",
+      "ipaUs": "/ɪnˈʃʊrəns/",
+      "level": "B1",
+      "translations": [
+        { "text": "страховка, страхование", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Travel insurance covers lost bags and medical help.", "textRu": "Страховка покрывает потерянный багаж и медицинскую помощь.", "audioUrl": null, "attribution": null },
+        { "textEn": "We bought insurance before booking the expensive tour.", "textRu": "Мы купили страховку до бронирования дорогой экскурсии.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "excursion",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ɪkˈskɜːʃn/",
+      "ipaUs": "/ɪkˈskɜːrʒn/",
+      "level": "B1",
+      "translations": [
+        { "text": "экскурсия", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The guide offered a morning excursion to the old town.", "textRu": "Гид предложил утреннюю экскурсию в старый город.", "audioUrl": null, "attribution": null },
+        { "textEn": "Our excursion included lunch and a short boat ride.", "textRu": "Наша экскурсия включала обед и короткую прогулку на лодке.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "sightseeing",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈsaɪtsiːɪŋ/",
+      "ipaUs": "/ˈsaɪtsiːɪŋ/",
+      "level": "B1",
+      "translations": [
+        { "text": "осмотр достопримечательностей", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We spent the whole day sightseeing around the city.", "textRu": "Мы провели весь день, осматривая город.", "audioUrl": null, "attribution": null },
+        { "textEn": "Sightseeing is cheaper when you walk instead of driving.", "textRu": "Осмотр достопримечательностей дешевле, если ходить пешком.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "landmark",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈlændmɑːk/",
+      "ipaUs": "/ˈlændmɑːrk/",
+      "level": "B2",
+      "translations": [
+        { "text": "достопримечательность", "sense": null, "isPrimary": true },
+        { "text": "ориентир", "sense": "о заметном объекте на местности", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "The old bridge is the main landmark of the town.", "textRu": "Старый мост — главная достопримечательность города.", "audioUrl": null, "attribution": null },
+        { "textEn": "We used the tower as a landmark while walking.", "textRu": "Мы использовали башню как ориентир во время прогулки.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "guide",
+      "partOfSpeech": "noun",
+      "ipaUk": "/gaɪd/",
+      "ipaUs": "/gaɪd/",
+      "level": "A2",
+      "translations": [
+        { "text": "гид, экскурсовод", "sense": null, "isPrimary": true },
+        { "text": "путеводитель", "sense": "о книге или брошюре для туристов", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Our guide told us many stories about the castle.", "textRu": "Наш гид рассказал много историй о замке.", "audioUrl": null, "attribution": null },
+        { "textEn": "I bought a small guide with a city map inside.", "textRu": "Я купил небольшой путеводитель с картой города.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "resort",
+      "partOfSpeech": "noun",
+      "ipaUk": "/rɪˈzɔːt/",
+      "ipaUs": "/rɪˈzɔːrt/",
+      "level": "B1",
+      "translations": [
+        { "text": "курорт", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The resort has three pools and a private beach.", "textRu": "На курорте три бассейна и частный пляж.", "audioUrl": null, "attribution": null },
+        { "textEn": "We stayed at a quiet resort near the mountains.", "textRu": "Мы остановились на тихом курорте недалеко от гор.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "reception",
+      "partOfSpeech": "noun",
+      "ipaUk": "/rɪˈsepʃn/",
+      "ipaUs": "/rɪˈsepʃn/",
+      "level": "A2",
+      "translations": [
+        { "text": "ресепшн, стойка администратора", "sense": null, "isPrimary": true },
+        { "text": "приём", "sense": "о торжественной встрече гостей", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Please leave the key at reception when you go out.", "textRu": "Оставляйте ключ на ресепшене, когда выходите.", "audioUrl": null, "attribution": null },
+        { "textEn": "The reception called a taxi for us in five minutes.", "textRu": "На ресепшене вызвали нам такси за пять минут.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "room service",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈruːm ˌsɜːvɪs/",
+      "ipaUs": "/ˈruːm ˌsɜːrvɪs/",
+      "level": "B1",
+      "translations": [
+        { "text": "обслуживание в номере", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We ordered breakfast from room service this morning.", "textRu": "Сегодня утром мы заказали завтрак в номер.", "audioUrl": null, "attribution": null },
+        { "textEn": "Room service is available until midnight every day.", "textRu": "Обслуживание в номере работает ежедневно до полуночи.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "miss a flight",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌmɪs ə ˈflaɪt/",
+      "ipaUs": "/ˌmɪs ə ˈflaɪt/",
+      "level": "B1",
+      "translations": [
+        { "text": "опоздать на рейс", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We almost missed our flight because of the traffic.", "textRu": "Мы почти опоздали на рейс из-за пробки.", "audioUrl": null, "attribution": null },
+        { "textEn": "If you miss a flight, call the airline at once.", "textRu": "Если вы опоздали на рейс, сразу позвоните в авиакомпанию.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "what time is check-out",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/wɒt taɪm ɪz ˈtʃek aʊt/",
+      "ipaUs": "/wʌt taɪm ɪz ˈtʃek aʊt/",
+      "level": "A2",
+      "translations": [
+        { "text": "во сколько выселение", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Excuse me, what time is check-out in this hotel?", "textRu": "Извините, во сколько выселение в этом отеле?", "audioUrl": null, "attribution": null },
+        { "textEn": "What time is check-out? We have a late train.", "textRu": "Во сколько выселение? У нас поздний поезд.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "i've lost my luggage",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/aɪv lɒst maɪ ˈlʌgɪdʒ/",
+      "ipaUs": "/aɪv lɔːst maɪ ˈlʌgɪdʒ/",
+      "level": "B1",
+      "translations": [
+        { "text": "у меня потерялся багаж", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I've lost my luggage and my passport is inside.", "textRu": "У меня потерялся багаж, и паспорт внутри.", "audioUrl": null, "attribution": null },
+        { "textEn": "I've lost my luggage; where can I report it?", "textRu": "У меня потерялся багаж; где я могу это заявить?", "audioUrl": null, "attribution": null }
+      ]
+    }
+  ]
+}

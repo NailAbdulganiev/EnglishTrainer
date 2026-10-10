@@ -1,0 +1,411 @@
+{
+  "slug": "office-it",
+  "title": "Офис и IT",
+  "description": "Созвоны, задачи, релизы, код-ревью и договорённости",
+  "sortOrder": 11,
+  "words": [
+    {
+      "lemma": "meeting",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈmiːtɪŋ/",
+      "ipaUs": "/ˈmiːtɪŋ/",
+      "level": "A2",
+      "translations": [
+        { "text": "встреча, совещание", "sense": null, "isPrimary": true },
+        { "text": "заседание", "sense": "официальное собрание", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "We have a team meeting every Monday morning.", "textRu": "У нас командное совещание каждый понедельник утром.", "audioUrl": null, "attribution": null },
+        { "textEn": "The meeting starts at ten, so please don't be late.", "textRu": "Совещание начинается в десять, поэтому, пожалуйста, не опаздывай.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "call",
+      "partOfSpeech": "noun",
+      "ipaUk": "/kɔːl/",
+      "ipaUs": "/kɔːl/",
+      "level": "A2",
+      "translations": [
+        { "text": "созвон, звонок", "sense": null, "isPrimary": true },
+        { "text": "крик", "sense": "громкий крик", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I have a quick call with the client at noon.", "textRu": "У меня короткий созвон с клиентом в полдень.", "audioUrl": null, "attribution": null },
+        { "textEn": "Let's set up a call to discuss the new project.", "textRu": "Давай назначим созвон, чтобы обсудить новый проект.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "task",
+      "partOfSpeech": "noun",
+      "ipaUk": "/tɑːsk/",
+      "ipaUs": "/tæsk/",
+      "level": "A2",
+      "translations": [
+        { "text": "задача", "sense": null, "isPrimary": true },
+        { "text": "задание", "sense": "учебное задание", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "This task will take me about two hours.", "textRu": "Эта задача займёт у меня около двух часов.", "audioUrl": null, "attribution": null },
+        { "textEn": "Please add the new task to our shared board.", "textRu": "Пожалуйста, добавь новую задачу на нашу общую доску.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "deadline",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈdedlaɪn/",
+      "ipaUs": "/ˈdedlaɪn/",
+      "level": "B1",
+      "translations": [
+        { "text": "срок, крайний срок", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Our deadline is next Friday, so we must hurry.", "textRu": "Наш крайний срок — следующая пятница, так что надо спешить.", "audioUrl": null, "attribution": null },
+        { "textEn": "She always finishes her work before the deadline.", "textRu": "Она всегда заканчивает работу до крайнего срока.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "release",
+      "partOfSpeech": "noun",
+      "ipaUk": "/rɪˈliːs/",
+      "ipaUs": "/rɪˈliːs/",
+      "level": "B1",
+      "translations": [
+        { "text": "релиз, выпуск", "sense": null, "isPrimary": true },
+        { "text": "освобождение", "sense": "освобождение из заключения", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "The new release goes live on Thursday evening.", "textRu": "Новый релиз выходит в четверг вечером.", "audioUrl": null, "attribution": null },
+        { "textEn": "We fixed three bugs before the release.", "textRu": "Мы исправили три бага перед релизом.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "bug",
+      "partOfSpeech": "noun",
+      "ipaUk": "/bʌg/",
+      "ipaUs": "/bʌg/",
+      "level": "B1",
+      "translations": [
+        { "text": "баг, ошибка в программе", "sense": null, "isPrimary": true },
+        { "text": "насекомое, жук", "sense": "насекомое", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Users found a serious bug in the payment form.", "textRu": "Пользователи нашли серьёзный баг в форме оплаты.", "audioUrl": null, "attribution": null },
+        { "textEn": "I will fix this bug right after lunch.", "textRu": "Я исправлю этот баг сразу после обеда.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "testing",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈtestɪŋ/",
+      "ipaUs": "/ˈtestɪŋ/",
+      "level": "B1",
+      "translations": [
+        { "text": "тестирование", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Testing takes two days after every big change.", "textRu": "Тестирование занимает два дня после каждого крупного изменения.", "audioUrl": null, "attribution": null },
+        { "textEn": "We do manual testing before each new version.", "textRu": "Мы проводим ручное тестирование перед каждой новой версией.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "documentation",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˌdɒkjumenˈteɪʃn/",
+      "ipaUs": "/ˌdɑːkjumenˈteɪʃn/",
+      "level": "B2",
+      "translations": [
+        { "text": "документация", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The documentation explains how to start the service.", "textRu": "Документация объясняет, как запустить сервис.", "audioUrl": null, "attribution": null },
+        { "textEn": "Please update the documentation after your changes.", "textRu": "Пожалуйста, обнови документацию после своих изменений.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "requirement",
+      "partOfSpeech": "noun",
+      "ipaUk": "/rɪˈkwaɪəmənt/",
+      "ipaUs": "/rɪˈkwaɪərmənt/",
+      "level": "B2",
+      "translations": [
+        { "text": "требование", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The client sent a long list of new requirements.", "textRu": "Клиент прислал длинный список новых требований.", "audioUrl": null, "attribution": null },
+        { "textEn": "This requirement is not clear, so let's discuss it.", "textRu": "Это требование непонятно, давай обсудим его.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "code review",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌkəʊd rɪˈvjuː/",
+      "ipaUs": "/ˌkoʊd rɪˈvjuː/",
+      "level": "B2",
+      "translations": [
+        { "text": "ревью кода, проверка кода", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "My code review found two small mistakes.", "textRu": "Моё ревью кода выявило две небольшие ошибки.", "audioUrl": null, "attribution": null },
+        { "textEn": "We do a code review before every merge.", "textRu": "Мы делаем ревью кода перед каждым слиянием.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "access",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈækses/",
+      "ipaUs": "/ˈækses/",
+      "level": "B1",
+      "translations": [
+        { "text": "доступ", "sense": null, "isPrimary": true },
+        { "text": "проход, вход", "sense": "право войти в здание", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I cannot open the report because I lost access.", "textRu": "Я не могу открыть отчёт, потому что потерял доступ.", "audioUrl": null, "attribution": null },
+        { "textEn": "Please give the new colleague access to the server.", "textRu": "Пожалуйста, дай новому коллеге доступ к серверу.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "standup",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈstændʌp/",
+      "ipaUs": "/ˈstændʌp/",
+      "level": "B1",
+      "translations": [
+        { "text": "стендап, короткая планёрка", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Our standup lasts only fifteen minutes every day.", "textRu": "Наш стендап длится всего пятнадцать минут каждый день.", "audioUrl": null, "attribution": null },
+        { "textEn": "At the standup I told the team about my progress.", "textRu": "На стендапе я рассказал команде о своём прогрессе.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "i'll send the link",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/aɪl send ðə lɪŋk/",
+      "ipaUs": "/aɪl send ðə lɪŋk/",
+      "level": "B1",
+      "translations": [
+        { "text": "я пришлю ссылку", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I'll send the link to the meeting in a minute.", "textRu": "Я пришлю ссылку на встречу через минуту.", "audioUrl": null, "attribution": null },
+        { "textEn": "Don't worry, I'll send the link right after the call.", "textRu": "Не волнуйся, я пришлю ссылку сразу после созвона.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "let's sync",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/lets sɪŋk/",
+      "ipaUs": "/lets sɪŋk/",
+      "level": "B1",
+      "translations": [
+        { "text": "давай синхронизируемся", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Let's sync tomorrow morning about the release plan.", "textRu": "Давай синхронизируемся завтра утром по плану релиза.", "audioUrl": null, "attribution": null },
+        { "textEn": "We should sync before talking to the client.", "textRu": "Нам стоит синхронизироваться перед разговором с клиентом.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "we need to clarify the details",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/wiː niːd tə ˈklærəfaɪ ðə ˈdiːteɪlz/",
+      "ipaUs": "/wiː niːd tə ˈklærəfaɪ ðə ˈdiːteɪlz/",
+      "level": "B2",
+      "translations": [
+        { "text": "нужно уточнить детали", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We need to clarify the details before we start.", "textRu": "Нам нужно уточнить детали, прежде чем начинать.", "audioUrl": null, "attribution": null },
+        { "textEn": "We need to clarify the details of this requirement.", "textRu": "Нам нужно уточнить детали этого требования.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "sprint",
+      "partOfSpeech": "noun",
+      "ipaUk": "/sprɪnt/",
+      "ipaUs": "/sprɪnt/",
+      "level": "B1",
+      "translations": [
+        { "text": "спринт, короткий рабочий цикл", "sense": null, "isPrimary": true },
+        { "text": "бег на короткую дистанцию", "sense": "спортивное значение", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "This sprint we plan to finish the search page.", "textRu": "В этом спринте мы планируем закончить страницу поиска.", "audioUrl": null, "attribution": null },
+        { "textEn": "Our sprint lasts two weeks and starts on Monday.", "textRu": "Наш спринт длится две недели и начинается в понедельник.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "ticket",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈtɪkɪt/",
+      "ipaUs": "/ˈtɪkɪt/",
+      "level": "A2",
+      "translations": [
+        { "text": "тикет, заявка", "sense": null, "isPrimary": true },
+        { "text": "билет", "sense": "проездной или входной билет", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Please create a ticket for this small bug.", "textRu": "Пожалуйста, создай тикет на этот небольшой баг.", "audioUrl": null, "attribution": null },
+        { "textEn": "The ticket is still open, so nobody has fixed it.", "textRu": "Тикет всё ещё открыт, значит, никто его не исправил.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "backlog",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈbæklɒg/",
+      "ipaUs": "/ˈbæklɔːg/",
+      "level": "B2",
+      "translations": [
+        { "text": "бэклог, список задач", "sense": null, "isPrimary": true },
+        { "text": "накопившиеся дела", "sense": "невыполненные дела", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "The backlog grows faster than we can close tickets.", "textRu": "Бэклог растёт быстрее, чем мы успеваем закрывать тикеты.", "audioUrl": null, "attribution": null },
+        { "textEn": "We moved the old task back to the backlog.", "textRu": "Мы вернули старую задачу обратно в бэклог.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "estimate",
+      "partOfSpeech": "verb",
+      "ipaUk": "/ˈestɪmeɪt/",
+      "ipaUs": "/ˈestɪmeɪt/",
+      "level": "B1",
+      "translations": [
+        { "text": "оценивать, прикидывать", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Can you estimate how long this task will take?", "textRu": "Можешь оценить, сколько времени займёт эта задача?", "audioUrl": null, "attribution": null },
+        { "textEn": "We estimate two weeks of work for this feature.", "textRu": "Мы оцениваем эту функцию в две недели работы.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "deploy",
+      "partOfSpeech": "verb",
+      "ipaUk": "/dɪˈplɔɪ/",
+      "ipaUs": "/dɪˈplɔɪ/",
+      "level": "B2",
+      "translations": [
+        { "text": "развёртывать, деплоить", "sense": null, "isPrimary": true },
+        { "text": "размещать, вводить в действие", "sense": "о войсках или ресурсах", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "We deploy a new version every second Tuesday.", "textRu": "Мы развёртываем новую версию каждый второй вторник.", "audioUrl": null, "attribution": null },
+        { "textEn": "Please deploy the fix as soon as it passes testing.", "textRu": "Пожалуйста, разверни исправление, как только оно пройдёт тестирование.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "approve",
+      "partOfSpeech": "verb",
+      "ipaUk": "/əˈpruːv/",
+      "ipaUs": "/əˈpruːv/",
+      "level": "B1",
+      "translations": [
+        { "text": "одобрять, утверждать", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "My manager will approve the plan this afternoon.", "textRu": "Мой руководитель утвердит план сегодня днём.", "audioUrl": null, "attribution": null },
+        { "textEn": "The client did not approve our new design.", "textRu": "Клиент не одобрил наш новый дизайн.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "feedback",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈfiːdbæk/",
+      "ipaUs": "/ˈfiːdbæk/",
+      "level": "B1",
+      "translations": [
+        { "text": "обратная связь, отзыв", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Thanks for your feedback on my code review.", "textRu": "Спасибо за твой отзыв о моём ревью кода.", "audioUrl": null, "attribution": null },
+        { "textEn": "We collect feedback from users every month.", "textRu": "Мы собираем обратную связь от пользователей каждый месяц.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "update",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈʌpdeɪt/",
+      "ipaUs": "/ˈʌpdeɪt/",
+      "level": "A2",
+      "translations": [
+        { "text": "обновление", "sense": null, "isPrimary": true },
+        { "text": "сводка новостей", "sense": "сообщение о текущем состоянии", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I will give you an update after the meeting.", "textRu": "Я дам тебе обновление после совещания.", "audioUrl": null, "attribution": null },
+        { "textEn": "The latest update fixed a small problem with login.", "textRu": "Последнее обновление исправило небольшую проблему со входом.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "blocker",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈblɒkə/",
+      "ipaUs": "/ˈblɑːkər/",
+      "level": "B2",
+      "translations": [
+        { "text": "блокер, препятствие", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I have a blocker, so I cannot finish the task.", "textRu": "У меня блокер, поэтому я не могу закончить задачу.", "audioUrl": null, "attribution": null },
+        { "textEn": "She told the team about a blocker during standup.", "textRu": "Она рассказала команде о блокере во время стендапа.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "milestone",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈmaɪlstəʊn/",
+      "ipaUs": "/ˈmaɪlstoʊn/",
+      "level": "B2",
+      "translations": [
+        { "text": "ключевой этап, веха", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Finishing the first version is an important milestone.", "textRu": "Завершение первой версии — важный ключевой этап.", "audioUrl": null, "attribution": null },
+        { "textEn": "We reached a big milestone before the summer holidays.", "textRu": "Мы достигли крупной вехи перед летними каникулами.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "schedule",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈʃedjuːl/",
+      "ipaUs": "/ˈskedʒuːl/",
+      "level": "A2",
+      "translations": [
+        { "text": "расписание, график", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Our schedule is very tight this month.", "textRu": "Наше расписание в этом месяце очень плотное.", "audioUrl": null, "attribution": null },
+        { "textEn": "The release is not on the schedule yet.", "textRu": "Релиза пока нет в графике.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "urgent",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈɜːdʒənt/",
+      "ipaUs": "/ˈɜːrdʒənt/",
+      "level": "B1",
+      "translations": [
+        { "text": "срочный", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "This is urgent, so please answer my message now.", "textRu": "Это срочно, поэтому, пожалуйста, ответь на моё сообщение сейчас.", "audioUrl": null, "attribution": null },
+        { "textEn": "We got an urgent request from the support team.", "textRu": "Мы получили срочный запрос от команды поддержки.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "briefly",
+      "partOfSpeech": "adverb",
+      "ipaUk": "/ˈbriːfli/",
+      "ipaUs": "/ˈbriːfli/",
+      "level": "B1",
+      "translations": [
+        { "text": "кратко, вкратце", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Please describe the problem briefly, in two sentences.", "textRu": "Пожалуйста, опиши проблему кратко, в двух предложениях.", "audioUrl": null, "attribution": null },
+        { "textEn": "He briefly explained the new task to the team.", "textRu": "Он кратко объяснил команде новую задачу.", "audioUrl": null, "attribution": null }
+      ]
+    }
+  ]
+}

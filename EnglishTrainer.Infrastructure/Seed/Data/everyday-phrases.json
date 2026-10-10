@@ -1,0 +1,406 @@
+{
+  "slug": "everyday-phrases",
+  "title": "Повседневные фразы",
+  "description": "Вежливость, просьбы, согласие и отказ на каждый день",
+  "sortOrder": 7,
+  "words": [
+    {
+      "lemma": "how are you",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/haʊ ɑː juː/",
+      "ipaUs": "/haʊ ɑːr juː/",
+      "level": "A1",
+      "translations": [
+        { "text": "как дела, как вы", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Hi, how are you doing today?", "textRu": "Привет, как ты сегодня?", "audioUrl": null, "attribution": null },
+        { "textEn": "How are you? I have not seen you for a while.", "textRu": "Как дела? Я тебя давно не видел.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "how's it going",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/haʊz ɪt ˈɡəʊɪŋ/",
+      "ipaUs": "/haʊz ɪt ˈɡoʊɪŋ/",
+      "level": "A2",
+      "translations": [
+        { "text": "как оно, как дела", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Hey, how's it going at your new job?", "textRu": "Привет, как дела на новой работе?", "audioUrl": null, "attribution": null },
+        { "textEn": "How's it going with your English lessons?", "textRu": "Как продвигаются твои уроки английского?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "nice to meet you",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/naɪs tə miːt juː/",
+      "ipaUs": "/naɪs tə miːt juː/",
+      "level": "A1",
+      "translations": [
+        { "text": "приятно познакомиться", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Nice to meet you, I have heard a lot about you.", "textRu": "Приятно познакомиться, я много о вас слышал.", "audioUrl": null, "attribution": null },
+        { "textEn": "It was nice to meet you at the party.", "textRu": "Было приятно познакомиться с тобой на вечеринке.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "long time no see",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/lɒŋ taɪm nəʊ siː/",
+      "ipaUs": "/lɔːŋ taɪm noʊ siː/",
+      "level": "B1",
+      "translations": [
+        { "text": "сколько лет, сколько зим", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Long time no see, how have you been?", "textRu": "Сколько лет, сколько зим, как ты поживал?", "audioUrl": null, "attribution": null },
+        { "textEn": "Long time no see, we should grab coffee soon.", "textRu": "Давно не виделись, надо скоро выпить кофе.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "see you later",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˈsiː juː ˈleɪtə/",
+      "ipaUs": "/ˈsiː juː ˈleɪtər/",
+      "level": "A1",
+      "translations": [
+        { "text": "увидимся позже, до встречи", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I have to run, see you later!", "textRu": "Мне надо бежать, увидимся позже!", "audioUrl": null, "attribution": null },
+        { "textEn": "See you later at the bus stop.", "textRu": "Увидимся позже на автобусной остановке.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "take care",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/teɪk keə/",
+      "ipaUs": "/teɪk ker/",
+      "level": "A2",
+      "translations": [
+        { "text": "береги себя, пока", "sense": null, "isPrimary": true },
+        { "text": "быть осторожным", "sense": "буквальное значение, заботиться о ком-то", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Take care of yourself and call me tomorrow.", "textRu": "Береги себя и позвони мне завтра.", "audioUrl": null, "attribution": null },
+        { "textEn": "Bye, take care on your way home.", "textRu": "Пока, будь осторожен по дороге домой.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "have a good day",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/hæv ə ɡʊd deɪ/",
+      "ipaUs": "/hæv ə ɡʊd deɪ/",
+      "level": "A1",
+      "translations": [
+        { "text": "хорошего дня", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Thanks for your help, have a good day!", "textRu": "Спасибо за помощь, хорошего дня!", "audioUrl": null, "attribution": null },
+        { "textEn": "Have a good day at work, see you tonight.", "textRu": "Хорошего дня на работе, увидимся вечером.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "excuse me",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ɪkˈskjuːz miː/",
+      "ipaUs": "/ɪkˈskjuːz miː/",
+      "level": "A1",
+      "translations": [
+        { "text": "извините, простите", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Excuse me, is this seat taken by anyone?", "textRu": "Извините, это место кем-то занято?", "audioUrl": null, "attribution": null },
+        { "textEn": "Excuse me, could you tell me where the station is?", "textRu": "Извините, не подскажете, где находится вокзал?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "i'm sorry",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/aɪm ˈsɒri/",
+      "ipaUs": "/aɪm ˈsɑːri/",
+      "level": "A1",
+      "translations": [
+        { "text": "извините, мне жаль", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I'm sorry, I did not hear what you said.", "textRu": "Извините, я не расслышал, что вы сказали.", "audioUrl": null, "attribution": null },
+        { "textEn": "I'm sorry about the mess in the kitchen.", "textRu": "Извини за беспорядок на кухне.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "no worries",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/nəʊ ˈwʌriz/",
+      "ipaUs": "/noʊ ˈwɜːriz/",
+      "level": "A2",
+      "translations": [
+        { "text": "не переживай, без проблем", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "No worries, it happens to everyone sometimes.", "textRu": "Без проблем, такое иногда случается с каждым.", "audioUrl": null, "attribution": null },
+        { "textEn": "No worries, I can wait another ten minutes.", "textRu": "Не переживай, я могу подождать ещё десять минут.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "could you help me",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/kʊd juː help miː/",
+      "ipaUs": "/kʊd juː help miː/",
+      "level": "A2",
+      "translations": [
+        { "text": "не могли бы вы мне помочь", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Could you help me with this heavy box?", "textRu": "Не могли бы вы помочь мне с этой тяжёлой коробкой?", "audioUrl": null, "attribution": null },
+        { "textEn": "Could you help me find the right bus?", "textRu": "Не могли бы вы помочь мне найти нужный автобус?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "would you mind",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/wʊd juː maɪnd/",
+      "ipaUs": "/wʊd juː maɪnd/",
+      "level": "B1",
+      "translations": [
+        { "text": "не могли бы вы, вы не против", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Would you mind closing the window, please?", "textRu": "Не могли бы вы закрыть окно, пожалуйста?", "audioUrl": null, "attribution": null },
+        { "textEn": "Would you mind if I sit here?", "textRu": "Вы не против, если я сяду здесь?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "of course",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/əv kɔːs/",
+      "ipaUs": "/əv kɔːrs/",
+      "level": "A1",
+      "translations": [
+        { "text": "конечно, разумеется", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Of course, I can give you a lift.", "textRu": "Конечно, я могу вас подвезти.", "audioUrl": null, "attribution": null },
+        { "textEn": "Of course you can borrow my umbrella.", "textRu": "Конечно, ты можешь взять мой зонт.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "sure thing",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ʃɔː θɪŋ/",
+      "ipaUs": "/ʃʊr θɪŋ/",
+      "level": "A2",
+      "translations": [
+        { "text": "конечно, без проблем", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Sure thing, I will send you the address.", "textRu": "Конечно, я отправлю тебе адрес.", "audioUrl": null, "attribution": null },
+        { "textEn": "Sure thing, just tell me when to come.", "textRu": "Без проблем, только скажи, когда приходить.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "i'm not sure",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/aɪm nɒt ʃɔː/",
+      "ipaUs": "/aɪm nɑːt ʃʊr/",
+      "level": "A2",
+      "translations": [
+        { "text": "я не уверен", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I'm not sure this is the right way.", "textRu": "Я не уверен, что это правильная дорога.", "audioUrl": null, "attribution": null },
+        { "textEn": "I'm not sure I can come on Friday.", "textRu": "Я не уверен, что смогу прийти в пятницу.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "let me know",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/let miː nəʊ/",
+      "ipaUs": "/let miː noʊ/",
+      "level": "A2",
+      "translations": [
+        { "text": "дай знать, сообщи мне", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Let me know when you get home safely.", "textRu": "Дай знать, когда доберёшься домой.", "audioUrl": null, "attribution": null },
+        { "textEn": "Let me know if you need any help.", "textRu": "Дай знать, если тебе нужна помощь.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "no problem",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/nəʊ ˈprɒbləm/",
+      "ipaUs": "/noʊ ˈprɑːbləm/",
+      "level": "A1",
+      "translations": [
+        { "text": "без проблем, не за что", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "No problem, I will finish it before lunch.", "textRu": "Без проблем, я закончу до обеда.", "audioUrl": null, "attribution": null },
+        { "textEn": "No problem, we can meet a bit later.", "textRu": "Без проблем, мы можем встретиться чуть позже.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "sounds good",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/saʊndz ɡʊd/",
+      "ipaUs": "/saʊndz ɡʊd/",
+      "level": "A2",
+      "translations": [
+        { "text": "звучит хорошо, отлично", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Sounds good, let us meet at seven then.", "textRu": "Звучит хорошо, тогда встретимся в семь.", "audioUrl": null, "attribution": null },
+        { "textEn": "Sounds good, I will book the tickets today.", "textRu": "Отлично, я забронирую билеты сегодня.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "thank you so much",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/θæŋk juː səʊ mʌtʃ/",
+      "ipaUs": "/θæŋk juː soʊ mʌtʃ/",
+      "level": "A1",
+      "translations": [
+        { "text": "большое спасибо", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Thank you so much for your kind words.", "textRu": "Большое спасибо за ваши добрые слова.", "audioUrl": null, "attribution": null },
+        { "textEn": "Thank you so much, that was really helpful.", "textRu": "Огромное спасибо, это очень помогло.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "you are welcome",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/juː ɑː ˈwelkəm/",
+      "ipaUs": "/juː ɑːr ˈwelkəm/",
+      "level": "A1",
+      "translations": [
+        { "text": "пожалуйста, не за что", "sense": null, "isPrimary": true },
+        { "text": "можете, добро пожаловать", "sense": "приглашение или разрешение что-то сделать", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "You are welcome, I was glad to help.", "textRu": "Пожалуйста, я был рад помочь.", "audioUrl": null, "attribution": null },
+        { "textEn": "You are welcome to stay for dinner.", "textRu": "Можете остаться на ужин.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "please",
+      "partOfSpeech": "adverb",
+      "ipaUk": "/pliːz/",
+      "ipaUs": "/pliːz/",
+      "level": "A1",
+      "translations": [
+        { "text": "пожалуйста", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Please close the door quietly when you leave.", "textRu": "Пожалуйста, тихо закрой дверь, когда будешь уходить.", "audioUrl": null, "attribution": null },
+        { "textEn": "Could you please repeat that a bit slower?", "textRu": "Не могли бы вы повторить это чуть медленнее?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "agree",
+      "partOfSpeech": "verb",
+      "ipaUk": "/əˈɡriː/",
+      "ipaUs": "/əˈɡriː/",
+      "level": "A1",
+      "translations": [
+        { "text": "соглашаться, быть согласным", "sense": null, "isPrimary": true },
+        { "text": "договариваться", "sense": "приходить к общему решению", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I agree with you about the weekend plans.", "textRu": "Я согласен с тобой насчёт планов на выходные.", "audioUrl": null, "attribution": null },
+        { "textEn": "We finally agreed on a time for the meeting.", "textRu": "Мы наконец договорились о времени встречи.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "refuse",
+      "partOfSpeech": "verb",
+      "ipaUk": "/rɪˈfjuːz/",
+      "ipaUs": "/rɪˈfjuːz/",
+      "level": "A2",
+      "translations": [
+        { "text": "отказываться", "sense": null, "isPrimary": true },
+        { "text": "отказывать", "sense": "кому-либо в просьбе", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "She refused to answer my question politely.", "textRu": "Она вежливо отказалась отвечать на мой вопрос.", "audioUrl": null, "attribution": null },
+        { "textEn": "It is hard to refuse such a nice offer.", "textRu": "Трудно отказаться от такого приятного предложения.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "apologize",
+      "partOfSpeech": "verb",
+      "ipaUk": "/əˈpɒlədʒaɪz/",
+      "ipaUs": "/əˈpɑːlədʒaɪz/",
+      "level": "B1",
+      "translations": [
+        { "text": "извиняться, приносить извинения", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I want to apologize for being so late.", "textRu": "Я хочу извиниться за то, что так опоздал.", "audioUrl": null, "attribution": null },
+        { "textEn": "He apologized and promised not to do it again.", "textRu": "Он извинился и пообещал больше так не делать.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "clarify",
+      "partOfSpeech": "verb",
+      "ipaUk": "/ˈklærəfaɪ/",
+      "ipaUs": "/ˈklærəfaɪ/",
+      "level": "B1",
+      "translations": [
+        { "text": "уточнять", "sense": null, "isPrimary": true },
+        { "text": "разъяснять, делать понятным", "sense": "объяснять что-то непонятное", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Could you clarify what you mean by that?", "textRu": "Не могли бы вы уточнить, что вы имеете в виду?", "audioUrl": null, "attribution": null },
+        { "textEn": "Let me clarify one small detail before we start.", "textRu": "Позвольте уточнить одну маленькую деталь, прежде чем мы начнём.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "polite",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/pəˈlaɪt/",
+      "ipaUs": "/pəˈlaɪt/",
+      "level": "A2",
+      "translations": [
+        { "text": "вежливый, учтивый", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "It is polite to say thank you for a gift.", "textRu": "Вежливо сказать спасибо за подарок.", "audioUrl": null, "attribution": null },
+        { "textEn": "The waiter was very polite and quick.", "textRu": "Официант был очень вежлив и расторопен.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "maybe",
+      "partOfSpeech": "adverb",
+      "ipaUk": "/ˈmeɪbi/",
+      "ipaUs": "/ˈmeɪbi/",
+      "level": "A1",
+      "translations": [
+        { "text": "может быть, возможно", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Maybe we can watch a film tonight instead.", "textRu": "Может быть, вместо этого посмотрим фильм сегодня вечером.", "audioUrl": null, "attribution": null },
+        { "textEn": "Maybe she is just busy with work today.", "textRu": "Может быть, она просто занята работой сегодня.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "awkward",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈɔːkwəd/",
+      "ipaUs": "/ˈɔːkwərd/",
+      "level": "B1",
+      "translations": [
+        { "text": "неловкий, неудобный", "sense": null, "isPrimary": true },
+        { "text": "нескладный, неуклюжий", "sense": "о человеке и его движениях", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "There was an awkward silence after his question.", "textRu": "После его вопроса повисла неловкая пауза.", "audioUrl": null, "attribution": null },
+        { "textEn": "It felt awkward to ask for more money.", "textRu": "Было неудобно просить больше денег.", "audioUrl": null, "attribution": null }
+      ]
+    }
+  ]
+}

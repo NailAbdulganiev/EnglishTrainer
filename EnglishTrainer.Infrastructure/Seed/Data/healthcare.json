@@ -1,0 +1,386 @@
+{
+  "slug": "healthcare",
+  "title": "Медицина",
+  "description": "Симптомы, запись к врачу, аптека, лекарства и медицинская страховка",
+  "sortOrder": 4,
+  "words": [
+    {
+      "lemma": "symptom",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈsɪmptəm/",
+      "ipaUs": "/ˈsɪmptəm/",
+      "level": "B1",
+      "translations": [
+        { "text": "симптом", "sense": null, "isPrimary": true },
+        { "text": "признак болезни", "sense": "проявление заболевания", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "A high fever is a common symptom of flu.", "textRu": "Высокая температура — частый симптом гриппа.", "audioUrl": null, "attribution": null },
+        { "textEn": "Tell the doctor about all your symptoms.", "textRu": "Расскажите врачу обо всех своих симптомах.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "pain",
+      "partOfSpeech": "noun",
+      "ipaUk": "/peɪn/",
+      "ipaUs": "/peɪn/",
+      "level": "A2",
+      "translations": [
+        { "text": "боль", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I have a sharp pain in my back.", "textRu": "У меня резкая боль в спине.", "audioUrl": null, "attribution": null },
+        { "textEn": "The pills helped, and the pain is gone.", "textRu": "Таблетки помогли, и боль прошла.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "headache",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈhedeɪk/",
+      "ipaUs": "/ˈhedeɪk/",
+      "level": "A2",
+      "translations": [
+        { "text": "головная боль", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I have a terrible headache since this morning.", "textRu": "У меня с самого утра ужасно болит голова.", "audioUrl": null, "attribution": null },
+        { "textEn": "A cup of tea often helps my headache.", "textRu": "Чашка чая часто помогает от головной боли.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "fever",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈfiːvə/",
+      "ipaUs": "/ˈfiːvər/",
+      "level": "A2",
+      "translations": [
+        { "text": "температура", "sense": null, "isPrimary": true },
+        { "text": "жар", "sense": "высокая температура тела", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "The child has a fever and a bad cough.", "textRu": "У ребёнка температура и сильный кашель.", "audioUrl": null, "attribution": null },
+        { "textEn": "Take these pills if your fever gets higher.", "textRu": "Примите эти таблетки, если температура поднимется.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "cough",
+      "partOfSpeech": "noun",
+      "ipaUk": "/kɒf/",
+      "ipaUs": "/kɔːf/",
+      "level": "A2",
+      "translations": [
+        { "text": "кашель", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "This cough is getting worse every night.", "textRu": "Этот кашель становится сильнее каждую ночь.", "audioUrl": null, "attribution": null },
+        { "textEn": "Do you have anything for a dry cough?", "textRu": "У вас есть что-нибудь от сухого кашля?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "sore throat",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌsɔː ˈθrəʊt/",
+      "ipaUs": "/ˌsɔːr ˈθroʊt/",
+      "level": "A2",
+      "translations": [
+        { "text": "боль в горле", "sense": null, "isPrimary": true },
+        { "text": "больное горло", "sense": "воспалённое горло", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I have a sore throat and cannot swallow.", "textRu": "У меня болит горло, и я не могу глотать.", "audioUrl": null, "attribution": null },
+        { "textEn": "Warm milk with honey is good for a sore throat.", "textRu": "Тёплое молоко с мёдом хорошо помогает при боли в горле.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "hurt",
+      "partOfSpeech": "verb",
+      "ipaUk": "/hɜːt/",
+      "ipaUs": "/hɜːrt/",
+      "level": "A2",
+      "translations": [
+        { "text": "болеть", "sense": null, "isPrimary": true },
+        { "text": "причинять боль", "sense": "делать больно", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "My knee hurts when I go up the stairs.", "textRu": "У меня болит колено, когда я поднимаюсь по лестнице.", "audioUrl": null, "attribution": null },
+        { "textEn": "It hurts here when I press it.", "textRu": "Здесь болит, когда я нажимаю.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "dizzy",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈdɪzi/",
+      "ipaUs": "/ˈdɪzi/",
+      "level": "B1",
+      "translations": [
+        { "text": "чувствующий головокружение", "sense": null, "isPrimary": true },
+        { "text": "кружится голова", "sense": "в выражении to feel dizzy", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I feel dizzy and need to sit down.", "textRu": "У меня кружится голова, нужно присесть.", "audioUrl": null, "attribution": null },
+        { "textEn": "She felt dizzy after standing up too fast.", "textRu": "У неё закружилась голова, когда она резко встала.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "nauseous",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈnɔːsiəs/",
+      "ipaUs": "/ˈnɔːʃəs/",
+      "level": "B2",
+      "translations": [
+        { "text": "чувствующий тошноту", "sense": null, "isPrimary": true },
+        { "text": "тошнит", "sense": "в выражении to feel nauseous", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I feel nauseous after taking this medicine.", "textRu": "Меня тошнит после этого лекарства.", "audioUrl": null, "attribution": null },
+        { "textEn": "He was nauseous all night and could not sleep.", "textRu": "Его тошнило всю ночь, и он не мог уснуть.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "rash",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ræʃ/",
+      "ipaUs": "/ræʃ/",
+      "level": "B2",
+      "translations": [
+        { "text": "сыпь", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "A red rash appeared on my arms.", "textRu": "На руках появилась красная сыпь.", "audioUrl": null, "attribution": null },
+        { "textEn": "The rash itches a lot, especially at night.", "textRu": "Сыпь сильно чешется, особенно ночью.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "allergy",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈælədʒi/",
+      "ipaUs": "/ˈælədʒi/",
+      "level": "B1",
+      "translations": [
+        { "text": "аллергия", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I have an allergy to penicillin.", "textRu": "У меня аллергия на пенициллин.", "audioUrl": null, "attribution": null },
+        { "textEn": "Tell the doctor about your allergy before treatment.", "textRu": "Сообщите врачу об аллергии до начала лечения.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "appointment",
+      "partOfSpeech": "noun",
+      "ipaUk": "/əˈpɔɪntmənt/",
+      "ipaUs": "/əˈpɔɪntmənt/",
+      "level": "B1",
+      "translations": [
+        { "text": "приём у врача", "sense": null, "isPrimary": true },
+        { "text": "запись", "sense": "договорённость о встрече", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I have an appointment with the doctor at four.", "textRu": "У меня приём у врача в четыре.", "audioUrl": null, "attribution": null },
+        { "textEn": "He missed his appointment and had to reschedule.", "textRu": "Он пропустил приём и записался заново.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "make an appointment",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌmeɪk ən əˈpɔɪntmənt/",
+      "ipaUs": "/ˌmeɪk ən əˈpɔɪntmənt/",
+      "level": "B1",
+      "translations": [
+        { "text": "записаться на приём", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I would like to make an appointment for tomorrow.", "textRu": "Я хотел бы записаться на приём на завтра.", "audioUrl": null, "attribution": null },
+        { "textEn": "You can make an appointment by phone or online.", "textRu": "Записаться на приём можно по телефону или онлайн.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "doctor",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈdɒktə/",
+      "ipaUs": "/ˈdɑːktər/",
+      "level": "A1",
+      "translations": [
+        { "text": "врач", "sense": null, "isPrimary": true },
+        { "text": "доктор", "sense": "обращение к врачу", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "The doctor listened to my breathing and took notes.", "textRu": "Врач послушал моё дыхание и сделал пометки.", "audioUrl": null, "attribution": null },
+        { "textEn": "You should see a doctor if the pain continues.", "textRu": "Стоит обратиться к врачу, если боль не пройдёт.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "nurse",
+      "partOfSpeech": "noun",
+      "ipaUk": "/nɜːs/",
+      "ipaUs": "/nɜːrs/",
+      "level": "A2",
+      "translations": [
+        { "text": "медсестра", "sense": null, "isPrimary": true },
+        { "text": "медбрат", "sense": "медицинский работник-мужчина", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "The nurse took my temperature and blood pressure.", "textRu": "Медсестра измерила мне температуру и давление.", "audioUrl": null, "attribution": null },
+        { "textEn": "A nurse came to check on me every hour.", "textRu": "Медсестра приходила проверять меня каждый час.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "examine",
+      "partOfSpeech": "verb",
+      "ipaUk": "/ɪɡˈzæmɪn/",
+      "ipaUs": "/ɪɡˈzæmɪn/",
+      "level": "B1",
+      "translations": [
+        { "text": "осматривать", "sense": null, "isPrimary": true },
+        { "text": "обследовать", "sense": "проверять состояние пациента", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "The doctor examined my throat and listened to my chest.", "textRu": "Врач осмотрел моё горло и послушал грудь.", "audioUrl": null, "attribution": null },
+        { "textEn": "They will examine you in the next room.", "textRu": "Вас осмотрят в соседнем кабинете.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "treatment",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈtriːtmənt/",
+      "ipaUs": "/ˈtriːtmənt/",
+      "level": "B1",
+      "translations": [
+        { "text": "лечение", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The treatment lasted two weeks and helped a lot.", "textRu": "Лечение длилось две недели и очень помогло.", "audioUrl": null, "attribution": null },
+        { "textEn": "This treatment is covered by your insurance.", "textRu": "Это лечение покрывается вашей страховкой.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "prescription",
+      "partOfSpeech": "noun",
+      "ipaUk": "/prɪˈskrɪpʃn/",
+      "ipaUs": "/prɪˈskrɪpʃn/",
+      "level": "B2",
+      "translations": [
+        { "text": "рецепт", "sense": "на лекарство", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The doctor gave me a prescription for antibiotics.", "textRu": "Врач выписал мне рецепт на антибиотики.", "audioUrl": null, "attribution": null },
+        { "textEn": "You cannot buy these pills without a prescription.", "textRu": "Эти таблетки нельзя купить без рецепта.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "pharmacy",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈfɑːməsi/",
+      "ipaUs": "/ˈfɑːrməsi/",
+      "level": "A2",
+      "translations": [
+        { "text": "аптека", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The pharmacy next to my house is open late.", "textRu": "Аптека рядом с домом работает допоздна.", "audioUrl": null, "attribution": null },
+        { "textEn": "I stopped at the pharmacy to buy some medicine.", "textRu": "Я зашёл в аптеку, чтобы купить лекарство.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "medicine",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈmedsn/",
+      "ipaUs": "/ˈmedɪsɪn/",
+      "level": "A1",
+      "translations": [
+        { "text": "лекарство", "sense": null, "isPrimary": true },
+        { "text": "медицина", "sense": "область науки", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Take this medicine three times a day after meals.", "textRu": "Принимайте это лекарство три раза в день после еды.", "audioUrl": null, "attribution": null },
+        { "textEn": "Keep the medicine in a cool, dark place.", "textRu": "Храните лекарство в прохладном тёмном месте.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "pill",
+      "partOfSpeech": "noun",
+      "ipaUk": "/pɪl/",
+      "ipaUs": "/pɪl/",
+      "level": "A2",
+      "translations": [
+        { "text": "таблетка", "sense": null, "isPrimary": true },
+        { "text": "пилюля", "sense": "лекарство в виде шарика", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I take one pill every morning with water.", "textRu": "Я принимаю одну таблетку каждое утро с водой.", "audioUrl": null, "attribution": null },
+        { "textEn": "These pills are too big for my son.", "textRu": "Эти таблетки слишком большие для моего сына.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "dose",
+      "partOfSpeech": "noun",
+      "ipaUk": "/dəʊs/",
+      "ipaUs": "/doʊs/",
+      "level": "B1",
+      "translations": [
+        { "text": "доза", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Do not take more than the usual dose.", "textRu": "Не принимайте больше обычной дозы.", "audioUrl": null, "attribution": null },
+        { "textEn": "The nurse wrote the correct dose on the box.", "textRu": "Медсестра написала правильную дозу на коробке.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "side effect",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˈsaɪd ɪˌfekt/",
+      "ipaUs": "/ˈsaɪd ɪˌfekt/",
+      "level": "B1",
+      "translations": [
+        { "text": "побочный эффект", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Drowsiness is a common side effect of this drug.", "textRu": "Сонливость — частый побочный эффект этого лекарства.", "audioUrl": null, "attribution": null },
+        { "textEn": "Did you notice any side effects after the injection?", "textRu": "Вы заметили какие-нибудь побочные эффекты после укола?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "insurance",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ɪnˈʃʊərəns/",
+      "ipaUs": "/ɪnˈʃʊrəns/",
+      "level": "B1",
+      "translations": [
+        { "text": "страховка", "sense": null, "isPrimary": true },
+        { "text": "медицинская страховка", "sense": "полис на лечение", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "My health insurance covers visits to specialists.", "textRu": "Моя медицинская страховка покрывает приёмы у специалистов.", "audioUrl": null, "attribution": null },
+        { "textEn": "Show your insurance card at the reception desk.", "textRu": "Покажите страховую карту на стойке регистрации.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "blood test",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˈblʌd test/",
+      "ipaUs": "/ˈblʌd test/",
+      "level": "B1",
+      "translations": [
+        { "text": "анализ крови", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The doctor asked me to do a blood test.", "textRu": "Врач попросил меня сдать анализ крови.", "audioUrl": null, "attribution": null },
+        { "textEn": "The blood test results will be ready tomorrow.", "textRu": "Результаты анализа крови будут готовы завтра.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "emergency",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ɪˈmɜːdʒənsi/",
+      "ipaUs": "/ɪˈmɜːrdʒənsi/",
+      "level": "B1",
+      "translations": [
+        { "text": "неотложная помощь", "sense": null, "isPrimary": true },
+        { "text": "экстренный случай", "sense": "чрезвычайная ситуация", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Call an ambulance if this is an emergency.", "textRu": "Вызывайте скорую, если это неотложный случай.", "audioUrl": null, "attribution": null },
+        { "textEn": "The hospital has a separate emergency entrance.", "textRu": "В больнице есть отдельный вход для неотложной помощи.", "audioUrl": null, "attribution": null }
+      ]
+    }
+  ]
+}

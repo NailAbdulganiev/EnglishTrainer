@@ -1,0 +1,32 @@
+<Project>
+
+  <!--
+    Общие настройки для всех проектов решения.
+
+    Вынесены в один файл, а не размазаны по четырём .csproj: правила «какой язык,
+    какая платформа, как относимся к предупреждениям» должны быть одинаковыми
+    во всём решении. Иначе через полгода один проект собирается с Nullable,
+    другой — без, и это выясняется в самый неподходящий момент.
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <!-- Предупреждение — это ошибка. Компилятор в .NET предупреждает ровно
+         о том, что потом становится багом в проде: null, необработанный
+         результат, устаревший API. -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <!--
+      Аудит уязвимостей NuGet ходит на nuget.org за списком уязвимых пакетов.
+      В окружении без доступа к сети он возвращает NU1900, а из-за
+      TreatWarningsAsErrors это ломает restore целиком.
+      Отключено осознанно; при работе с сетью верните true.
+    -->
+    <NuGetAudit>false</NuGetAudit>
+  </PropertyGroup>
+
+</Project>
