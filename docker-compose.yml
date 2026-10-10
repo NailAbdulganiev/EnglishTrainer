@@ -1,0 +1,48 @@
+# Локальная база для разработки.
+#
+# Порт на хосте — 5433, а не 5432: 5432 обычно занят PostgreSQL, установленным
+# в систему, и подмена его контейнером сломала бы другие проекты на этой машине.
+#
+# Запуск:  docker compose up -d
+# Проверка: docker compose ps   (должен быть healthy)
+#
+# Если PostgreSQL уже установлен и вы хотите использовать его — контейнер не нужен,
+# достаточно указать свою строку подключения в appsettings.Development.json.
+#
+# Версия образа — 16: она полностью поддерживает всё, что использует EF Core,
+# и хранит данные по классическому пути /var/lib/postgresql/data.
+# Образ 18-й версии работает так же, но раскладывает данные иначе
+# (/var/lib/postgresql/18/docker), поэтому при переходе на него нужно
+# поправить точку монтирования тома.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: english-trainer-db
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: english_trainer
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      # Кодировка и правила сравнения строк фиксируются при создании кластера.
+      # Если оставить это хосту, поведение сортировки и регистронезависимых
+      # сравнений будет разным на разных машинах.
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+
+    ports:
+      - "5433:5432"
+
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+    healthcheck:
+      # Без проверки приложение может стартовать раньше базы и упасть
+      # на применении миграций.
+      test: ["CMD-SHELL", "pg_isready -U postgres -d english_trainer"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres-data:

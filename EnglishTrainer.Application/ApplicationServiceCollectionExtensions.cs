@@ -1,0 +1,33 @@
+using EnglishTrainer.Application.Services;
+using EnglishTrainer.Domain.Abstractions;
+using EnglishTrainer.Domain.Scheduling;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace EnglishTrainer.Application;
+
+/// <summary>
+/// Регистрация сервисов слоя Application.
+/// </summary>
+/// <remarks>
+/// Слой знает только о своих портах (интерфейсах). Реализации — часов, хешера,
+/// репозиториев — подставляет Infrastructure. Благодаря этому Application
+/// не зависит от EF Core и его можно тестировать без базы.
+/// </remarks>
+public static class ApplicationServiceCollectionExtensions
+{
+    public static IServiceCollection AddApplication(this IServiceCollection services)
+    {
+        services.AddScoped<AuthService>();
+        services.AddScoped<DeckService>();
+        services.AddScoped<FavoriteService>();
+        services.AddScoped<FriendService>();
+        services.AddScoped<ProfileService>();
+        services.AddScoped<StudySessionService>();
+        services.AddScoped<StatsService>();
+
+        services.AddSingleton<ISrsScheduler>(_ => new Sm2SrsScheduler());
+        services.AddSingleton<SrsOptions>();
+
+        return services;
+    }
+}

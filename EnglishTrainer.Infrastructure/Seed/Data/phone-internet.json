@@ -1,0 +1,408 @@
+{
+  "slug": "phone-internet",
+  "title": "Телефон и интернет",
+  "description": "Связь, тарифы, приложения, интернет и поддержка",
+  "sortOrder": 16,
+  "words": [
+    {
+      "lemma": "tariff",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈtærɪf/",
+      "ipaUs": "/ˈterɪf/",
+      "level": "B2",
+      "translations": [
+        { "text": "тариф", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "This tariff includes twenty gigabytes of mobile data.", "textRu": "Этот тариф включает двадцать гигабайт мобильного интернета.", "audioUrl": null, "attribution": null },
+        { "textEn": "I want to change my tariff before the end of the month.", "textRu": "Я хочу сменить тариф до конца месяца.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "top up",
+      "partOfSpeech": "verb",
+      "ipaUk": "/ˌtɒp ˈʌp/",
+      "ipaUs": "/ˌtɑːp ˈʌp/",
+      "level": "B1",
+      "translations": [
+        { "text": "пополнить счёт", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I need to top up my phone before the trip.", "textRu": "Мне нужно пополнить счёт телефона перед поездкой.", "audioUrl": null, "attribution": null },
+        { "textEn": "You can top up your account at any cash machine.", "textRu": "Ты можешь пополнить счёт в любом банкомате.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "sim card",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈsɪm kɑːd/",
+      "ipaUs": "/ˈsɪm kɑːrd/",
+      "level": "A2",
+      "translations": [
+        { "text": "сим-карта", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "My new phone needs a smaller sim card.", "textRu": "Для моего нового телефона нужна сим-карта поменьше.", "audioUrl": null, "attribution": null },
+        { "textEn": "Put the sim card into the slot carefully.", "textRu": "Аккуратно вставь сим-карту в слот.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "roaming",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈrəʊmɪŋ/",
+      "ipaUs": "/ˈroʊmɪŋ/",
+      "level": "B1",
+      "translations": [
+        { "text": "роуминг", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Turn off roaming to avoid a huge bill.", "textRu": "Отключи роуминг, чтобы избежать огромного счёта.", "audioUrl": null, "attribution": null },
+        { "textEn": "Roaming is very expensive in some countries.", "textRu": "В некоторых странах роуминг очень дорогой.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "wi-fi",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈwaɪ faɪ/",
+      "ipaUs": "/ˈwaɪ faɪ/",
+      "level": "A2",
+      "translations": [
+        { "text": "вай-фай", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The wi-fi in this hotel is very slow.", "textRu": "Вай-фай в этом отеле очень медленный.", "audioUrl": null, "attribution": null },
+        { "textEn": "Ask the waiter for the wi-fi password.", "textRu": "Спроси у официанта пароль от вай-фая.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "password",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈpɑːswɜːd/",
+      "ipaUs": "/ˈpæswɜːrd/",
+      "level": "A2",
+      "translations": [
+        { "text": "пароль", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I forgot my password and cannot open the app.", "textRu": "Я забыл пароль и не могу открыть приложение.", "audioUrl": null, "attribution": null },
+        { "textEn": "Never tell your password to anyone on the phone.", "textRu": "Никогда не сообщай пароль никому по телефону.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "connection",
+      "partOfSpeech": "noun",
+      "ipaUk": "/kəˈnekʃn/",
+      "ipaUs": "/kəˈnekʃn/",
+      "level": "B1",
+      "translations": [
+        { "text": "подключение", "sense": null, "isPrimary": true },
+        { "text": "связь", "sense": "наличие связи с сетью", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "The connection drops every time I enter the lift.", "textRu": "Связь пропадает каждый раз, когда я захожу в лифт.", "audioUrl": null, "attribution": null },
+        { "textEn": "Check the connection before you call the support service.", "textRu": "Проверь подключение, прежде чем звонить в службу поддержки.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "app",
+      "partOfSpeech": "noun",
+      "ipaUk": "/æp/",
+      "ipaUs": "/æp/",
+      "level": "A1",
+      "translations": [
+        { "text": "приложение", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "This app shows how much data I have left.", "textRu": "В этом приложении видно, сколько трафика у меня осталось.", "audioUrl": null, "attribution": null },
+        { "textEn": "Download the app and sign in with your number.", "textRu": "Скачай приложение и войди по своему номеру.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "update",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈʌpdeɪt/",
+      "ipaUs": "/ˈʌpdeɪt/",
+      "level": "B1",
+      "translations": [
+        { "text": "обновление", "sense": null, "isPrimary": true },
+        { "text": "новость", "sense": "свежая информация о событиях", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "The update will take about ten minutes.", "textRu": "Обновление займёт около десяти минут.", "audioUrl": null, "attribution": null },
+        { "textEn": "After the update my phone works much faster.", "textRu": "После обновления телефон работает намного быстрее.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "notification",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˌnəʊtɪfɪˈkeɪʃn/",
+      "ipaUs": "/ˌnoʊtɪfɪˈkeɪʃn/",
+      "level": "B1",
+      "translations": [
+        { "text": "уведомление", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I get a notification when my balance is low.", "textRu": "Мне приходит уведомление, когда баланс низкий.", "audioUrl": null, "attribution": null },
+        { "textEn": "Turn off notifications at night if they wake you.", "textRu": "Отключи уведомления на ночь, если они тебя будят.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "account",
+      "partOfSpeech": "noun",
+      "ipaUk": "/əˈkaʊnt/",
+      "ipaUs": "/əˈkaʊnt/",
+      "level": "B1",
+      "translations": [
+        { "text": "аккаунт", "sense": null, "isPrimary": true },
+        { "text": "счёт", "sense": "банковский счёт", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "My account was blocked after too many wrong passwords.", "textRu": "Мой аккаунт заблокировали после слишком многих неверных паролей.", "audioUrl": null, "attribution": null },
+        { "textEn": "Create a new account with your email address.", "textRu": "Создай новый аккаунт, указав свою электронную почту.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "support",
+      "partOfSpeech": "noun",
+      "ipaUk": "/səˈpɔːt/",
+      "ipaUs": "/səˈpɔːrt/",
+      "level": "B2",
+      "translations": [
+        { "text": "поддержка", "sense": null, "isPrimary": true },
+        { "text": "опора", "sense": "опора или подставка", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "The support answered my message in five minutes.", "textRu": "Поддержка ответила на моё сообщение через пять минут.", "audioUrl": null, "attribution": null },
+        { "textEn": "Call support if the internet stops working again.", "textRu": "Позвони в поддержку, если интернет снова перестанет работать.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "no signal",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/nəʊ ˈsɪgnəl/",
+      "ipaUs": "/noʊ ˈsɪgnəl/",
+      "level": "A2",
+      "translations": [
+        { "text": "нет связи", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "There is no signal in this underground car park.", "textRu": "В этом подземном паркинге нет связи.", "audioUrl": null, "attribution": null },
+        { "textEn": "My phone shows no signal since yesterday evening.", "textRu": "Мой телефон показывает отсутствие связи со вчерашнего вечера.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "how to connect to wi-fi",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/haʊ tə kəˈnekt tə ˈwaɪ faɪ/",
+      "ipaUs": "/haʊ tə kəˈnekt tə ˈwaɪ faɪ/",
+      "level": "A2",
+      "translations": [
+        { "text": "как подключиться к Wi-Fi", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Can you show me how to connect to wi-fi here?", "textRu": "Можешь показать, как здесь подключиться к Wi-Fi?", "audioUrl": null, "attribution": null },
+        { "textEn": "She asked the receptionist how to connect to wi-fi.", "textRu": "Она спросила у администратора, как подключиться к Wi-Fi.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "reset the password",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌriːˈset ðə ˈpɑːswɜːd/",
+      "ipaUs": "/ˌriːˈset ðə ˈpæswɜːrd/",
+      "level": "B1",
+      "translations": [
+        { "text": "сбросить пароль", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I had to reset the password for my account.", "textRu": "Мне пришлось сбросить пароль от своего аккаунта.", "audioUrl": null, "attribution": null },
+        { "textEn": "Press this link to reset the password safely.", "textRu": "Нажми эту ссылку, чтобы безопасно сбросить пароль.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "network",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈnetwɜːk/",
+      "ipaUs": "/ˈnetwɜːrk/",
+      "level": "B1",
+      "translations": [
+        { "text": "сеть", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The network is down in our whole district.", "textRu": "Сеть не работает во всём нашем районе.", "audioUrl": null, "attribution": null },
+        { "textEn": "My phone cannot find the home network.", "textRu": "Мой телефон не находит домашнюю сеть.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "signal",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈsɪgnəl/",
+      "ipaUs": "/ˈsɪgnəl/",
+      "level": "A2",
+      "translations": [
+        { "text": "сигнал", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The signal is weak near the old bridge.", "textRu": "Возле старого моста сигнал слабый.", "audioUrl": null, "attribution": null },
+        { "textEn": "Move closer to the window to get a better signal.", "textRu": "Подойди ближе к окну, чтобы сигнал был лучше.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "data",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈdeɪtə/",
+      "ipaUs": "/ˈdeɪtə/",
+      "level": "B1",
+      "translations": [
+        { "text": "данные", "sense": null, "isPrimary": true },
+        { "text": "трафик", "sense": "мобильный интернет", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I used all my data during the first week.", "textRu": "Я израсходовал весь трафик за первую неделю.", "audioUrl": null, "attribution": null },
+        { "textEn": "Turn on mobile data and try again.", "textRu": "Включи мобильные данные и попробуй снова.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "message",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈmesɪdʒ/",
+      "ipaUs": "/ˈmesɪdʒ/",
+      "level": "A2",
+      "translations": [
+        { "text": "сообщение", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I sent you a message with the new address.", "textRu": "Я отправил тебе сообщение с новым адресом.", "audioUrl": null, "attribution": null },
+        { "textEn": "Her message did not arrive until the evening.", "textRu": "Её сообщение пришло только вечером.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "call",
+      "partOfSpeech": "verb",
+      "ipaUk": "/kɔːl/",
+      "ipaUs": "/kɔːl/",
+      "level": "A1",
+      "translations": [
+        { "text": "звонить", "sense": null, "isPrimary": true },
+        { "text": "называть", "sense": "давать имя", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Call me when you reach the airport.", "textRu": "Позвони мне, когда доберёшься до аэропорта.", "audioUrl": null, "attribution": null },
+        { "textEn": "He calls his mother every Sunday evening.", "textRu": "Он звонит маме каждый вечер в воскресенье.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "charge",
+      "partOfSpeech": "verb",
+      "ipaUk": "/tʃɑːdʒ/",
+      "ipaUs": "/tʃɑːrdʒ/",
+      "level": "B1",
+      "translations": [
+        { "text": "заряжать", "sense": null, "isPrimary": true },
+        { "text": "брать плату", "sense": "назначать цену за услугу", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I charge my phone every night before bed.", "textRu": "Я заряжаю телефон каждый вечер перед сном.", "audioUrl": null, "attribution": null },
+        { "textEn": "The battery is low, so charge it now.", "textRu": "Батарея почти пустая, заряди её сейчас.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "battery",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈbætri/",
+      "ipaUs": "/ˈbætəri/",
+      "level": "A2",
+      "translations": [
+        { "text": "батарея", "sense": null, "isPrimary": true },
+        { "text": "аккумулятор", "sense": "перезаряжаемая батарея", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "My battery lasts only half a day now.", "textRu": "Теперь моей батареи хватает только на полдня.", "audioUrl": null, "attribution": null },
+        { "textEn": "Cold weather makes the battery lose power quickly.", "textRu": "На холоде батарея быстро теряет заряд.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "charger",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈtʃɑːdʒə/",
+      "ipaUs": "/ˈtʃɑːrdʒər/",
+      "level": "A2",
+      "translations": [
+        { "text": "зарядное устройство", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I left my charger in the hotel room.", "textRu": "Я оставил зарядку в номере отеля.", "audioUrl": null, "attribution": null },
+        { "textEn": "This charger fits both my phone and tablet.", "textRu": "Эта зарядка подходит и к телефону, и к планшету.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "subscription",
+      "partOfSpeech": "noun",
+      "ipaUk": "/səbˈskrɪpʃn/",
+      "ipaUs": "/səbˈskrɪpʃn/",
+      "level": "B2",
+      "translations": [
+        { "text": "подписка", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "My subscription renews automatically every month.", "textRu": "Моя подписка автоматически продлевается каждый месяц.", "audioUrl": null, "attribution": null },
+        { "textEn": "Cancel the subscription if you do not use it.", "textRu": "Отмени подписку, если ты ею не пользуешься.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "download",
+      "partOfSpeech": "verb",
+      "ipaUk": "/ˌdaʊnˈləʊd/",
+      "ipaUs": "/ˈdaʊnloʊd/",
+      "level": "A2",
+      "translations": [
+        { "text": "скачать", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Download the map before you leave the city.", "textRu": "Скачай карту, прежде чем выехать из города.", "audioUrl": null, "attribution": null },
+        { "textEn": "She downloaded three films for the long flight.", "textRu": "Она скачала три фильма для долгого перелёта.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "install",
+      "partOfSpeech": "verb",
+      "ipaUk": "/ɪnˈstɔːl/",
+      "ipaUs": "/ɪnˈstɔːl/",
+      "level": "B1",
+      "translations": [
+        { "text": "установить", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Install this program to check your internet speed.", "textRu": "Установи эту программу, чтобы проверить скорость интернета.", "audioUrl": null, "attribution": null },
+        { "textEn": "It takes two minutes to install the new app.", "textRu": "Установка нового приложения занимает две минуты.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "log in",
+      "partOfSpeech": "verb",
+      "ipaUk": "/ˌlɒg ˈɪn/",
+      "ipaUs": "/ˌlɑːg ˈɪn/",
+      "level": "A2",
+      "translations": [
+        { "text": "войти", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I cannot log in because I forgot my username.", "textRu": "Я не могу войти, потому что забыл имя пользователя.", "audioUrl": null, "attribution": null },
+        { "textEn": "Log in again and check your account settings.", "textRu": "Войди снова и проверь настройки аккаунта.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "username",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈjuːzəneɪm/",
+      "ipaUs": "/ˈjuːzərneɪm/",
+      "level": "A2",
+      "translations": [
+        { "text": "имя пользователя", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Choose a username that is easy to remember.", "textRu": "Выбери имя пользователя, которое легко запомнить.", "audioUrl": null, "attribution": null },
+        { "textEn": "Your username and password are both case sensitive.", "textRu": "Имя пользователя и пароль чувствительны к регистру.", "audioUrl": null, "attribution": null }
+      ]
+    }
+  ]
+}

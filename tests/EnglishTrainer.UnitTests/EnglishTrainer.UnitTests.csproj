@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Тесты чистой логики: алгоритм повторений, нормализация ответов, хеширование
+    паролей, разбор токенов, преобразование в DTO. Без базы и без HTTP —
+    поэтому они выполняются за секунды и не требуют ничего запускать.
+  -->
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <!--
+      Проект собирается как приложение: точка входа в Program.cs позволяет запустить
+      тесты автономно (dotnet run) там, где тестовый хост VSTest не стартует.
+      Штатный dotnet test при этом работает как обычно — свою точку входа
+      тестовый SDK не генерирует, чтобы не было двух Main.
+    -->
+    <OutputType>Exe</OutputType>
+    <GenerateProgramFile>false</GenerateProgramFile>
+    <!--
+      Microsoft.NET.Test.Sdk 17.5.0 — самая новая версия в локальном кеше пакетов,
+      она рассчитана на .NET 7. На .NET 10 тестовый хост запускается через
+      roll-forward: без этой настройки dotnet test не находит подходящую среду выполнения.
+    -->
+    <RollForward>LatestMajor</RollForward>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+    <PackageReference Include="xunit" Version="2.4.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="3.2.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\EnglishTrainer.Domain\EnglishTrainer.Domain.csproj" />
+    <ProjectReference Include="..\..\EnglishTrainer.Application\EnglishTrainer.Application.csproj" />
+    <ProjectReference Include="..\..\EnglishTrainer.Infrastructure\EnglishTrainer.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

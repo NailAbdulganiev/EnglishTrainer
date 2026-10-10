@@ -1,0 +1,382 @@
+{
+  "slug": "bank-documents",
+  "title": "Банк и документы",
+  "description": "Счёт в банке, налоги, виза, страховка и госуслуги",
+  "sortOrder": 5,
+  "words": [
+    {
+      "lemma": "account",
+      "partOfSpeech": "noun",
+      "ipaUk": "/əˈkaʊnt/",
+      "ipaUs": "/əˈkaʊnt/",
+      "level": "A2",
+      "translations": [
+        { "text": "счёт (в банке)", "sense": "финансы", "isPrimary": true },
+        { "text": "учётная запись", "sense": "интернет", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I would like to open a bank account this week.", "textRu": "Я хотел бы открыть банковский счёт на этой неделе.", "audioUrl": null, "attribution": null },
+        { "textEn": "Please log in to your account and check the balance.", "textRu": "Пожалуйста, войдите в аккаунт и проверьте баланс.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "cash",
+      "partOfSpeech": "noun",
+      "ipaUk": "/kæʃ/",
+      "ipaUs": "/kæʃ/",
+      "level": "A1",
+      "translations": [
+        { "text": "наличные", "sense": "деньги", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Do you have any cash, or should I pay by card?", "textRu": "У вас есть наличные или мне заплатить картой?", "audioUrl": null, "attribution": null },
+        { "textEn": "I took some cash out before we went shopping.", "textRu": "Я снял немного наличных перед походом за покупками.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "payment",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈpeɪmənt/",
+      "ipaUs": "/ˈpeɪmənt/",
+      "level": "A2",
+      "translations": [
+        { "text": "платёж, оплата", "sense": "финансы", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Your payment should arrive within two working days.", "textRu": "Ваш платёж должен поступить в течение двух рабочих дней.", "audioUrl": null, "attribution": null },
+        { "textEn": "I forgot to make the monthly payment again.", "textRu": "Я опять забыл внести ежемесячный платёж.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "transfer",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈtrænsfɜː/",
+      "ipaUs": "/ˈtrænsfɜːr/",
+      "level": "B1",
+      "translations": [
+        { "text": "перевод (денег)", "sense": "финансы", "isPrimary": true },
+        { "text": "пересадка", "sense": "транспорт", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "The bank charged me extra for the international transfer.", "textRu": "Банк взял с меня дополнительную плату за международный перевод.", "audioUrl": null, "attribution": null },
+        { "textEn": "We had a long transfer at the airport in Warsaw.", "textRu": "У нас была долгая пересадка в аэропорту Варшавы.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "fee",
+      "partOfSpeech": "noun",
+      "ipaUk": "/fiː/",
+      "ipaUs": "/fiː/",
+      "level": "B1",
+      "translations": [
+        { "text": "сбор, комиссия", "sense": "финансы", "isPrimary": true },
+        { "text": "плата за обучение", "sense": "образование", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "There is a small fee for replacing your bank card.", "textRu": "За замену банковской карты есть небольшая комиссия.", "audioUrl": null, "attribution": null },
+        { "textEn": "The lawyer explained every fee before I signed anything.", "textRu": "Юрист объяснил каждый сбор, прежде чем я что-либо подписал.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "loan",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ləʊn/",
+      "ipaUs": "/loʊn/",
+      "level": "B1",
+      "translations": [
+        { "text": "кредит, заём", "sense": "финансы", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We took out a loan to buy our first flat.", "textRu": "Мы взяли кредит, чтобы купить первую квартиру.", "audioUrl": null, "attribution": null },
+        { "textEn": "The bank refused my loan because I have no credit history.", "textRu": "Банк отказал мне в кредите, потому что у меня нет кредитной истории.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "mortgage",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈmɔːgɪdʒ/",
+      "ipaUs": "/ˈmɔːrgɪdʒ/",
+      "level": "B2",
+      "translations": [
+        { "text": "ипотека", "sense": "финансы", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Our mortgage payment takes most of my salary.", "textRu": "Платёж по ипотеке забирает большую часть моей зарплаты.", "audioUrl": null, "attribution": null },
+        { "textEn": "They spent three months getting a mortgage approved.", "textRu": "Они потратили три месяца, чтобы получить одобрение ипотеки.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "tax",
+      "partOfSpeech": "noun",
+      "ipaUk": "/tæks/",
+      "ipaUs": "/tæks/",
+      "level": "A2",
+      "translations": [
+        { "text": "налог", "sense": "финансы", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I pay tax every month directly from my salary.", "textRu": "Я плачу налог каждый месяц прямо из зарплаты.", "audioUrl": null, "attribution": null },
+        { "textEn": "The government raised the tax on cigarettes again.", "textRu": "Правительство снова подняло налог на сигареты.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "tax return",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˈtæks rɪˌtɜːn/",
+      "ipaUs": "/ˈtæks rɪˌtɜːrn/",
+      "level": "B2",
+      "translations": [
+        { "text": "налоговая декларация", "sense": "налоги", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I have to send my tax return before the end of April.", "textRu": "Я должен отправить налоговую декларацию до конца апреля.", "audioUrl": null, "attribution": null },
+        { "textEn": "An accountant helped us fill in the tax return correctly.", "textRu": "Бухгалтер помог нам правильно заполнить налоговую декларацию.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "fine",
+      "partOfSpeech": "noun",
+      "ipaUk": "/faɪn/",
+      "ipaUs": "/faɪn/",
+      "level": "B1",
+      "translations": [
+        { "text": "штраф", "sense": "право", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I got a fine for parking near the school gates.", "textRu": "Я получил штраф за парковку у школьных ворот.", "audioUrl": null, "attribution": null },
+        { "textEn": "You can pay the fine online or at the post office.", "textRu": "Штраф можно оплатить онлайн или на почте.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "receipt",
+      "partOfSpeech": "noun",
+      "ipaUk": "/rɪˈsiːt/",
+      "ipaUs": "/rɪˈsiːt/",
+      "level": "A2",
+      "translations": [
+        { "text": "чек, квитанция", "sense": "покупки", "isPrimary": true },
+        { "text": "получение", "sense": "формальное", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Keep the receipt in case you want to return it.", "textRu": "Сохраните чек на случай, если захотите вернуть товар.", "audioUrl": null, "attribution": null },
+        { "textEn": "The cashier printed my receipt and wished me a good day.", "textRu": "Кассир распечатал мой чек и пожелал хорошего дня.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "exchange rate",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ɪksˈtʃeɪndʒ reɪt/",
+      "ipaUs": "/ɪksˈtʃeɪndʒ reɪt/",
+      "level": "B1",
+      "translations": [
+        { "text": "курс обмена валюты", "sense": "финансы", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The exchange rate was better at the airport last week.", "textRu": "На прошлой неделе курс обмена в аэропорту был лучше.", "audioUrl": null, "attribution": null },
+        { "textEn": "Check today's exchange rate before you send money abroad.", "textRu": "Проверьте сегодняшний курс, прежде чем отправлять деньги за границу.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "currency",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈkʌrənsi/",
+      "ipaUs": "/ˈkɜːrənsi/",
+      "level": "B1",
+      "translations": [
+        { "text": "валюта", "sense": "финансы", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "What currency do they use in that country?", "textRu": "Какую валюту используют в той стране?", "audioUrl": null, "attribution": null },
+        { "textEn": "I changed some currency before our trip to London.", "textRu": "Я обменял немного валюты перед поездкой в Лондон.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "insurance",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ɪnˈʃʊərəns/",
+      "ipaUs": "/ɪnˈʃʊrəns/",
+      "level": "A2",
+      "translations": [
+        { "text": "страховка, страхование", "sense": "страхование", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Our health insurance covers visits to the family doctor.", "textRu": "Наша медицинская страховка покрывает визиты к семейному врачу.", "audioUrl": null, "attribution": null },
+        { "textEn": "I bought travel insurance before flying to Spain.", "textRu": "Я купил туристическую страховку перед полётом в Испанию.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "passport",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈpɑːspɔːt/",
+      "ipaUs": "/ˈpæspɔːrt/",
+      "level": "A1",
+      "translations": [
+        { "text": "паспорт", "sense": "документы", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Don't leave your passport at home again.", "textRu": "Не оставляй паспорт дома снова.", "audioUrl": null, "attribution": null },
+        { "textEn": "My passport expires in two years, so I have time.", "textRu": "Срок моего паспорта истекает через два года, так что время есть.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "visa",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈviːzə/",
+      "ipaUs": "/ˈviːzə/",
+      "level": "A2",
+      "translations": [
+        { "text": "виза", "sense": "документы", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We applied for a visa six weeks before the trip.", "textRu": "Мы подали на визу за шесть недель до поездки.", "audioUrl": null, "attribution": null },
+        { "textEn": "Her visa was refused because one document was missing.", "textRu": "Ей отказали в визе, потому что одного документа не хватало.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "residence permit",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˈrezɪdəns ˌpɜːmɪt/",
+      "ipaUs": "/ˈrezɪdəns ˌpɜːrmɪt/",
+      "level": "B2",
+      "translations": [
+        { "text": "вид на жительство", "sense": "документы", "isPrimary": true },
+        { "text": "разрешение на проживание", "sense": "документы", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I collected my residence permit at the migration office.", "textRu": "Я получил вид на жительство в миграционном офисе.", "audioUrl": null, "attribution": null },
+        { "textEn": "You need a residence permit to work here legally.", "textRu": "Чтобы работать здесь легально, нужен вид на жительство.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "valid",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈvælɪd/",
+      "ipaUs": "/ˈvælɪd/",
+      "level": "B1",
+      "translations": [
+        { "text": "действительный", "sense": "документы", "isPrimary": true },
+        { "text": "обоснованный", "sense": "аргумент", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Is my passport still valid for another six months?", "textRu": "Мой паспорт действителен ещё шесть месяцев?", "audioUrl": null, "attribution": null },
+        { "textEn": "The ticket is valid only on the day of travel.", "textRu": "Билет действителен только в день поездки.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "application",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˌæplɪˈkeɪʃn/",
+      "ipaUs": "/ˌæplɪˈkeɪʃn/",
+      "level": "B1",
+      "translations": [
+        { "text": "заявление, заявка", "sense": "документы", "isPrimary": true },
+        { "text": "приложение (программа)", "sense": "технологии", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "My application for a bank card was approved yesterday.", "textRu": "Мою заявку на банковскую карту одобрили вчера.", "audioUrl": null, "attribution": null },
+        { "textEn": "Please send the application form by registered mail.", "textRu": "Пожалуйста, отправьте заявление заказным письмом.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "appointment",
+      "partOfSpeech": "noun",
+      "ipaUk": "/əˈpɔɪntmənt/",
+      "ipaUs": "/əˈpɔɪntmənt/",
+      "level": "A2",
+      "translations": [
+        { "text": "приём (по записи)", "sense": "учреждения", "isPrimary": true },
+        { "text": "назначенная встреча", "sense": "общее", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I booked an appointment at the tax office for Monday.", "textRu": "Я записался на приём в налоговую на понедельник.", "audioUrl": null, "attribution": null },
+        { "textEn": "She cancelled her appointment because the doctor was ill.", "textRu": "Она отменила приём, потому что врач заболел.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "utility bill",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/juːˈtɪləti bɪl/",
+      "ipaUs": "/juːˈtɪləti bɪl/",
+      "level": "B2",
+      "translations": [
+        { "text": "квитанция за коммунальные услуги", "sense": "быт", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The landlord asked for a utility bill as proof of address.", "textRu": "Арендодатель попросил квитанцию за коммунальные услуги как подтверждение адреса.", "audioUrl": null, "attribution": null },
+        { "textEn": "We pay the utility bill online at the beginning of each month.", "textRu": "Мы оплачиваем коммунальные счета онлайн в начале каждого месяца.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "proof of address",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˈpruːf əv əˈdres/",
+      "ipaUs": "/ˈpruːf əv əˈdres/",
+      "level": "B2",
+      "translations": [
+        { "text": "подтверждение адреса", "sense": "документы", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The bank wants proof of address dated in the last three months.", "textRu": "Банк хочет подтверждение адреса, датированное последними тремя месяцами.", "audioUrl": null, "attribution": null },
+        { "textEn": "I used my rental contract as proof of address.", "textRu": "Я использовал договор аренды как подтверждение адреса.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "renew",
+      "partOfSpeech": "verb",
+      "ipaUk": "/rɪˈnjuː/",
+      "ipaUs": "/rɪˈnuː/",
+      "level": "B1",
+      "translations": [
+        { "text": "продлевать, обновлять", "sense": "документы", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I need to renew my passport before the summer holiday.", "textRu": "Мне нужно продлить паспорт до летнего отпуска.", "audioUrl": null, "attribution": null },
+        { "textEn": "She renewed her insurance policy online in five minutes.", "textRu": "Она продлила страховой полис онлайн за пять минут.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "expire",
+      "partOfSpeech": "verb",
+      "ipaUk": "/ɪkˈspaɪə/",
+      "ipaUs": "/ɪkˈspaɪər/",
+      "level": "B1",
+      "translations": [
+        { "text": "истекать (о сроке)", "sense": "документы", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "My visa expires at the end of next month.", "textRu": "Моя виза истекает в конце следующего месяца.", "audioUrl": null, "attribution": null },
+        { "textEn": "Check that your card has not expired before paying.", "textRu": "Проверьте, не истёк ли срок действия карты, прежде чем платить.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "withdraw",
+      "partOfSpeech": "verb",
+      "ipaUk": "/wɪðˈdrɔː/",
+      "ipaUs": "/wɪðˈdrɔː/",
+      "level": "B1",
+      "translations": [
+        { "text": "снимать (деньги со счёта)", "sense": "банк", "isPrimary": true },
+        { "text": "отзывать", "sense": "общее", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I would like to withdraw two hundred euros, please.", "textRu": "Я хотел бы снять двести евро, пожалуйста.", "audioUrl": null, "attribution": null },
+        { "textEn": "The cash machine refused to let me withdraw any money.", "textRu": "Банкомат отказался выдать мне деньги.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "apply",
+      "partOfSpeech": "verb",
+      "ipaUk": "/əˈplaɪ/",
+      "ipaUs": "/əˈplaɪ/",
+      "level": "B1",
+      "translations": [
+        { "text": "подавать заявление", "sense": "документы", "isPrimary": true },
+        { "text": "применять", "sense": "общее", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I want to apply for a residence permit this autumn.", "textRu": "Я хочу подать на вид на жительство этой осенью.", "audioUrl": null, "attribution": null },
+        { "textEn": "You can apply online and then bring the documents.", "textRu": "Вы можете подать заявку онлайн, а потом принести документы.", "audioUrl": null, "attribution": null }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,185 @@
+@EnglishTrainer.Api_HostAddress = http://localhost:5201
+@email = learner@example.com
+@password = Password-12345
+@token = <вставьте accessToken из ответа на регистрацию>
+@deckId = 3
+@itemId = 1
+
+### Живость сервиса
+GET {{EnglishTrainer.Api_HostAddress}}/health
+Accept: application/json
+
+### Проверка соединения с базой
+GET {{EnglishTrainer.Api_HostAddress}}/health/db
+Accept: application/json
+
+### Регистрация
+POST {{EnglishTrainer.Api_HostAddress}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}",
+  "displayName": "Ученик",
+  "timeZoneId": "Europe/Moscow"
+}
+
+### Вход
+POST {{EnglishTrainer.Api_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+### Профиль и настройки
+GET {{EnglishTrainer.Api_HostAddress}}/api/me
+Authorization: Bearer {{token}}
+
+### Изменить настройки обучения
+PUT {{EnglishTrainer.Api_HostAddress}}/api/me/settings
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "newWordsPerDay": 10,
+  "maxCardsPerSession": 60,
+  "dailyGoal": 30,
+  "dailyReminderEnabled": true,
+  "reminderTime": "19:00:00",
+  "showTranscriptionUpfront": true
+}
+
+### Сменить часовой пояс
+PUT {{EnglishTrainer.Api_HostAddress}}/api/me/timezone
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "timeZoneId": "Europe/Moscow"
+}
+
+### Колоды с прогрессом
+GET {{EnglishTrainer.Api_HostAddress}}/api/decks
+Authorization: Bearer {{token}}
+
+### Одна колода
+GET {{EnglishTrainer.Api_HostAddress}}/api/decks/first-days
+Authorization: Bearer {{token}}
+
+### Слова колоды
+GET {{EnglishTrainer.Api_HostAddress}}/api/decks/first-days/words
+Authorization: Bearer {{token}}
+
+### Словарная статья слова
+GET {{EnglishTrainer.Api_HostAddress}}/api/words/1
+Authorization: Bearer {{token}}
+
+### Очередь на сейчас: повторения плюс новые слова
+GET {{EnglishTrainer.Api_HostAddress}}/api/study/session?deckId={{deckId}}
+Authorization: Bearer {{token}}
+
+### Ответ на карточку.
+### Правильного ответа в карточке нет — он проверяется здесь.
+POST {{EnglishTrainer.Api_HostAddress}}/api/study/review
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "itemId": {{itemId}},
+  "answer": "arrival",
+  "rating": null,
+  "elapsedMs": 3200
+}
+
+### Прервать сессию
+DELETE {{EnglishTrainer.Api_HostAddress}}/api/study/session
+Authorization: Bearer {{token}}
+
+### Сводка прогресса
+GET {{EnglishTrainer.Api_HostAddress}}/api/stats/summary
+Authorization: Bearer {{token}}
+
+### Активность по дням и кривая удержания
+GET {{EnglishTrainer.Api_HostAddress}}/api/stats/activity?from=2026-01-01&to=2026-01-31
+Authorization: Bearer {{token}}
+
+### Избранное: только идентификаторы (для звёздочек в списках)
+GET {{EnglishTrainer.Api_HostAddress}}/api/favorites/ids
+Authorization: Bearer {{token}}
+
+### Избранное: слова с прогрессом
+GET {{EnglishTrainer.Api_HostAddress}}/api/favorites
+Authorization: Bearer {{token}}
+
+### Поставить отметку «в избранном»
+PUT {{EnglishTrainer.Api_HostAddress}}/api/words/{{itemId}}/favorite
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "isFavorite": true
+}
+
+### Тренировка только по избранному (вне расписания)
+POST {{EnglishTrainer.Api_HostAddress}}/api/study/favorites
+Authorization: Bearer {{token}}
+
+### Ответ «не знаю»: без ответа, с явной оценкой «забыл»
+POST {{EnglishTrainer.Api_HostAddress}}/api/study/review
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "itemId": {{itemId}},
+  "answer": null,
+  "rating": 1
+}
+
+### Профиль: ник, дата регистрации, сводка
+GET {{EnglishTrainer.Api_HostAddress}}/api/me
+Authorization: Bearer {{token}}
+
+### Сменить ник
+PUT {{EnglishTrainer.Api_HostAddress}}/api/me/profile
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "username": "johannesmetz98",
+  "displayName": "Йоханнес"
+}
+
+### Друзья, входящие и исходящие заявки
+GET {{EnglishTrainer.Api_HostAddress}}/api/friends
+Authorization: Bearer {{token}}
+
+### Найти человека по началу ника
+GET {{EnglishTrainer.Api_HostAddress}}/api/users/search?query=joh
+Authorization: Bearer {{token}}
+
+### Отправить заявку в друзья
+POST {{EnglishTrainer.Api_HostAddress}}/api/friends
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "username": "johannesmetz98"
+}
+
+### Принять входящую заявку
+POST {{EnglishTrainer.Api_HostAddress}}/api/friends/johannesmetz98/accept
+Authorization: Bearer {{token}}
+
+### Убрать из друзей или отменить свою заявку
+DELETE {{EnglishTrainer.Api_HostAddress}}/api/friends/johannesmetz98
+Authorization: Bearer {{token}}
+
+### Активная сессия, если есть (204, если её нет)
+GET {{EnglishTrainer.Api_HostAddress}}/api/study/session/active
+Authorization: Bearer {{token}}
+
+### Документация OpenAPI (только в режиме Development)
+GET {{EnglishTrainer.Api_HostAddress}}/openapi/v1.json
+Accept: application/json

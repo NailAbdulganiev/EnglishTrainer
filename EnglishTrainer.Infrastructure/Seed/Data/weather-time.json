@@ -1,0 +1,406 @@
+{
+  "slug": "weather-time",
+  "title": "Погода и время",
+  "description": "Погода, времена года, даты, сроки и планы",
+  "sortOrder": 14,
+  "words": [
+    {
+      "lemma": "forecast",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈfɔːkɑːst/",
+      "ipaUs": "/ˈfɔːrkæst/",
+      "level": "B1",
+      "translations": [
+        { "text": "прогноз", "sense": null, "isPrimary": true },
+        { "text": "предсказание, прогноз на будущее", "sense": "о будущих событиях, не только о погоде", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "The weather forecast says it will rain tomorrow.", "textRu": "Прогноз погоды обещает завтра дождь.", "audioUrl": null, "attribution": null },
+        { "textEn": "According to the forecast, the weekend will be sunny.", "textRu": "Согласно прогнозу, выходные будут солнечными.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "thunderstorm",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈθʌndəstɔːm/",
+      "ipaUs": "/ˈθʌndərstɔːrm/",
+      "level": "B1",
+      "translations": [
+        { "text": "гроза", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "A thunderstorm woke us up in the middle of the night.", "textRu": "Гроза разбудила нас посреди ночи.", "audioUrl": null, "attribution": null },
+        { "textEn": "We stayed at home during the heavy thunderstorm.", "textRu": "Во время сильной грозы мы остались дома.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "fog",
+      "partOfSpeech": "noun",
+      "ipaUk": "/fɒɡ/",
+      "ipaUs": "/fɑːɡ/",
+      "level": "A2",
+      "translations": [
+        { "text": "туман", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Thick fog covered the road this morning.", "textRu": "Сегодня утром густой туман накрыл дорогу.", "audioUrl": null, "attribution": null },
+        { "textEn": "We could not see the bridge because of the fog.", "textRu": "Из-за тумана мы не видели мост.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "frost",
+      "partOfSpeech": "noun",
+      "ipaUk": "/frɒst/",
+      "ipaUs": "/frɔːst/",
+      "level": "B1",
+      "translations": [
+        { "text": "мороз", "sense": null, "isPrimary": true },
+        { "text": "иней", "sense": "тонкий слой льда на поверхностях", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "The frost made the grass white and hard.", "textRu": "От мороза трава стала белой и жёсткой.", "audioUrl": null, "attribution": null },
+        { "textEn": "There was frost on the car windows again.", "textRu": "На окнах машины снова был иней.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "thaw",
+      "partOfSpeech": "noun",
+      "ipaUk": "/θɔː/",
+      "ipaUs": "/θɔː/",
+      "level": "B2",
+      "translations": [
+        { "text": "оттепель", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "After a week of frost came a sudden thaw.", "textRu": "После недели морозов наступила внезапная оттепель.", "audioUrl": null, "attribution": null },
+        { "textEn": "The thaw turned the snow into deep puddles.", "textRu": "Из-за оттепели снег превратился в глубокие лужи.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "humidity",
+      "partOfSpeech": "noun",
+      "ipaUk": "/hjuːˈmɪdəti/",
+      "ipaUs": "/hjuːˈmɪdəti/",
+      "level": "B2",
+      "translations": [
+        { "text": "влажность", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The humidity in summer makes it hard to sleep.", "textRu": "Из-за летней влажности трудно спать.", "audioUrl": null, "attribution": null },
+        { "textEn": "High humidity is typical for this region in August.", "textRu": "Высокая влажность типична для этого региона в августе.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "dawn",
+      "partOfSpeech": "noun",
+      "ipaUk": "/dɔːn/",
+      "ipaUs": "/dɔːn/",
+      "level": "B1",
+      "translations": [
+        { "text": "рассвет", "sense": null, "isPrimary": true },
+        { "text": "начало, заря", "sense": "переносное: начало чего-то нового", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "We left the house before dawn to catch the train.", "textRu": "Мы вышли из дома до рассвета, чтобы успеть на поезд.", "audioUrl": null, "attribution": null },
+        { "textEn": "The birds start singing at dawn in spring.", "textRu": "Весной птицы начинают петь на рассвете.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "sunset",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈsʌnset/",
+      "ipaUs": "/ˈsʌnset/",
+      "level": "A2",
+      "translations": [
+        { "text": "закат", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The sunset over the sea was incredibly beautiful.", "textRu": "Закат над морем был невероятно красивым.", "audioUrl": null, "attribution": null },
+        { "textEn": "We watched the sunset from the hotel balcony.", "textRu": "Мы смотрели закат с балкона отеля.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "sunrise",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈsʌnraɪz/",
+      "ipaUs": "/ˈsʌnraɪz/",
+      "level": "A2",
+      "translations": [
+        { "text": "восход солнца", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "They climbed the hill to see the sunrise.", "textRu": "Они поднялись на холм, чтобы увидеть восход солнца.", "audioUrl": null, "attribution": null },
+        { "textEn": "The sunrise painted the sky pink and gold.", "textRu": "Восход окрасил небо в розовый и золотой.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "spring",
+      "partOfSpeech": "noun",
+      "ipaUk": "/sprɪŋ/",
+      "ipaUs": "/sprɪŋ/",
+      "level": "A1",
+      "translations": [
+        { "text": "весна", "sense": null, "isPrimary": true },
+        { "text": "родник, источник", "sense": "природный источник воды", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "In spring the parks are full of flowers.", "textRu": "Весной парки полны цветов.", "audioUrl": null, "attribution": null },
+        { "textEn": "Spring is my favourite season of the year.", "textRu": "Весна — моё любимое время года.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "summer",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈsʌmə/",
+      "ipaUs": "/ˈsʌmər/",
+      "level": "A1",
+      "translations": [
+        { "text": "лето", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We always spend the summer at my grandmother's house.", "textRu": "Мы всегда проводим лето в доме бабушки.", "audioUrl": null, "attribution": null },
+        { "textEn": "Summer in this city is hot and very dry.", "textRu": "Лето в этом городе жаркое и очень сухое.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "autumn",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈɔːtəm/",
+      "ipaUs": "/ˈɔːtəm/",
+      "level": "A2",
+      "translations": [
+        { "text": "осень", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "In autumn the leaves turn yellow and red.", "textRu": "Осенью листья становятся жёлтыми и красными.", "audioUrl": null, "attribution": null },
+        { "textEn": "Autumn is the best time for long walks.", "textRu": "Осень — лучшее время для долгих прогулок.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "winter",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈwɪntə/",
+      "ipaUs": "/ˈwɪntər/",
+      "level": "A1",
+      "translations": [
+        { "text": "зима", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Winter here lasts from November to March.", "textRu": "Зима здесь длится с ноября по март.", "audioUrl": null, "attribution": null },
+        { "textEn": "We play hockey every winter on the frozen lake.", "textRu": "Каждую зиму мы играем в хоккей на замёрзшем озере.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "weekday",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈwiːkdeɪ/",
+      "ipaUs": "/ˈwiːkdeɪ/",
+      "level": "B1",
+      "translations": [
+        { "text": "будний день", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "On a weekday the office is usually quiet.", "textRu": "В будний день в офисе обычно тихо.", "audioUrl": null, "attribution": null },
+        { "textEn": "I get up early every weekday morning.", "textRu": "Я встаю рано каждое утро по будням.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "weekend",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˌwiːkˈend/",
+      "ipaUs": "/ˈwiːkend/",
+      "level": "A2",
+      "translations": [
+        { "text": "выходные", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We are going to the countryside this weekend.", "textRu": "В эти выходные мы едем за город.", "audioUrl": null, "attribution": null },
+        { "textEn": "My weekend was quiet and completely relaxing.", "textRu": "Мои выходные прошли тихо и совершенно расслабленно.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "deadline",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈdedlaɪn/",
+      "ipaUs": "/ˈdedlaɪn/",
+      "level": "B1",
+      "translations": [
+        { "text": "срок, крайний срок", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The deadline for the report is Friday afternoon.", "textRu": "Крайний срок сдачи отчёта — пятница, вторая половина дня.", "audioUrl": null, "attribution": null },
+        { "textEn": "We worked all night to meet the deadline.", "textRu": "Мы работали всю ночь, чтобы уложиться в срок.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "schedule",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈʃedjuːl/",
+      "ipaUs": "/ˈskedʒuːl/",
+      "level": "B1",
+      "translations": [
+        { "text": "расписание, график", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "My schedule is full of meetings until Thursday.", "textRu": "Моё расписание забито встречами до четверга.", "audioUrl": null, "attribution": null },
+        { "textEn": "According to the schedule, the train leaves at six.", "textRu": "Согласно расписанию, поезд отправляется в шесть.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "drizzle",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈdrɪzl/",
+      "ipaUs": "/ˈdrɪzl/",
+      "level": "B2",
+      "translations": [
+        { "text": "мелкий дождь, изморось", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "A light drizzle fell all morning.", "textRu": "Всё утро моросил мелкий дождь.", "audioUrl": null, "attribution": null },
+        { "textEn": "Take an umbrella, there is drizzle outside.", "textRu": "Возьми зонт, на улице моросит.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "breeze",
+      "partOfSpeech": "noun",
+      "ipaUk": "/briːz/",
+      "ipaUs": "/briːz/",
+      "level": "B1",
+      "translations": [
+        { "text": "лёгкий ветерок", "sense": null, "isPrimary": true },
+        { "text": "простое дело", "sense": "разговорное: что-то очень лёгкое", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "A cool breeze came from the open window.", "textRu": "Из открытого окна тянуло прохладным ветерком.", "audioUrl": null, "attribution": null },
+        { "textEn": "We sat on the beach in a warm breeze.", "textRu": "Мы сидели на пляже под тёплым ветерком.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "chilly",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈtʃɪli/",
+      "ipaUs": "/ˈtʃɪli/",
+      "level": "B1",
+      "translations": [
+        { "text": "прохладный, зябкий", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "It was chilly, so I put on a jacket.", "textRu": "Было прохладно, поэтому я надел куртку.", "audioUrl": null, "attribution": null },
+        { "textEn": "The evenings here are chilly even in summer.", "textRu": "Вечера здесь прохладные даже летом.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "freezing",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈfriːzɪŋ/",
+      "ipaUs": "/ˈfriːzɪŋ/",
+      "level": "B1",
+      "translations": [
+        { "text": "ледяной, очень холодный", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "It is freezing outside, wear a warm hat.", "textRu": "На улице очень холодно, надень тёплую шапку.", "audioUrl": null, "attribution": null },
+        { "textEn": "The water in the lake was absolutely freezing.", "textRu": "Вода в озере была совершенно ледяной.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "humid",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈhjuːmɪd/",
+      "ipaUs": "/ˈhjuːmɪd/",
+      "level": "B1",
+      "translations": [
+        { "text": "влажный, сырой", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The air was hot and humid after the rain.", "textRu": "После дождя воздух был жарким и влажным.", "audioUrl": null, "attribution": null },
+        { "textEn": "Summers here are humid and hard to bear.", "textRu": "Лето здесь влажное и тяжело переносится.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "sunny",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈsʌni/",
+      "ipaUs": "/ˈsʌni/",
+      "level": "A1",
+      "translations": [
+        { "text": "солнечный", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "It was a sunny day, perfect for a picnic.", "textRu": "День был солнечный, идеальный для пикника.", "audioUrl": null, "attribution": null },
+        { "textEn": "The weather will be sunny and warm tomorrow.", "textRu": "Завтра погода будет солнечной и тёплой.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "cloudy",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈklaʊdi/",
+      "ipaUs": "/ˈklaʊdi/",
+      "level": "A2",
+      "translations": [
+        { "text": "облачный, пасмурный", "sense": null, "isPrimary": true },
+        { "text": "мутный, неясный", "sense": "о жидкости или о неясной ситуации", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "It is cloudy today, but it is not raining.", "textRu": "Сегодня пасмурно, но дождя нет.", "audioUrl": null, "attribution": null },
+        { "textEn": "The sky was cloudy and the wind was strong.", "textRu": "Небо было в облаках, и дул сильный ветер.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "in a week",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ɪn ə ˈwiːk/",
+      "ipaUs": "/ɪn ə ˈwiːk/",
+      "level": "A2",
+      "translations": [
+        { "text": "через неделю", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The exams start in a week, so I am studying.", "textRu": "Экзамены начинаются через неделю, поэтому я готовлюсь.", "audioUrl": null, "attribution": null },
+        { "textEn": "She will come back from Berlin in a week.", "textRu": "Она вернётся из Берлина через неделю.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "on time",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ɒn ˈtaɪm/",
+      "ipaUs": "/ɑːn ˈtaɪm/",
+      "level": "A2",
+      "translations": [
+        { "text": "вовремя, точно по времени", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The train arrived exactly on time this morning.", "textRu": "Сегодня утром поезд прибыл точно по расписанию.", "audioUrl": null, "attribution": null },
+        { "textEn": "Please try to be on time for the meeting.", "textRu": "Пожалуйста, постарайся прийти на встречу вовремя.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "postpone",
+      "partOfSpeech": "verb",
+      "ipaUk": "/pəˈspəʊn/",
+      "ipaUs": "/poʊˈspoʊn/",
+      "level": "B1",
+      "translations": [
+        { "text": "откладывать, переносить", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "They decided to postpone the wedding until next spring.", "textRu": "Они решили перенести свадьбу на следующую весну.", "audioUrl": null, "attribution": null },
+        { "textEn": "We had to postpone the meeting because of the storm.", "textRu": "Нам пришлось перенести встречу из-за грозы.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "reschedule",
+      "partOfSpeech": "verb",
+      "ipaUk": "/ˌriːˈʃedjuːl/",
+      "ipaUs": "/ˌriːˈskedʒuːl/",
+      "level": "B2",
+      "translations": [
+        { "text": "перенести на другое время", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Can we reschedule our lesson for Thursday evening?", "textRu": "Можем мы перенести наш урок на вечер четверга?", "audioUrl": null, "attribution": null },
+        { "textEn": "The airline rescheduled my flight to the next day.", "textRu": "Авиакомпания перенесла мой рейс на следующий день.", "audioUrl": null, "attribution": null }
+      ]
+    }
+  ]
+}

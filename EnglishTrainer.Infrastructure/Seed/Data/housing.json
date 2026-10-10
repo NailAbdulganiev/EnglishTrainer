@@ -1,0 +1,373 @@
+{
+  "slug": "housing",
+  "title": "Жильё",
+  "description": "Аренда квартиры, договор, залог и коммунальные услуги",
+  "sortOrder": 2,
+  "words": [
+    {
+      "lemma": "rent",
+      "partOfSpeech": "noun",
+      "ipaUk": "/rent/",
+      "ipaUs": "/rent/",
+      "level": "A2",
+      "translations": [
+        { "text": "арендная плата, аренда", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The rent is due on the first day of each month.", "textRu": "Арендную плату нужно вносить первого числа каждого месяца.", "audioUrl": null, "attribution": null },
+        { "textEn": "The rent includes water but not electricity.", "textRu": "В арендную плату входит вода, но не электричество.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "landlord",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈlændlɔːd/",
+      "ipaUs": "/ˈlændlɔːrd/",
+      "level": "A2",
+      "translations": [
+        { "text": "арендодатель, домовладелец", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The landlord asked for a one-month deposit.", "textRu": "Арендодатель попросил залог за один месяц.", "audioUrl": null, "attribution": null },
+        { "textEn": "Our landlord fixed the boiler the same day.", "textRu": "Наш арендодатель починил котёл в тот же день.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "tenant",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈtenənt/",
+      "ipaUs": "/ˈtenənt/",
+      "level": "B1",
+      "translations": [
+        { "text": "арендатор, жилец", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The tenant must pay the bills every month.", "textRu": "Арендатор должен каждый месяц оплачивать счета.", "audioUrl": null, "attribution": null },
+        { "textEn": "A new tenant is moving into the flat above us.", "textRu": "Новый жилец переезжает в квартиру над нами.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "lease",
+      "partOfSpeech": "noun",
+      "ipaUk": "/liːs/",
+      "ipaUs": "/liːs/",
+      "level": "B2",
+      "translations": [
+        { "text": "договор аренды", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We signed a twelve-month lease last week.", "textRu": "Мы подписали договор аренды на двенадцать месяцев на прошлой неделе.", "audioUrl": null, "attribution": null },
+        { "textEn": "Read the lease carefully before you sign it.", "textRu": "Прочитайте договор аренды внимательно, прежде чем подписывать.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "deposit",
+      "partOfSpeech": "noun",
+      "ipaUk": "/dɪˈpɒzɪt/",
+      "ipaUs": "/dɪˈpɑːzɪt/",
+      "level": "B1",
+      "translations": [
+        { "text": "залог, депозит", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The deposit is returned when you move out.", "textRu": "Залог возвращают, когда вы съезжаете.", "audioUrl": null, "attribution": null },
+        { "textEn": "We paid a deposit of one thousand euros.", "textRu": "Мы заплатили залог в тысячу евро.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "utilities",
+      "partOfSpeech": "noun",
+      "ipaUk": "/juːˈtɪlətiz/",
+      "ipaUs": "/juːˈtɪlətiz/",
+      "level": "B1",
+      "translations": [
+        { "text": "коммунальные услуги", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The utilities are not included in the price.", "textRu": "Коммунальные услуги не включены в стоимость.", "audioUrl": null, "attribution": null },
+        { "textEn": "We split the utilities between the three of us.", "textRu": "Мы делим коммунальные услуги на троих.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "electricity",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ɪˌlekˈtrɪsəti/",
+      "ipaUs": "/ɪˌlekˈtrɪsəti/",
+      "level": "A2",
+      "translations": [
+        { "text": "электричество", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The electricity went off during the storm last night.", "textRu": "Электричество отключилось во время грозы прошлой ночью.", "audioUrl": null, "attribution": null },
+        { "textEn": "We pay for electricity at the end of each month.", "textRu": "Мы платим за электричество в конце каждого месяца.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "heating",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈhiːtɪŋ/",
+      "ipaUs": "/ˈhiːtɪŋ/",
+      "level": "A2",
+      "translations": [
+        { "text": "отопление", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The heating doesn't work in the bedroom.", "textRu": "В спальне не работает отопление.", "audioUrl": null, "attribution": null },
+        { "textEn": "Our heating bill is much higher in winter.", "textRu": "Наш счёт за отопление зимой намного выше.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "bill",
+      "partOfSpeech": "noun",
+      "ipaUk": "/bɪl/",
+      "ipaUs": "/bɪl/",
+      "level": "A2",
+      "translations": [
+        { "text": "счёт, квитанция", "sense": null, "isPrimary": true },
+        { "text": "банкнота, купюра", "sense": "банкнота (США)", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I forgot to pay the electricity bill again.", "textRu": "Я опять забыл оплатить счёт за электричество.", "audioUrl": null, "attribution": null },
+        { "textEn": "The bills arrive at the beginning of the month.", "textRu": "Счета приходят в начале месяца.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "furniture",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈfɜːnɪtʃə/",
+      "ipaUs": "/ˈfɜːrnɪtʃər/",
+      "level": "A2",
+      "translations": [
+        { "text": "мебель", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The flat is small, so we bought very little furniture.", "textRu": "Квартира маленькая, поэтому мы купили совсем немного мебели.", "audioUrl": null, "attribution": null },
+        { "textEn": "All the furniture in the living room is new.", "textRu": "Вся мебель в гостиной новая.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "neighbour",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈneɪbə/",
+      "ipaUs": "/ˈneɪbər/",
+      "level": "A2",
+      "translations": [
+        { "text": "сосед", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Our neighbour helped us carry the boxes upstairs.", "textRu": "Наш сосед помог нам занести коробки наверх.", "audioUrl": null, "attribution": null },
+        { "textEn": "The neighbour upstairs plays loud music at night.", "textRu": "Сосед сверху громко включает музыку по ночам.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "plumber",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈplʌmə/",
+      "ipaUs": "/ˈplʌmər/",
+      "level": "B1",
+      "translations": [
+        { "text": "сантехник", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We called a plumber because the tap was leaking.", "textRu": "Мы вызвали сантехника, потому что кран протекал.", "audioUrl": null, "attribution": null },
+        { "textEn": "The plumber will come on Tuesday morning.", "textRu": "Сантехник придёт во вторник утром.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "tap",
+      "partOfSpeech": "noun",
+      "ipaUk": "/tæp/",
+      "ipaUs": "/tæp/",
+      "level": "A2",
+      "translations": [
+        { "text": "кран", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The hot tap in the kitchen is broken.", "textRu": "Горячий кран на кухне сломан.", "audioUrl": null, "attribution": null },
+        { "textEn": "Please turn off the tap when you finish.", "textRu": "Пожалуйста, закройте кран, когда закончите.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "flatmate",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈflætmeɪt/",
+      "ipaUs": "/ˈflætmeɪt/",
+      "level": "A2",
+      "translations": [
+        { "text": "сосед по квартире", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "My flatmate pays half of the rent and bills.", "textRu": "Мой сосед по квартире платит половину аренды и счетов.", "audioUrl": null, "attribution": null },
+        { "textEn": "We are looking for a new flatmate for the spare room.", "textRu": "Мы ищем нового соседа в свободную комнату.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "leak",
+      "partOfSpeech": "noun",
+      "ipaUk": "/liːk/",
+      "ipaUs": "/liːk/",
+      "level": "B1",
+      "translations": [
+        { "text": "течь, протечка", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "There is a leak under the kitchen sink.", "textRu": "Под кухонной раковиной протечка.", "audioUrl": null, "attribution": null },
+        { "textEn": "The leak in the roof got worse after the rain.", "textRu": "Протечка в крыше усилилась после дождя.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "furnished",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈfɜːnɪʃt/",
+      "ipaUs": "/ˈfɜːrnɪʃt/",
+      "level": "B1",
+      "translations": [
+        { "text": "с мебелью, меблированный", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The flat is fully furnished, so we only brought clothes.", "textRu": "Квартира полностью с мебелью, поэтому мы привезли только одежду.", "audioUrl": null, "attribution": null },
+        { "textEn": "A furnished room costs a little more each month.", "textRu": "Меблированная комната стоит немного дороже в месяц.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "spacious",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈspeɪʃəs/",
+      "ipaUs": "/ˈspeɪʃəs/",
+      "level": "B1",
+      "translations": [
+        { "text": "просторный", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The living room is bright and surprisingly spacious.", "textRu": "Гостиная светлая и на удивление просторная.", "audioUrl": null, "attribution": null },
+        { "textEn": "We want a spacious flat with a big balcony.", "textRu": "Мы хотим просторную квартиру с большим балконом.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "noisy",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈnɔɪzi/",
+      "ipaUs": "/ˈnɔɪzi/",
+      "level": "A2",
+      "translations": [
+        { "text": "шумный", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The street is noisy, so we close the windows at night.", "textRu": "Улица шумная, поэтому мы закрываем окна на ночь.", "audioUrl": null, "attribution": null },
+        { "textEn": "Our new neighbours are friendly but very noisy.", "textRu": "Наши новые соседи дружелюбные, но очень шумные.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "damp",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/dæmp/",
+      "ipaUs": "/dæmp/",
+      "level": "B1",
+      "translations": [
+        { "text": "сырой, влажный", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The wall in the corner feels cold and damp.", "textRu": "Стена в углу холодная и сырая.", "audioUrl": null, "attribution": null },
+        { "textEn": "We bought a heater because the room was damp.", "textRu": "Мы купили обогреватель, потому что комната была сырой.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "renovate",
+      "partOfSpeech": "verb",
+      "ipaUk": "/ˈrenəveɪt/",
+      "ipaUs": "/ˈrenəveɪt/",
+      "level": "B1",
+      "translations": [
+        { "text": "ремонтировать, обновлять", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The owners plan to renovate the kitchen this summer.", "textRu": "Хозяева планируют отремонтировать кухню этим летом.", "audioUrl": null, "attribution": null },
+        { "textEn": "We renovated the old flat before moving in.", "textRu": "Мы отремонтировали старую квартиру перед переездом.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "sign",
+      "partOfSpeech": "verb",
+      "ipaUk": "/saɪn/",
+      "ipaUs": "/saɪn/",
+      "level": "A2",
+      "translations": [
+        { "text": "подписывать", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Please sign the lease before Friday.", "textRu": "Пожалуйста, подпишите договор аренды до пятницы.", "audioUrl": null, "attribution": null },
+        { "textEn": "We signed the contract at the agency office.", "textRu": "Мы подписали договор в офисе агентства.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "move in",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌmuːv ˈɪn/",
+      "ipaUs": "/ˌmuːv ˈɪn/",
+      "level": "A2",
+      "translations": [
+        { "text": "въезжать, переезжать", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We can move in at the beginning of May.", "textRu": "Мы можем въехать в начале мая.", "audioUrl": null, "attribution": null },
+        { "textEn": "They moved in last weekend and love the area.", "textRu": "Они переехали в прошлые выходные, и им очень нравится район.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "move out",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌmuːv ˈaʊt/",
+      "ipaUs": "/ˌmuːv ˈaʊt/",
+      "level": "A2",
+      "translations": [
+        { "text": "съезжать, выезжать", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We have to move out before the end of June.", "textRu": "Нам нужно съехать до конца июня.", "audioUrl": null, "attribution": null },
+        { "textEn": "The previous tenants moved out without cleaning the flat.", "textRu": "Прежние жильцы съехали, не убрав квартиру.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "pay the bills",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌpeɪ ðə ˈbɪlz/",
+      "ipaUs": "/ˌpeɪ ðə ˈbɪlz/",
+      "level": "A2",
+      "translations": [
+        { "text": "оплачивать счета", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We take turns to pay the bills online.", "textRu": "Мы по очереди оплачиваем счета онлайн.", "audioUrl": null, "attribution": null },
+        { "textEn": "It is easier to pay the bills by card.", "textRu": "Счета удобнее оплачивать картой.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "the heating doesn't work",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ðə ˈhiːtɪŋ ˌdʌznt ˈwɜːk/",
+      "ipaUs": "/ðə ˈhiːtɪŋ ˌdʌznt ˈwɜːrk/",
+      "level": "A2",
+      "translations": [
+        { "text": "отопление не работает", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The heating doesn't work, and the flat is freezing.", "textRu": "Отопление не работает, и в квартире очень холодно.", "audioUrl": null, "attribution": null },
+        { "textEn": "I called the landlord because the heating doesn't work.", "textRu": "Я позвонил арендодателю, потому что отопление не работает.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "how much is the rent?",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌhaʊ ˈmʌtʃ ɪz ðə ˈrent/",
+      "ipaUs": "/ˌhaʊ ˈmʌtʃ ɪz ðə ˈrent/",
+      "level": "A1",
+      "translations": [
+        { "text": "Сколько стоит аренда?", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Excuse me, how much is the rent for this flat?", "textRu": "Извините, сколько стоит аренда этой квартиры?", "audioUrl": null, "attribution": null },
+        { "textEn": "How much is the rent, and are the bills included?", "textRu": "Сколько стоит аренда и включены ли счета?", "audioUrl": null, "attribution": null }
+      ]
+    }
+  ]
+}

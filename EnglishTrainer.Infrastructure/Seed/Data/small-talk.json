@@ -1,0 +1,401 @@
+{
+  "slug": "small-talk",
+  "title": "Знакомство и общение",
+  "description": "Разговор ни о чём, представление, интересы, приглашения",
+  "sortOrder": 17,
+  "words": [
+    {
+      "lemma": "introduce",
+      "partOfSpeech": "verb",
+      "ipaUk": "/ˌɪntrəˈdjuːs/",
+      "ipaUs": "/ˌɪntrəˈduːs/",
+      "level": "A2",
+      "translations": [
+        { "text": "представлять, знакомить", "sense": null, "isPrimary": true },
+        { "text": "представляться, знакомиться", "sense": "называть себя при знакомстве", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Let me introduce you to my colleague Anna.", "textRu": "Позволь представить тебе мою коллегу Анну.", "audioUrl": null, "attribution": null },
+        { "textEn": "I would like to introduce myself before the meeting starts.", "textRu": "Я хотел бы представиться перед началом встречи.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "pleased",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/pliːzd/",
+      "ipaUs": "/pliːzd/",
+      "level": "A2",
+      "translations": [
+        { "text": "довольный, рад", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I am pleased to meet you at last.", "textRu": "Я рад наконец познакомиться с тобой.", "audioUrl": null, "attribution": null },
+        { "textEn": "She looked pleased with the results of the test.", "textRu": "Она выглядела довольной результатами теста.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "hobby",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈhɒbi/",
+      "ipaUs": "/ˈhɑːbi/",
+      "level": "A2",
+      "translations": [
+        { "text": "хобби, увлечение", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "My main hobby is taking photos of birds.", "textRu": "Моё главное увлечение — фотографировать птиц.", "audioUrl": null, "attribution": null },
+        { "textEn": "Do you have any hobbies besides sports?", "textRu": "У тебя есть какие-нибудь увлечения кроме спорта?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "weekend",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˌwiːkˈend/",
+      "ipaUs": "/ˌwiːkˈend/",
+      "level": "A1",
+      "translations": [
+        { "text": "выходные", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We spent the whole weekend at my parents' house.", "textRu": "Мы провели все выходные в доме моих родителей.", "audioUrl": null, "attribution": null },
+        { "textEn": "What are your plans for the weekend?", "textRu": "Какие у тебя планы на выходные?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "invite",
+      "partOfSpeech": "verb",
+      "ipaUk": "/ɪnˈvaɪt/",
+      "ipaUs": "/ɪnˈvaɪt/",
+      "level": "A2",
+      "translations": [
+        { "text": "приглашать", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I want to invite you to my birthday party.", "textRu": "Я хочу пригласить тебя на мой день рождения.", "audioUrl": null, "attribution": null },
+        { "textEn": "They invited us to dinner on Friday evening.", "textRu": "Они пригласили нас на ужин в пятницу вечером.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "chat",
+      "partOfSpeech": "verb",
+      "ipaUk": "/tʃæt/",
+      "ipaUs": "/tʃæt/",
+      "level": "A2",
+      "translations": [
+        { "text": "болтать, общаться", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We chatted about music for almost an hour.", "textRu": "Мы болтали о музыке почти час.", "audioUrl": null, "attribution": null },
+        { "textEn": "Come and chat with us after the lesson.", "textRu": "Приходи поболтать с нами после урока.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "join",
+      "partOfSpeech": "verb",
+      "ipaUk": "/dʒɔɪn/",
+      "ipaUs": "/dʒɔɪn/",
+      "level": "A2",
+      "translations": [
+        { "text": "присоединяться", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Would you like to join us for a coffee?", "textRu": "Не хочешь присоединиться к нам на чашку кофе?", "audioUrl": null, "attribution": null },
+        { "textEn": "She joined the club to meet new people.", "textRu": "Она вступила в клуб, чтобы познакомиться с новыми людьми.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "interested",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈɪntrəstɪd/",
+      "ipaUs": "/ˈɪntrəstɪd/",
+      "level": "A2",
+      "translations": [
+        { "text": "заинтересованный, интересующийся", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I am interested in learning about other cultures.", "textRu": "Мне интересно узнавать о других культурах.", "audioUrl": null, "attribution": null },
+        { "textEn": "He seemed interested when I mentioned the concert.", "textRu": "Он, казалось, заинтересовался, когда я упомянул концерт.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "busy",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈbɪzi/",
+      "ipaUs": "/ˈbɪzi/",
+      "level": "A2",
+      "translations": [
+        { "text": "занятой", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Sorry, I am busy this evening.", "textRu": "Извини, сегодня вечером я занят.", "audioUrl": null, "attribution": null },
+        { "textEn": "She is always busy with work during the week.", "textRu": "Она всегда занята работой в течение недели.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "plan",
+      "partOfSpeech": "noun",
+      "ipaUk": "/plæn/",
+      "ipaUs": "/plæn/",
+      "level": "A2",
+      "translations": [
+        { "text": "план", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Do you have any plans for Saturday?", "textRu": "У тебя есть какие-нибудь планы на субботу?", "audioUrl": null, "attribution": null },
+        { "textEn": "Our plan is to meet at the park at noon.", "textRu": "Наш план — встретиться в парке в полдень.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "free time",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˌfriː ˈtaɪm/",
+      "ipaUs": "/ˌfriː ˈtaɪm/",
+      "level": "A2",
+      "translations": [
+        { "text": "свободное время", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "In my free time I play the guitar.", "textRu": "В свободное время я играю на гитаре.", "audioUrl": null, "attribution": null },
+        { "textEn": "What do you usually do in your free time?", "textRu": "Что ты обычно делаешь в свободное время?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "maybe",
+      "partOfSpeech": "adverb",
+      "ipaUk": "/ˈmeɪbi/",
+      "ipaUs": "/ˈmeɪbi/",
+      "level": "A2",
+      "translations": [
+        { "text": "может быть, возможно", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Maybe we can go to the cinema tonight.", "textRu": "Может быть, мы можем пойти в кино сегодня вечером.", "audioUrl": null, "attribution": null },
+        { "textEn": "Maybe she is busy, but I will ask her.", "textRu": "Может быть, она занята, но я спрошу её.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "actually",
+      "partOfSpeech": "adverb",
+      "ipaUk": "/ˈæktʃuəli/",
+      "ipaUs": "/ˈæktʃuəli/",
+      "level": "B1",
+      "translations": [
+        { "text": "вообще-то, на самом деле", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Actually, I have never been to London.", "textRu": "Вообще-то я никогда не был в Лондоне.", "audioUrl": null, "attribution": null },
+        { "textEn": "I actually prefer tea to coffee in the morning.", "textRu": "Я, вообще-то, предпочитаю чай кофе по утрам.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "sure",
+      "partOfSpeech": "adverb",
+      "ipaUk": "/ʃɔː/",
+      "ipaUs": "/ʃʊr/",
+      "level": "A2",
+      "translations": [
+        { "text": "конечно, непременно", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Sure, I would love to come with you.", "textRu": "Конечно, я с удовольствием пойду с тобой.", "audioUrl": null, "attribution": null },
+        { "textEn": "Sure, that sounds like a great idea.", "textRu": "Конечно, звучит как отличная идея.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "unfortunately",
+      "partOfSpeech": "adverb",
+      "ipaUk": "/ʌnˈfɔːtʃənətli/",
+      "ipaUs": "/ʌnˈfɔːrtʃənətli/",
+      "level": "B1",
+      "translations": [
+        { "text": "к сожалению", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Unfortunately, I am busy on Friday evening.", "textRu": "К сожалению, в пятницу вечером я занят.", "audioUrl": null, "attribution": null },
+        { "textEn": "Unfortunately, we cannot stay any longer today.", "textRu": "К сожалению, сегодня мы не можем остаться дольше.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "nice to meet you",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌnaɪs tə ˈmiːt juː/",
+      "ipaUs": "/ˌnaɪs tə ˈmiːt juː/",
+      "level": "A1",
+      "translations": [
+        { "text": "приятно познакомиться", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Nice to meet you, I have heard a lot about you.", "textRu": "Приятно познакомиться, я много о тебе слышал.", "audioUrl": null, "attribution": null },
+        { "textEn": "It was nice to meet you at the party.", "textRu": "Было приятно познакомиться с тобой на вечеринке.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "what do you do",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌwɒt də jə ˈduː/",
+      "ipaUs": "/ˌwɑːt də jə ˈduː/",
+      "level": "A2",
+      "translations": [
+        { "text": "чем ты занимаешься", "sense": "вопрос о работе или роде занятий", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "So what do you do for a living?", "textRu": "Так чем ты занимаешься, на что живёшь?", "audioUrl": null, "attribution": null },
+        { "textEn": "What do you do when you are not working?", "textRu": "Чем ты занимаешься, когда не работаешь?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "how are you",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌhaʊ ɑː ˈjuː/",
+      "ipaUs": "/ˌhaʊ ɑːr ˈjuː/",
+      "level": "A1",
+      "translations": [
+        { "text": "как дела, как ты", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Hi, how are you doing these days?", "textRu": "Привет, как у тебя дела в последнее время?", "audioUrl": null, "attribution": null },
+        { "textEn": "How are you after such a long trip?", "textRu": "Как ты после такой долгой поездки?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "how was your weekend",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌhaʊ wəz jɔː ˈwiːkend/",
+      "ipaUs": "/ˌhaʊ wəz jʊr ˈwiːkend/",
+      "level": "A2",
+      "translations": [
+        { "text": "как прошли выходные", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "How was your weekend, did you go anywhere?", "textRu": "Как прошли выходные, ты куда-нибудь ездил?", "audioUrl": null, "attribution": null },
+        { "textEn": "Tell me, how was your weekend with your friends?", "textRu": "Расскажи, как прошли выходные с друзьями?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "let's meet up",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌlets ˈmiːt ʌp/",
+      "ipaUs": "/ˌlets ˈmiːt ʌp/",
+      "level": "A2",
+      "translations": [
+        { "text": "давай как-нибудь встретимся", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Let's meet up sometime next week for coffee.", "textRu": "Давай как-нибудь встретимся на следующей неделе за кофе.", "audioUrl": null, "attribution": null },
+        { "textEn": "Let's meet up near the station at six.", "textRu": "Давай встретимся у станции в шесть.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "i'd love to",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌaɪd ˈlʌv tuː/",
+      "ipaUs": "/ˌaɪd ˈlʌv tuː/",
+      "level": "A2",
+      "translations": [
+        { "text": "я бы с удовольствием", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I'd love to see that new exhibition with you.", "textRu": "Я бы с удовольствием сходил с тобой на новую выставку.", "audioUrl": null, "attribution": null },
+        { "textEn": "I'd love to, but I am working that evening.", "textRu": "Я бы с удовольствием, но в тот вечер я работаю.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "would you like",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌwʊd jə ˈlaɪk/",
+      "ipaUs": "/ˌwʊdʒə ˈlaɪk/",
+      "level": "A2",
+      "translations": [
+        { "text": "не хочешь ли, не желаете ли", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Would you like to join us for dinner?", "textRu": "Не хочешь присоединиться к нам на ужин?", "audioUrl": null, "attribution": null },
+        { "textEn": "Would you like some tea or coffee?", "textRu": "Не желаете ли чаю или кофе?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "hang out",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌhæŋ ˈaʊt/",
+      "ipaUs": "/ˌhæŋ ˈaʊt/",
+      "level": "B1",
+      "translations": [
+        { "text": "проводить время вместе, тусоваться", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We usually hang out at the park on Sundays.", "textRu": "Обычно мы проводим время в парке по воскресеньям.", "audioUrl": null, "attribution": null },
+        { "textEn": "Do you want to hang out after class today?", "textRu": "Хочешь потусоваться после занятий сегодня?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "get to know",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌget tə ˈnəʊ/",
+      "ipaUs": "/ˌget tə ˈnoʊ/",
+      "level": "B1",
+      "translations": [
+        { "text": "узнавать кого-либо ближе, знакомиться", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I would like to get to know you better.", "textRu": "Я хотел бы узнать тебя получше.", "audioUrl": null, "attribution": null },
+        { "textEn": "We got to know each other during the trip.", "textRu": "Мы познакомились ближе во время поездки.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "catch up",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌkætʃ ˈʌp/",
+      "ipaUs": "/ˌkætʃ ˈʌp/",
+      "level": "B1",
+      "translations": [
+        { "text": "поболтать о жизни, наверстать общение", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Let's meet on Friday and catch up properly.", "textRu": "Давай встретимся в пятницу и нормально поболтаем.", "audioUrl": null, "attribution": null },
+        { "textEn": "I need to catch up with my old classmates.", "textRu": "Мне нужно повидаться со старыми одноклассниками.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "see you",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˈsiː juː/",
+      "ipaUs": "/ˈsiː juː/",
+      "level": "A1",
+      "translations": [
+        { "text": "до встречи, увидимся", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "See you tomorrow at the same place.", "textRu": "До встречи завтра на том же месте.", "audioUrl": null, "attribution": null },
+        { "textEn": "It was great, see you next week!", "textRu": "Было здорово, увидимся на следующей неделе!", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "by the way",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌbaɪ ðə ˈweɪ/",
+      "ipaUs": "/ˌbaɪ ðə ˈweɪ/",
+      "level": "B1",
+      "translations": [
+        { "text": "кстати, между прочим", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "By the way, did you finish that book?", "textRu": "Кстати, ты дочитал ту книгу?", "audioUrl": null, "attribution": null },
+        { "textEn": "By the way, my sister is coming to visit us.", "textRu": "Кстати, моя сестра приезжает к нам в гости.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "come over",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌkʌm ˈəʊvə/",
+      "ipaUs": "/ˌkʌm ˈoʊvər/",
+      "level": "A2",
+      "translations": [
+        { "text": "заходить в гости, приходить", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Come over for dinner whenever you want.", "textRu": "Заходи на ужин, когда захочешь.", "audioUrl": null, "attribution": null },
+        { "textEn": "My friends came over to watch a film.", "textRu": "Мои друзья зашли посмотреть фильм.", "audioUrl": null, "attribution": null }
+      ]
+    }
+  ]
+}

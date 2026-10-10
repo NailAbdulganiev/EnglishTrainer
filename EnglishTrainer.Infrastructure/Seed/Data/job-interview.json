@@ -1,0 +1,391 @@
+{
+  "slug": "job-interview",
+  "title": "Работа и собеседование",
+  "description": "Поиск работы, CV, опыт, зарплата и трудовой договор",
+  "sortOrder": 3,
+  "words": [
+    {
+      "lemma": "interview",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈɪntəvjuː/",
+      "ipaUs": "/ˈɪntərvjuː/",
+      "level": "A2",
+      "translations": [
+        { "text": "собеседование", "sense": null, "isPrimary": true },
+        { "text": "интервью", "sense": "разговор с журналистом", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I have a job interview on Monday morning.", "textRu": "У меня собеседование в понедельник утром.", "audioUrl": null, "attribution": null },
+        { "textEn": "She was nervous before her interview at the bank.", "textRu": "Она нервничала перед собеседованием в банке.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "apply",
+      "partOfSpeech": "verb",
+      "ipaUk": "/əˈplaɪ/",
+      "ipaUs": "/əˈplaɪ/",
+      "level": "A2",
+      "translations": [
+        { "text": "подавать заявку", "sense": null, "isPrimary": true },
+        { "text": "применять", "sense": "использовать на практике", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I decided to apply for a job at that company.", "textRu": "Я решил подать заявку на работу в ту компанию.", "audioUrl": null, "attribution": null },
+        { "textEn": "You can apply online and attach your CV.", "textRu": "Ты можешь откликнуться онлайн и приложить своё резюме.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "cv",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˌsiːˈviː/",
+      "ipaUs": "/ˌsiːˈviː/",
+      "level": "A2",
+      "translations": [
+        { "text": "резюме", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Please send your CV to our HR manager.", "textRu": "Пожалуйста, отправьте своё резюме нашему HR-менеджеру.", "audioUrl": null, "attribution": null },
+        { "textEn": "He updated his CV before starting the job search.", "textRu": "Он обновил своё резюме перед началом поиска работы.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "cover letter",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˈkʌvə ˈletə/",
+      "ipaUs": "/ˈkʌvər ˈletər/",
+      "level": "B1",
+      "translations": [
+        { "text": "сопроводительное письмо", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I always write a short cover letter for each vacancy.", "textRu": "Я всегда пишу короткое сопроводительное письмо под каждую вакансию.", "audioUrl": null, "attribution": null },
+        { "textEn": "Your cover letter should explain why you want this job.", "textRu": "В сопроводительном письме стоит объяснить, почему вы хотите эту работу.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "experience",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ɪkˈspɪəriəns/",
+      "ipaUs": "/ɪkˈspɪriəns/",
+      "level": "A2",
+      "translations": [
+        { "text": "опыт", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Do you have any experience in customer service?", "textRu": "У вас есть опыт работы с клиентами?", "audioUrl": null, "attribution": null },
+        { "textEn": "She has five years of experience as a sales manager.", "textRu": "У неё пять лет опыта работы менеджером по продажам.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "skill",
+      "partOfSpeech": "noun",
+      "ipaUk": "/skɪl/",
+      "ipaUs": "/skɪl/",
+      "level": "A2",
+      "translations": [
+        { "text": "навык", "sense": null, "isPrimary": true },
+        { "text": "умение", "sense": "способность что-то делать хорошо", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Good communication skills are important for this position.", "textRu": "Хорошие навыки общения важны для этой должности.", "audioUrl": null, "attribution": null },
+        { "textEn": "I learned some new skills during my internship.", "textRu": "Я освоил несколько новых навыков во время стажировки.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "salary",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈsæləri/",
+      "ipaUs": "/ˈsæləri/",
+      "level": "A2",
+      "translations": [
+        { "text": "зарплата", "sense": null, "isPrimary": true },
+        { "text": "оклад", "sense": "фиксированная часть зарплаты", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "What salary do you expect for this role?", "textRu": "Какую зарплату вы ожидаете на этой должности?", "audioUrl": null, "attribution": null },
+        { "textEn": "The salary is paid twice a month.", "textRu": "Зарплату выплачивают два раза в месяц.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "employer",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ɪmˈplɔɪə/",
+      "ipaUs": "/ɪmˈplɔɪər/",
+      "level": "B1",
+      "translations": [
+        { "text": "работодатель", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "My employer pays for my English courses.", "textRu": "Мой работодатель оплачивает мои курсы английского.", "audioUrl": null, "attribution": null },
+        { "textEn": "A good employer cares about the team.", "textRu": "Хороший работодатель заботится о команде.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "employee",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ɪmˈplɔɪiː/",
+      "ipaUs": "/ɪmˈplɔɪiː/",
+      "level": "A2",
+      "translations": [
+        { "text": "сотрудник", "sense": null, "isPrimary": true },
+        { "text": "работник", "sense": "наёмный рабочий", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Every employee gets a laptop and a phone.", "textRu": "Каждый сотрудник получает ноутбук и телефон.", "audioUrl": null, "attribution": null },
+        { "textEn": "The company has more than two hundred employees.", "textRu": "В компании более двухсот сотрудников.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "vacancy",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈveɪkənsi/",
+      "ipaUs": "/ˈveɪkənsi/",
+      "level": "B1",
+      "translations": [
+        { "text": "вакансия", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I found a vacancy for a junior designer.", "textRu": "Я нашёл вакансию младшего дизайнера.", "audioUrl": null, "attribution": null },
+        { "textEn": "This vacancy is still open, so apply today.", "textRu": "Эта вакансия всё ещё открыта, так что откликайтесь сегодня.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "candidate",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈkændɪdət/",
+      "ipaUs": "/ˈkændɪdeɪt/",
+      "level": "B1",
+      "translations": [
+        { "text": "кандидат", "sense": null, "isPrimary": true },
+        { "text": "соискатель", "sense": "человек, ищущий работу", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "We interviewed three candidates for this position.", "textRu": "Мы провели собеседование с тремя кандидатами на эту должность.", "audioUrl": null, "attribution": null },
+        { "textEn": "The best candidate will start next month.", "textRu": "Лучший кандидат выйдет на работу в следующем месяце.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "hire",
+      "partOfSpeech": "verb",
+      "ipaUk": "/ˈhaɪə/",
+      "ipaUs": "/ˈhaɪər/",
+      "level": "B1",
+      "translations": [
+        { "text": "нанимать", "sense": null, "isPrimary": true },
+        { "text": "брать на работу", "sense": "принимать в штат", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "The manager decided to hire two new developers.", "textRu": "Менеджер решил нанять двух новых разработчиков.", "audioUrl": null, "attribution": null },
+        { "textEn": "They hired me after a short test task.", "textRu": "Меня взяли на работу после короткого тестового задания.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "probation period",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/prəˈbeɪʃn ˈpɪəriəd/",
+      "ipaUs": "/proʊˈbeɪʃn ˈpɪriəd/",
+      "level": "B2",
+      "translations": [
+        { "text": "испытательный срок", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The probation period lasts three months.", "textRu": "Испытательный срок длится три месяца.", "audioUrl": null, "attribution": null },
+        { "textEn": "During the probation period you get full salary.", "textRu": "Во время испытательного срока вы получаете полную зарплату.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "contract",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈkɒntrækt/",
+      "ipaUs": "/ˈkɑːntrækt/",
+      "level": "B1",
+      "translations": [
+        { "text": "трудовой договор", "sense": null, "isPrimary": true },
+        { "text": "контракт", "sense": "письменное соглашение", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I signed the contract and started on Monday.", "textRu": "Я подписал трудовой договор и вышел в понедельник.", "audioUrl": null, "attribution": null },
+        { "textEn": "Read the contract carefully before you sign it.", "textRu": "Внимательно прочитайте договор, прежде чем подписывать.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "full-time",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˌfʊl ˈtaɪm/",
+      "ipaUs": "/ˌfʊl ˈtaɪm/",
+      "level": "B1",
+      "translations": [
+        { "text": "на полную ставку", "sense": null, "isPrimary": true },
+        { "text": "полный рабочий день", "sense": "о графике работы", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "She is looking for a full-time job in marketing.", "textRu": "Она ищет работу на полную ставку в маркетинге.", "audioUrl": null, "attribution": null },
+        { "textEn": "I work full-time, so I study English in the evening.", "textRu": "Я работаю полный день, поэтому учу английский вечером.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "part-time",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˌpɑːt ˈtaɪm/",
+      "ipaUs": "/ˌpɑːrt ˈtaɪm/",
+      "level": "A2",
+      "translations": [
+        { "text": "на неполную ставку", "sense": null, "isPrimary": true },
+        { "text": "подработка", "sense": "временная занятость", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "He has a part-time job at a small café.", "textRu": "У него подработка в маленьком кафе.", "audioUrl": null, "attribution": null },
+        { "textEn": "Part-time work is perfect for students.", "textRu": "Работа на неполную ставку идеально подходит студентам.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "colleague",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈkɒliːɡ/",
+      "ipaUs": "/ˈkɑːliːɡ/",
+      "level": "A2",
+      "translations": [
+        { "text": "коллега", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "My colleagues helped me a lot in the first week.", "textRu": "Коллеги очень помогли мне в первую неделю.", "audioUrl": null, "attribution": null },
+        { "textEn": "I had lunch with a colleague from another department.", "textRu": "Я пообедал с коллегой из другого отдела.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "manager",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈmænɪdʒə/",
+      "ipaUs": "/ˈmænɪdʒər/",
+      "level": "A2",
+      "translations": [
+        { "text": "руководитель", "sense": null, "isPrimary": true },
+        { "text": "менеджер", "sense": "управляющий в компании", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "My manager asked me to finish the report today.", "textRu": "Мой руководитель попросил закончить отчёт сегодня.", "audioUrl": null, "attribution": null },
+        { "textEn": "You should tell your manager about the problem.", "textRu": "Тебе стоит рассказать руководителю о проблеме.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "deadline",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈdedlaɪn/",
+      "ipaUs": "/ˈdedlaɪn/",
+      "level": "B1",
+      "translations": [
+        { "text": "срок сдачи", "sense": null, "isPrimary": true },
+        { "text": "крайний срок", "sense": "последний день для выполнения", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "The deadline for this task is Friday afternoon.", "textRu": "Срок сдачи этой задачи — пятница, вторая половина дня.", "audioUrl": null, "attribution": null },
+        { "textEn": "We worked late to meet the deadline.", "textRu": "Мы работали допоздна, чтобы уложиться в срок.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "overtime",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈəʊvətaɪm/",
+      "ipaUs": "/ˈoʊvərtaɪm/",
+      "level": "B1",
+      "translations": [
+        { "text": "сверхурочные", "sense": null, "isPrimary": true },
+        { "text": "сверхурочная работа", "sense": "работа после окончания дня", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I worked three hours of overtime yesterday.", "textRu": "Вчера я отработал три часа сверхурочно.", "audioUrl": null, "attribution": null },
+        { "textEn": "Does the company pay for overtime?", "textRu": "Компания оплачивает сверхурочные?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "benefits",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈbenɪfɪts/",
+      "ipaUs": "/ˈbenɪfɪts/",
+      "level": "B1",
+      "translations": [
+        { "text": "льготы", "sense": null, "isPrimary": true },
+        { "text": "соцпакет", "sense": "дополнительные бонусы от компании", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "The job offers good benefits and free lunches.", "textRu": "На этой работе хороший соцпакет и бесплатные обеды.", "audioUrl": null, "attribution": null },
+        { "textEn": "Ask about benefits at the end of the interview.", "textRu": "Спросите о льготах в конце собеседования.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "promotion",
+      "partOfSpeech": "noun",
+      "ipaUk": "/prəˈməʊʃn/",
+      "ipaUs": "/prəˈmoʊʃn/",
+      "level": "B1",
+      "translations": [
+        { "text": "повышение", "sense": null, "isPrimary": true },
+        { "text": "продвижение по службе", "sense": "новая должность внутри компании", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "She got a promotion after two years of work.", "textRu": "Она получила повышение после двух лет работы.", "audioUrl": null, "attribution": null },
+        { "textEn": "I hope to get a promotion next spring.", "textRu": "Надеюсь получить повышение следующей весной.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "reference",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈrefrəns/",
+      "ipaUs": "/ˈrefərəns/",
+      "level": "B2",
+      "translations": [
+        { "text": "рекомендация", "sense": null, "isPrimary": true },
+        { "text": "рекомендательное письмо", "sense": "документ от прошлого работодателя", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Could you give me a reference from my last job?", "textRu": "Не могли бы вы дать мне рекомендацию с прошлой работы?", "audioUrl": null, "attribution": null },
+        { "textEn": "The employer asked for two references.", "textRu": "Работодатель попросил две рекомендации.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "qualification",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˌkwɒlɪfɪˈkeɪʃn/",
+      "ipaUs": "/ˌkwɑːlɪfɪˈkeɪʃn/",
+      "level": "B2",
+      "translations": [
+        { "text": "квалификация", "sense": null, "isPrimary": true },
+        { "text": "диплом", "sense": "документ об образовании", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "This position requires a qualification in accounting.", "textRu": "Для этой должности нужна квалификация бухгалтера.", "audioUrl": null, "attribution": null },
+        { "textEn": "Her qualifications impressed the whole team.", "textRu": "Её квалификация впечатлила всю команду.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "negotiate",
+      "partOfSpeech": "verb",
+      "ipaUk": "/nɪˈɡəʊʃieɪt/",
+      "ipaUs": "/nɪˈɡoʊʃieɪt/",
+      "level": "B2",
+      "translations": [
+        { "text": "вести переговоры", "sense": null, "isPrimary": true },
+        { "text": "договариваться", "sense": "обсуждать условия", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "You can negotiate your salary after the offer.", "textRu": "Вы можете обсудить зарплату после предложения.", "audioUrl": null, "attribution": null },
+        { "textEn": "We negotiated a better schedule with the manager.", "textRu": "Мы договорились с руководителем о более удобном графике.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "work from home",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌwɜːk frəm ˈhəʊm/",
+      "ipaUs": "/ˌwɜːrk frəm ˈhoʊm/",
+      "level": "B1",
+      "translations": [
+        { "text": "работать из дома", "sense": null, "isPrimary": true },
+        { "text": "работать удалённо", "sense": "вне офиса", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I can work from home twice a week.", "textRu": "Я могу работать из дома дважды в неделю.", "audioUrl": null, "attribution": null },
+        { "textEn": "Many people prefer to work from home in winter.", "textRu": "Многие предпочитают зимой работать из дома.", "audioUrl": null, "attribution": null }
+      ]
+    }
+  ]
+}

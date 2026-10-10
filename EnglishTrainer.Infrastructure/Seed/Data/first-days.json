@@ -1,0 +1,373 @@
+{
+  "slug": "first-days",
+  "title": "Первые дни",
+  "description": "Аэропорт, транспорт, магазин и вежливые фразы",
+  "sortOrder": 1,
+  "words": [
+    {
+      "lemma": "arrival",
+      "partOfSpeech": "noun",
+      "ipaUk": "/əˈraɪvl/",
+      "ipaUs": "/əˈraɪvl/",
+      "level": "A1",
+      "translations": [
+        { "text": "прибытие", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Our arrival was delayed by two hours.", "textRu": "Наше прибытие задержалось на два часа.", "audioUrl": null, "attribution": null },
+        { "textEn": "Please wait for me in the arrival hall.", "textRu": "Пожалуйста, подожди меня в зале прилёта.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "departure",
+      "partOfSpeech": "noun",
+      "ipaUk": "/dɪˈpɑːtʃə/",
+      "ipaUs": "/dɪˈpɑːrtʃər/",
+      "level": "A2",
+      "translations": [
+        { "text": "отправление, вылет", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The departure time is written on your ticket.", "textRu": "Время вылета написано на вашем билете.", "audioUrl": null, "attribution": null },
+        { "textEn": "We checked the departure board before going to the gate.", "textRu": "Мы проверили табло вылета, прежде чем идти к выходу.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "passport",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈpɑːspɔːt/",
+      "ipaUs": "/ˈpæspɔːrt/",
+      "level": "A1",
+      "translations": [
+        { "text": "паспорт", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Show your passport to the officer at the desk.", "textRu": "Покажите паспорт офицеру за стойкой.", "audioUrl": null, "attribution": null },
+        { "textEn": "My passport is in the front pocket of my bag.", "textRu": "Мой паспорт в переднем кармане сумки.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "luggage",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈlʌɡɪdʒ/",
+      "ipaUs": "/ˈlʌɡɪdʒ/",
+      "level": "A1",
+      "translations": [
+        { "text": "багаж", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Our luggage arrived on the next flight.", "textRu": "Наш багаж прибыл следующим рейсом.", "audioUrl": null, "attribution": null },
+        { "textEn": "Can I leave my luggage at the hotel?", "textRu": "Можно оставить багаж в отеле?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "customs",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈkʌstəmz/",
+      "ipaUs": "/ˈkʌstəmz/",
+      "level": "A2",
+      "translations": [
+        { "text": "таможня", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We went through customs in about ten minutes.", "textRu": "Мы прошли таможню примерно за десять минут.", "audioUrl": null, "attribution": null },
+        { "textEn": "The customs officer asked me a few simple questions.", "textRu": "Таможенник задал мне несколько простых вопросов.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "gate",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ɡeɪt/",
+      "ipaUs": "/ɡeɪt/",
+      "level": "A1",
+      "translations": [
+        { "text": "выход на посадку", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Our gate changed, so we had to walk fast.", "textRu": "Наш выход изменился, поэтому нам пришлось идти быстро.", "audioUrl": null, "attribution": null },
+        { "textEn": "The gate closes thirty minutes before the flight.", "textRu": "Выход на посадку закрывается за тридцать минут до рейса.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "queue",
+      "partOfSpeech": "noun",
+      "ipaUk": "/kjuː/",
+      "ipaUs": "/kjuː/",
+      "level": "A2",
+      "translations": [
+        { "text": "очередь", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "There was a long queue at the passport control.", "textRu": "На паспортном контроле была длинная очередь.", "audioUrl": null, "attribution": null },
+        { "textEn": "We stood in the queue for almost an hour.", "textRu": "Мы простояли в очереди почти час.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "ticket",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈtɪkɪt/",
+      "ipaUs": "/ˈtɪkɪt/",
+      "level": "A1",
+      "translations": [
+        { "text": "билет", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I bought a ticket for the next train to the city.", "textRu": "Я купил билет на следующий поезд до города.", "audioUrl": null, "attribution": null },
+        { "textEn": "Keep your ticket until you leave the station.", "textRu": "Сохраняйте билет, пока не выйдете со станции.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "platform",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈplætfɔːm/",
+      "ipaUs": "/ˈplætfɔːrm/",
+      "level": "A2",
+      "translations": [
+        { "text": "платформа, перрон", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The train to the centre leaves from platform three.", "textRu": "Поезд в центр отправляется с третьей платформы.", "audioUrl": null, "attribution": null },
+        { "textEn": "We waited on the platform for twenty minutes.", "textRu": "Мы ждали на платформе двадцать минут.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "fare",
+      "partOfSpeech": "noun",
+      "ipaUk": "/feə/",
+      "ipaUs": "/fer/",
+      "level": "A2",
+      "translations": [
+        { "text": "стоимость проезда", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The bus fare is two pounds in this city.", "textRu": "Стоимость проезда на автобусе в этом городе — два фунта.", "audioUrl": null, "attribution": null },
+        { "textEn": "How much is the fare to the airport?", "textRu": "Сколько стоит проезд до аэропорта?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "receipt",
+      "partOfSpeech": "noun",
+      "ipaUk": "/rɪˈsiːt/",
+      "ipaUs": "/rɪˈsiːt/",
+      "level": "A2",
+      "translations": [
+        { "text": "чек, квитанция", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Keep the receipt in case you want to return it.", "textRu": "Сохраните чек на случай, если захотите вернуть покупку.", "audioUrl": null, "attribution": null },
+        { "textEn": "The shop assistant put the receipt in the bag.", "textRu": "Продавец положил чек в пакет.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "change",
+      "partOfSpeech": "noun",
+      "ipaUk": "/tʃeɪndʒ/",
+      "ipaUs": "/tʃeɪndʒ/",
+      "level": "A2",
+      "translations": [
+        { "text": "сдача, мелочь", "sense": null, "isPrimary": true },
+        { "text": "перемена, изменение", "sense": "изменение", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Here is your change, two pounds fifty.", "textRu": "Вот ваша сдача — два фунта пятьдесят.", "audioUrl": null, "attribution": null },
+        { "textEn": "Sorry, I don't have any change for the bus.", "textRu": "Извините, у меня нет мелочи на автобус.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "cash",
+      "partOfSpeech": "noun",
+      "ipaUk": "/kæʃ/",
+      "ipaUs": "/kæʃ/",
+      "level": "A1",
+      "translations": [
+        { "text": "наличные", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Do you take cash or only cards?", "textRu": "Вы принимаете наличные или только карты?", "audioUrl": null, "attribution": null },
+        { "textEn": "I paid in cash because the machine was broken.", "textRu": "Я заплатил наличными, потому что аппарат был сломан.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "discount",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈdɪskaʊnt/",
+      "ipaUs": "/ˈdɪskaʊnt/",
+      "level": "A2",
+      "translations": [
+        { "text": "скидка", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The shop gave us a small discount on the coffee.", "textRu": "Магазин дал нам небольшую скидку на кофе.", "audioUrl": null, "attribution": null },
+        { "textEn": "Is there a discount for students at this museum?", "textRu": "Есть ли скидка для студентов в этом музее?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "neighbourhood",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈneɪbəhʊd/",
+      "ipaUs": "/ˈneɪbərhʊd/",
+      "level": "A2",
+      "translations": [
+        { "text": "район, окрестности", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "This neighbourhood is quiet and close to the metro.", "textRu": "Этот район тихий и близко к метро.", "audioUrl": null, "attribution": null },
+        { "textEn": "We walked around the neighbourhood to find a café.", "textRu": "Мы обошли район, чтобы найти кафе.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "address",
+      "partOfSpeech": "noun",
+      "ipaUk": "/əˈdres/",
+      "ipaUs": "/ˈædres/",
+      "level": "A1",
+      "translations": [
+        { "text": "адрес", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Write your address on this form, please.", "textRu": "Напишите, пожалуйста, ваш адрес в этой форме.", "audioUrl": null, "attribution": null },
+        { "textEn": "I asked a passer-by for the address of the bank.", "textRu": "Я спросил у прохожего адрес банка.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "transfer",
+      "partOfSpeech": "verb",
+      "ipaUk": "/trænsˈfɜː/",
+      "ipaUs": "/trænsˈfɜːr/",
+      "level": "A2",
+      "translations": [
+        { "text": "пересаживаться, делать пересадку", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "You need to transfer to the green line at the next stop.", "textRu": "Вам нужно пересесть на зелёную линию на следующей остановке.", "audioUrl": null, "attribution": null },
+        { "textEn": "We transferred to a bus because the tram stopped running.", "textRu": "Мы пересели на автобус, потому что трамвай перестал ходить.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "arrive",
+      "partOfSpeech": "verb",
+      "ipaUk": "/əˈraɪv/",
+      "ipaUs": "/əˈraɪv/",
+      "level": "A1",
+      "translations": [
+        { "text": "прибывать, приезжать", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Our plane will arrive in London at seven in the morning.", "textRu": "Наш самолёт прибудет в Лондон в семь утра.", "audioUrl": null, "attribution": null },
+        { "textEn": "When did you arrive at the hotel yesterday?", "textRu": "Когда ты приехал в отель вчера?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "boarding pass",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˈbɔːdɪŋ pɑːs/",
+      "ipaUs": "/ˈbɔːrdɪŋ pæs/",
+      "level": "A2",
+      "translations": [
+        { "text": "посадочный талон", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The officer looked at my passport and boarding pass.", "textRu": "Офицер посмотрел мой паспорт и посадочный талон.", "audioUrl": null, "attribution": null },
+        { "textEn": "I saved my boarding pass on the phone.", "textRu": "Я сохранил посадочный талон в телефоне.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "bus stop",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˈbʌs stɒp/",
+      "ipaUs": "/ˈbʌs stɑːp/",
+      "level": "A1",
+      "translations": [
+        { "text": "автобусная остановка", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The bus stop is just around the corner.", "textRu": "Автобусная остановка прямо за углом.", "audioUrl": null, "attribution": null },
+        { "textEn": "We waited at the bus stop for ten minutes.", "textRu": "Мы ждали на автобусной остановке десять минут.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "how much does it cost?",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌhaʊ ˈmʌtʃ dʌz ɪt ˈkɒst/",
+      "ipaUs": "/ˌhaʊ ˈmʌtʃ dʌz ɪt ˈkɔːst/",
+      "level": "A1",
+      "translations": [
+        { "text": "Сколько это стоит?", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Excuse me, how much does it cost?", "textRu": "Извините, сколько это стоит?", "audioUrl": null, "attribution": null },
+        { "textEn": "I like this jacket, but how much does it cost?", "textRu": "Мне нравится эта куртка, но сколько она стоит?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "could you help me, please?",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/kʊd juː ˈhelp miː pliːz/",
+      "ipaUs": "/kʊd juː ˈhelp miː pliːz/",
+      "level": "A1",
+      "translations": [
+        { "text": "Не могли бы вы мне помочь?", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Could you help me, please? I am lost.", "textRu": "Не могли бы вы мне помочь? Я заблудился.", "audioUrl": null, "attribution": null },
+        { "textEn": "Could you help me, please? I need the right platform.", "textRu": "Не могли бы вы помочь? Мне нужна нужная платформа.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "excuse me",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ɪkˈskjuːz miː/",
+      "ipaUs": "/ɪkˈskjuːz miː/",
+      "level": "A1",
+      "translations": [
+        { "text": "Извините (обращение)", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Excuse me, is this seat free?", "textRu": "Извините, это место свободно?", "audioUrl": null, "attribution": null },
+        { "textEn": "Excuse me, where is the nearest pharmacy?", "textRu": "Извините, где ближайшая аптека?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "straight ahead",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌstreɪt əˈhed/",
+      "ipaUs": "/ˌstreɪt əˈhed/",
+      "level": "A2",
+      "translations": [
+        { "text": "прямо, вперёд", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Go straight ahead and then turn right at the bank.", "textRu": "Идите прямо, а потом поверните направо у банка.", "audioUrl": null, "attribution": null },
+        { "textEn": "The metro entrance is straight ahead, near the fountain.", "textRu": "Вход в метро прямо, рядом с фонтаном.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "turn left",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌtɜːn ˈleft/",
+      "ipaUs": "/ˌtɜːrn ˈleft/",
+      "level": "A1",
+      "translations": [
+        { "text": "повернуть налево", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Turn left at the traffic lights and walk two blocks.", "textRu": "Поверните налево на светофоре и пройдите два квартала.", "audioUrl": null, "attribution": null },
+        { "textEn": "You should turn left after the small bridge.", "textRu": "Вам следует повернуть налево после маленького моста.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "i don't understand",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/aɪ dəʊnt ˌʌndəˈstænd/",
+      "ipaUs": "/aɪ doʊnt ˌʌndərˈstænd/",
+      "level": "A2",
+      "translations": [
+        { "text": "Я не понимаю", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Sorry, I don't understand. Could you repeat that?", "textRu": "Извините, я не понимаю. Не могли бы вы повторить?", "audioUrl": null, "attribution": null },
+        { "textEn": "I don't understand this form; can you explain it?", "textRu": "Я не понимаю эту форму; можете объяснить?", "audioUrl": null, "attribution": null }
+      ]
+    }
+  ]
+}

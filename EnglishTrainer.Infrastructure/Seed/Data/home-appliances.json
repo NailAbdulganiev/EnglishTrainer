@@ -1,0 +1,407 @@
+{
+  "slug": "home-appliances",
+  "title": "Дом и техника",
+  "description": "Уборка, бытовая техника, поломки и мастер",
+  "sortOrder": 15,
+  "words": [
+    {
+      "lemma": "vacuum cleaner",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈvækjuːm ˈkliːnə/",
+      "ipaUs": "/ˈvækjuːm ˈkliːnər/",
+      "level": "A2",
+      "translations": [
+        { "text": "пылесос", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The vacuum cleaner is in the hall closet.", "textRu": "Пылесос стоит в шкафу в прихожей.", "audioUrl": null, "attribution": null },
+        { "textEn": "Our old vacuum cleaner makes a very loud noise.", "textRu": "Наш старый пылесос очень громко шумит.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "vacuum",
+      "partOfSpeech": "verb",
+      "ipaUk": "/ˈvækjuːm/",
+      "ipaUs": "/ˈvækjuːm/",
+      "level": "B1",
+      "translations": [
+        { "text": "пылесосить", "sense": null, "isPrimary": true },
+        { "text": "вакуум", "sense": "безвоздушное пространство", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I need to vacuum the living room today.", "textRu": "Мне нужно сегодня пропылесосить гостиную.", "audioUrl": null, "attribution": null },
+        { "textEn": "She vacuums the carpets every Saturday morning.", "textRu": "Она пылесосит ковры каждое субботнее утро.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "washing machine",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈwɒʃɪŋ məˌʃiːn/",
+      "ipaUs": "/ˈwɑːʃɪŋ məˌʃiːn/",
+      "level": "A2",
+      "translations": [
+        { "text": "стиральная машина", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The washing machine stopped working in the middle of a cycle.", "textRu": "Стиральная машина сломалась посреди цикла.", "audioUrl": null, "attribution": null },
+        { "textEn": "Please put your dirty towels into the washing machine.", "textRu": "Положи, пожалуйста, грязные полотенца в стиральную машину.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "dishwasher",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈdɪʃwɒʃə/",
+      "ipaUs": "/ˈdɪʃwɑːʃər/",
+      "level": "A2",
+      "translations": [
+        { "text": "посудомоечная машина", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We run the dishwasher every evening after dinner.", "textRu": "Мы запускаем посудомоечную машину каждый вечер после ужина.", "audioUrl": null, "attribution": null },
+        { "textEn": "The dishwasher leaves water on the clean plates.", "textRu": "Посудомоечная машина оставляет воду на чистых тарелках.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "fridge",
+      "partOfSpeech": "noun",
+      "ipaUk": "/frɪdʒ/",
+      "ipaUs": "/frɪdʒ/",
+      "level": "A1",
+      "translations": [
+        { "text": "холодильник", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "There is almost nothing left in the fridge.", "textRu": "В холодильнике почти ничего не осталось.", "audioUrl": null, "attribution": null },
+        { "textEn": "The fridge keeps making a strange clicking sound.", "textRu": "Холодильник всё время странно щёлкает.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "microwave",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈmaɪkrəweɪv/",
+      "ipaUs": "/ˈmaɪkrəweɪv/",
+      "level": "A2",
+      "translations": [
+        { "text": "микроволновка", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Heat the soup in the microwave for two minutes.", "textRu": "Разогрей суп в микроволновке две минуты.", "audioUrl": null, "attribution": null },
+        { "textEn": "Our microwave is broken, so we use the oven.", "textRu": "Наша микроволновка сломана, поэтому мы пользуемся духовкой.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "iron",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈaɪən/",
+      "ipaUs": "/ˈaɪərn/",
+      "level": "A2",
+      "translations": [
+        { "text": "утюг", "sense": null, "isPrimary": true },
+        { "text": "железо", "sense": "металл", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "The iron is still hot, so be careful.", "textRu": "Утюг ещё горячий, будь осторожен.", "audioUrl": null, "attribution": null },
+        { "textEn": "I left the iron on the ironing board.", "textRu": "Я оставил утюг на гладильной доске.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "socket",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈsɒkɪt/",
+      "ipaUs": "/ˈsɑːkɪt/",
+      "level": "A2",
+      "translations": [
+        { "text": "розетка", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "This socket does not work at all.", "textRu": "Эта розетка вообще не работает.", "audioUrl": null, "attribution": null },
+        { "textEn": "Plug the charger into the socket by the bed.", "textRu": "Вставь зарядку в розетку у кровати.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "switch",
+      "partOfSpeech": "noun",
+      "ipaUk": "/swɪtʃ/",
+      "ipaUs": "/swɪtʃ/",
+      "level": "A2",
+      "translations": [
+        { "text": "выключатель", "sense": null, "isPrimary": true },
+        { "text": "переключатель", "sense": "кнопка для смены режима", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "The light switch is behind the door.", "textRu": "Выключатель света находится за дверью.", "audioUrl": null, "attribution": null },
+        { "textEn": "Press the switch to turn on the fan.", "textRu": "Нажми выключатель, чтобы включить вентилятор.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "leak",
+      "partOfSpeech": "noun",
+      "ipaUk": "/liːk/",
+      "ipaUs": "/liːk/",
+      "level": "B1",
+      "translations": [
+        { "text": "протечка", "sense": null, "isPrimary": true },
+        { "text": "утечка", "sense": "утечка информации", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "There is a leak under the kitchen sink.", "textRu": "Под кухонной раковиной протечка.", "audioUrl": null, "attribution": null },
+        { "textEn": "We called a plumber as soon as we saw the leak.", "textRu": "Мы вызвали сантехника, как только увидели протечку.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "clog",
+      "partOfSpeech": "noun",
+      "ipaUk": "/klɒg/",
+      "ipaUs": "/klɑːg/",
+      "level": "B2",
+      "translations": [
+        { "text": "засор", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "A clog in the pipe caused water everywhere.", "textRu": "Из-за засора в трубе вода была повсюду.", "audioUrl": null, "attribution": null },
+        { "textEn": "She removed the clog with a long wire.", "textRu": "Она убрала засор длинной проволокой.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "repair",
+      "partOfSpeech": "verb",
+      "ipaUk": "/rɪˈpeə/",
+      "ipaUs": "/rɪˈper/",
+      "level": "B1",
+      "translations": [
+        { "text": "починить", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Can you repair the door handle before Friday?", "textRu": "Ты можешь починить дверную ручку до пятницы?", "audioUrl": null, "attribution": null },
+        { "textEn": "He repairs old appliances in his small workshop.", "textRu": "Он чинит старую технику в своей маленькой мастерской.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "plumber",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈplʌmə/",
+      "ipaUs": "/ˈplʌmər/",
+      "level": "B1",
+      "translations": [
+        { "text": "сантехник", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The plumber will come tomorrow at nine.", "textRu": "Сантехник придёт завтра в девять.", "audioUrl": null, "attribution": null },
+        { "textEn": "We need a plumber to fix this pipe.", "textRu": "Нам нужен сантехник, чтобы починить эту трубу.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "electrician",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ɪˌlekˈtrɪʃn/",
+      "ipaUs": "/ɪˌlekˈtrɪʃn/",
+      "level": "B1",
+      "translations": [
+        { "text": "электрик", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The electrician checked every socket in the flat.", "textRu": "Электрик проверил каждую розетку в квартире.", "audioUrl": null, "attribution": null },
+        { "textEn": "Never touch the wires before the electrician arrives.", "textRu": "Никогда не трогай провода до прихода электрика.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "warranty",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈwɒrənti/",
+      "ipaUs": "/ˈwɔːrənti/",
+      "level": "B2",
+      "translations": [
+        { "text": "гарантия", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The washing machine is still under warranty.", "textRu": "Стиральная машина ещё на гарантии.", "audioUrl": null, "attribution": null },
+        { "textEn": "Keep the receipt if you want to use the warranty.", "textRu": "Сохрани чек, если хочешь воспользоваться гарантией.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "instruction",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ɪnˈstrʌkʃn/",
+      "ipaUs": "/ɪnˈstrʌkʃn/",
+      "level": "B1",
+      "translations": [
+        { "text": "инструкция", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Read the instruction before you start the machine.", "textRu": "Прочитай инструкцию, прежде чем запускать машину.", "audioUrl": null, "attribution": null },
+        { "textEn": "The instructions are written in very small print.", "textRu": "Инструкция написана очень мелким шрифтом.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "broken",
+      "partOfSpeech": "adjective",
+      "ipaUk": "/ˈbrəʊkən/",
+      "ipaUs": "/ˈbroʊkən/",
+      "level": "A2",
+      "translations": [
+        { "text": "сломанный", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The fridge is broken and we lost all the food.", "textRu": "Холодильник сломан, и мы потеряли всю еду.", "audioUrl": null, "attribution": null },
+        { "textEn": "Is this chair broken or just old?", "textRu": "Этот стул сломан или просто старый?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "appliance",
+      "partOfSpeech": "noun",
+      "ipaUk": "/əˈplaɪəns/",
+      "ipaUs": "/əˈplaɪəns/",
+      "level": "B1",
+      "translations": [
+        { "text": "бытовой прибор", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Every kitchen appliance needs to be cleaned regularly.", "textRu": "Каждый бытовой прибор нужно регулярно чистить.", "audioUrl": null, "attribution": null },
+        { "textEn": "This shop sells appliance parts and tools.", "textRu": "В этом магазине продают запчасти и инструменты для бытовой техники.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "detergent",
+      "partOfSpeech": "noun",
+      "ipaUk": "/dɪˈtɜːdʒənt/",
+      "ipaUs": "/dɪˈtɜːrdʒənt/",
+      "level": "B2",
+      "translations": [
+        { "text": "моющее средство", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Add a small amount of detergent to the water.", "textRu": "Добавь немного моющего средства в воду.", "audioUrl": null, "attribution": null },
+        { "textEn": "We ran out of detergent for the dishwasher.", "textRu": "У нас закончилось средство для посудомоечной машины.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "laundry",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈlɔːndri/",
+      "ipaUs": "/ˈlɔːndri/",
+      "level": "B1",
+      "translations": [
+        { "text": "стирка", "sense": null, "isPrimary": true },
+        { "text": "бельё", "sense": "бельё для стирки", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "I do the laundry every Sunday evening.", "textRu": "По воскресеньям вечером я занимаюсь стиркой.", "audioUrl": null, "attribution": null },
+        { "textEn": "The laundry is still wet, so leave it outside.", "textRu": "Бельё ещё мокрое, оставь его на улице.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "dust",
+      "partOfSpeech": "noun",
+      "ipaUk": "/dʌst/",
+      "ipaUs": "/dʌst/",
+      "level": "B1",
+      "translations": [
+        { "text": "пыль", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "There is thick dust on top of the cupboard.", "textRu": "На шкафу толстый слой пыли.", "audioUrl": null, "attribution": null },
+        { "textEn": "Wipe the dust off the shelves with a damp cloth.", "textRu": "Протри пыль с полок влажной тряпкой.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "mop",
+      "partOfSpeech": "noun",
+      "ipaUk": "/mɒp/",
+      "ipaUs": "/mɑːp/",
+      "level": "B1",
+      "translations": [
+        { "text": "швабра", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The mop is standing behind the bathroom door.", "textRu": "Швабра стоит за дверью в ванной.", "audioUrl": null, "attribution": null },
+        { "textEn": "Use a wet mop on the kitchen floor.", "textRu": "Используй мокрую швабру для кухонного пола.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "kettle",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈketl/",
+      "ipaUs": "/ˈketl/",
+      "level": "A2",
+      "translations": [
+        { "text": "чайник", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Put the kettle on and we will have tea.", "textRu": "Поставь чайник, и мы выпьем чаю.", "audioUrl": null, "attribution": null },
+        { "textEn": "Our electric kettle boils water in two minutes.", "textRu": "Наш электрический чайник закипает за две минуты.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "plug",
+      "partOfSpeech": "noun",
+      "ipaUk": "/plʌg/",
+      "ipaUs": "/plʌg/",
+      "level": "A2",
+      "translations": [
+        { "text": "вилка", "sense": null, "isPrimary": true },
+        { "text": "пробка", "sense": "пробка для слива воды", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "The plug does not fit into this old socket.", "textRu": "Вилка не подходит к этой старой розетке.", "audioUrl": null, "attribution": null },
+        { "textEn": "Pull the plug out before you clean the machine.", "textRu": "Вытащи вилку из розетки, прежде чем чистить машину.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "fix",
+      "partOfSpeech": "verb",
+      "ipaUk": "/fɪks/",
+      "ipaUs": "/fɪks/",
+      "level": "A2",
+      "translations": [
+        { "text": "чинить", "sense": null, "isPrimary": true },
+        { "text": "назначать", "sense": "назначать дату или время", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "My father can fix almost anything at home.", "textRu": "Мой отец может починить дома почти всё.", "audioUrl": null, "attribution": null },
+        { "textEn": "It took two hours to fix the leaking tap.", "textRu": "Починка протекающего крана заняла два часа.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "it doesn't work",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ɪt ˈdʌznt ˈwɜːk/",
+      "ipaUs": "/ɪt ˈdʌznt ˈwɜːrk/",
+      "level": "A1",
+      "translations": [
+        { "text": "это не работает", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The washing machine is full of water and it doesn't work.", "textRu": "Стиральная машина полна воды, и она не работает.", "audioUrl": null, "attribution": null },
+        { "textEn": "I pressed the button twice, but it doesn't work.", "textRu": "Я нажал кнопку дважды, но это не работает.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "it needs replacing",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ɪt niːdz rɪˈpleɪsɪŋ/",
+      "ipaUs": "/ɪt niːdz rɪˈpleɪsɪŋ/",
+      "level": "A2",
+      "translations": [
+        { "text": "это нужно заменить", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The old pipe is rusty and it needs replacing.", "textRu": "Старая труба ржавая, и её нужно заменить.", "audioUrl": null, "attribution": null },
+        { "textEn": "The filter is dirty, so it needs replacing soon.", "textRu": "Фильтр грязный, поэтому его скоро нужно заменить.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "call a technician",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/kɔːl ə tekˈnɪʃn/",
+      "ipaUs": "/kɔːl ə tekˈnɪʃn/",
+      "level": "A2",
+      "translations": [
+        { "text": "вызвать мастера", "sense": null, "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We should call a technician about the broken fridge.", "textRu": "Нам стоит вызвать мастера из-за сломанного холодильника.", "audioUrl": null, "attribution": null },
+        { "textEn": "If the machine still leaks, call a technician tomorrow.", "textRu": "Если машина всё ещё протекает, вызови мастера завтра.", "audioUrl": null, "attribution": null }
+      ]
+    }
+  ]
+}

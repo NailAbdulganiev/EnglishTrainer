@@ -1,0 +1,382 @@
+{
+  "slug": "family-school",
+  "title": "Быт и школа",
+  "description": "Детский сад, школа, родительское собрание и обустройство дома",
+  "sortOrder": 6,
+  "words": [
+    {
+      "lemma": "kindergarten",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈkɪndəgɑːtn/",
+      "ipaUs": "/ˈkɪndərgɑːrtn/",
+      "level": "A2",
+      "translations": [
+        { "text": "детский сад", "sense": "образование", "isPrimary": true },
+        { "text": "подготовительная группа (в США)", "sense": "образование", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Our daughter started kindergarten in September and loves it.", "textRu": "Наша дочь пошла в детский сад в сентябре и очень довольна.", "audioUrl": null, "attribution": null },
+        { "textEn": "The kindergarten closes at six in the evening.", "textRu": "Детский сад закрывается в шесть вечера.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "nursery",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈnɜːsəri/",
+      "ipaUs": "/ˈnɜːrsəri/",
+      "level": "B1",
+      "translations": [
+        { "text": "ясли, детский сад", "sense": "образование", "isPrimary": true },
+        { "text": "питомник (растений)", "sense": "садоводство", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "We found a small nursery five minutes from our flat.", "textRu": "Мы нашли маленькие ясли в пяти минутах от квартиры.", "audioUrl": null, "attribution": null },
+        { "textEn": "The nursery asks parents to bring spare clothes.", "textRu": "Ясли просят родителей приносить запасную одежду.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "primary school",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˈpraɪməri skuːl/",
+      "ipaUs": "/ˈpraɪmeri skuːl/",
+      "level": "A2",
+      "translations": [
+        { "text": "начальная школа", "sense": "образование", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Children here start primary school at the age of five.", "textRu": "Дети здесь идут в начальную школу в пять лет.", "audioUrl": null, "attribution": null },
+        { "textEn": "The primary school is right behind our house.", "textRu": "Начальная школа прямо за нашим домом.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "high school",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˈhaɪ skuːl/",
+      "ipaUs": "/ˈhaɪ skuːl/",
+      "level": "A2",
+      "translations": [
+        { "text": "старшая школа", "sense": "образование", "isPrimary": true },
+        { "text": "средняя школа (в США)", "sense": "образование", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "My son will go to high school next year.", "textRu": "Мой сын пойдёт в старшую школу в следующем году.", "audioUrl": null, "attribution": null },
+        { "textEn": "She teaches history at the local high school.", "textRu": "Она преподаёт историю в местной школе.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "teacher",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈtiːtʃə/",
+      "ipaUs": "/ˈtiːtʃər/",
+      "level": "A1",
+      "translations": [
+        { "text": "учитель, преподаватель", "sense": "образование", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The teacher asked us to sign the reading diary.", "textRu": "Учитель попросил нас подписать дневник чтения.", "audioUrl": null, "attribution": null },
+        { "textEn": "Our class teacher is very kind but strict.", "textRu": "Наша классная руководительница очень добрая, но строгая.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "homework",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈhəʊmwɜːk/",
+      "ipaUs": "/ˈhoʊmwɜːrk/",
+      "level": "A1",
+      "translations": [
+        { "text": "домашнее задание", "sense": "школа", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "He does his homework at the kitchen table every evening.", "textRu": "Он делает уроки за кухонным столом каждый вечер.", "audioUrl": null, "attribution": null },
+        { "textEn": "There was too much homework before the holidays.", "textRu": "Перед каникулами было слишком много домашних заданий.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "lesson",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈlesn/",
+      "ipaUs": "/ˈlesn/",
+      "level": "A1",
+      "translations": [
+        { "text": "урок", "sense": "школа", "isPrimary": true },
+        { "text": "жизненный урок", "sense": "переносное", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "The first lesson starts at half past eight.", "textRu": "Первый урок начинается в половине девятого.", "audioUrl": null, "attribution": null },
+        { "textEn": "I missed two lessons because of a bad cold.", "textRu": "Я пропустил два урока из-за сильной простуды.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "timetable",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈtaɪmteɪbl/",
+      "ipaUs": "/ˈtaɪmteɪbl/",
+      "level": "A2",
+      "translations": [
+        { "text": "расписание", "sense": "школа", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The new timetable hangs on the fridge door.", "textRu": "Новое расписание висит на двери холодильника.", "audioUrl": null, "attribution": null },
+        { "textEn": "I checked the school timetable to plan our week.", "textRu": "Я посмотрел школьное расписание, чтобы спланировать неделю.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "grade",
+      "partOfSpeech": "noun",
+      "ipaUk": "/greɪd/",
+      "ipaUs": "/greɪd/",
+      "level": "A2",
+      "translations": [
+        { "text": "оценка", "sense": "школа", "isPrimary": true },
+        { "text": "класс (год обучения)", "sense": "школа", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "She got a good grade for her English test.", "textRu": "Она получила хорошую оценку за тест по английскому.", "audioUrl": null, "attribution": null },
+        { "textEn": "My younger brother is in the fifth grade.", "textRu": "Мой младший брат учится в пятом классе.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "uniform",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈjuːnɪfɔːm/",
+      "ipaUs": "/ˈjuːnɪfɔːrm/",
+      "level": "A2",
+      "translations": [
+        { "text": "школьная форма", "sense": "школа", "isPrimary": true },
+        { "text": "униформа", "sense": "общее", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "We had to buy a school uniform in August.", "textRu": "Нам пришлось купить школьную форму в августе.", "audioUrl": null, "attribution": null },
+        { "textEn": "The uniform is dark blue with a small badge.", "textRu": "Форма тёмно-синяя с маленьким значком.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "backpack",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈbækpæk/",
+      "ipaUs": "/ˈbækpæk/",
+      "level": "A1",
+      "translations": [
+        { "text": "рюкзак", "sense": "школа", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "His backpack was full of books and a lunch box.", "textRu": "Его рюкзак был полон книг и ланч-бокса.", "audioUrl": null, "attribution": null },
+        { "textEn": "I bought a stronger backpack for the new school year.", "textRu": "Я купил рюкзак покрепче к новому учебному году.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "parent-teacher meeting",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌpeərənt ˈtiːtʃə ˌmiːtɪŋ/",
+      "ipaUs": "/ˌperənt ˈtiːtʃər ˌmiːtɪŋ/",
+      "level": "B1",
+      "translations": [
+        { "text": "родительское собрание", "sense": "школа", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The parent-teacher meeting is on Thursday at six.", "textRu": "Родительское собрание в четверг в шесть.", "audioUrl": null, "attribution": null },
+        { "textEn": "At the parent-teacher meeting we discussed his reading skills.", "textRu": "На родительском собрании мы обсудили его навыки чтения.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "playground",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈpleɪgraʊnd/",
+      "ipaUs": "/ˈpleɪgraʊnd/",
+      "level": "A2",
+      "translations": [
+        { "text": "детская площадка", "sense": "быт", "isPrimary": true },
+        { "text": "игровая площадка (в школе)", "sense": "школа", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "The children run to the playground after lunch.", "textRu": "После обеда дети бегут на площадку.", "audioUrl": null, "attribution": null },
+        { "textEn": "Our yard has a small playground and two benches.", "textRu": "В нашем дворе есть маленькая площадка и две скамейки.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "babysitter",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈbeɪbisɪtə/",
+      "ipaUs": "/ˈbeɪbisɪtər/",
+      "level": "B1",
+      "translations": [
+        { "text": "няня", "sense": "быт", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We found a babysitter who lives in the next building.", "textRu": "Мы нашли няню, которая живёт в соседнем доме.", "audioUrl": null, "attribution": null },
+        { "textEn": "The babysitter reads to the children before bedtime.", "textRu": "Няня читает детям перед сном.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "neighbour",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈneɪbə/",
+      "ipaUs": "/ˈneɪbər/",
+      "level": "A2",
+      "translations": [
+        { "text": "сосед, соседка", "sense": "быт", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Our neighbour helps us with the garden every spring.", "textRu": "Наш сосед помогает нам с садом каждую весну.", "audioUrl": null, "attribution": null },
+        { "textEn": "The neighbours upstairs are repairing their bathroom this week.", "textRu": "Соседи сверху на этой неделе ремонтируют ванную.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "rent",
+      "partOfSpeech": "noun",
+      "ipaUk": "/rent/",
+      "ipaUs": "/rent/",
+      "level": "A2",
+      "translations": [
+        { "text": "арендная плата", "sense": "жильё", "isPrimary": true },
+        { "text": "аренда", "sense": "жильё", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "We pay the rent on the first day of each month.", "textRu": "Мы платим аренду первого числа каждого месяца.", "audioUrl": null, "attribution": null },
+        { "textEn": "The rent includes water but not electricity.", "textRu": "В аренду входит вода, но не электричество.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "repair",
+      "partOfSpeech": "noun",
+      "ipaUk": "/rɪˈpeə/",
+      "ipaUs": "/rɪˈper/",
+      "level": "B1",
+      "translations": [
+        { "text": "ремонт, починка", "sense": "быт", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The washing machine needs a serious repair.", "textRu": "Стиральная машина требует серьёзного ремонта.", "audioUrl": null, "attribution": null },
+        { "textEn": "We spent the weekend doing small repairs around the flat.", "textRu": "Мы провели выходные за мелким ремонтом по квартире.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "fix",
+      "partOfSpeech": "verb",
+      "ipaUk": "/fɪks/",
+      "ipaUs": "/fɪks/",
+      "level": "A2",
+      "translations": [
+        { "text": "чинить, исправлять", "sense": "быт", "isPrimary": true },
+        { "text": "назначать (дату, время)", "sense": "общее", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "Can you fix the tap in the kitchen tonight?", "textRu": "Ты можешь починить кран на кухне сегодня вечером?", "audioUrl": null, "attribution": null },
+        { "textEn": "The technician fixed our boiler in less than an hour.", "textRu": "Мастер починил наш котёл меньше чем за час.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "renovate",
+      "partOfSpeech": "verb",
+      "ipaUk": "/ˈrenəveɪt/",
+      "ipaUs": "/ˈrenəveɪt/",
+      "level": "B2",
+      "translations": [
+        { "text": "делать ремонт, реконструировать", "sense": "ремонт", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We plan to renovate the children's room in spring.", "textRu": "Мы планируем отремонтировать детскую комнату весной.", "audioUrl": null, "attribution": null },
+        { "textEn": "They renovated the whole flat before moving in.", "textRu": "Они сделали ремонт во всей квартире перед переездом.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "appliance",
+      "partOfSpeech": "noun",
+      "ipaUk": "/əˈplaɪəns/",
+      "ipaUs": "/əˈplaɪəns/",
+      "level": "B2",
+      "translations": [
+        { "text": "бытовой прибор", "sense": "техника", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Every kitchen appliance in the flat is quite old.", "textRu": "Каждый бытовой прибор в квартире довольно старый.", "audioUrl": null, "attribution": null },
+        { "textEn": "We bought a new appliance with a two-year guarantee.", "textRu": "Мы купили новый бытовой прибор с гарантией на два года.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "washing machine",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˈwɒʃɪŋ məˌʃiːn/",
+      "ipaUs": "/ˈwɔːʃɪŋ məˌʃiːn/",
+      "level": "A2",
+      "translations": [
+        { "text": "стиральная машина", "sense": "техника", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "The washing machine is making a strange noise again.", "textRu": "Стиральная машина снова странно шумит.", "audioUrl": null, "attribution": null },
+        { "textEn": "Please put your towels in the washing machine.", "textRu": "Пожалуйста, положи полотенца в стиральную машину.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "vacuum cleaner",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˈvækjuːm ˌkliːnə/",
+      "ipaUs": "/ˈvækjuːm ˌkliːnər/",
+      "level": "A2",
+      "translations": [
+        { "text": "пылесос", "sense": "техника", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "Our vacuum cleaner broke, so we swept the floor.", "textRu": "Наш пылесос сломался, поэтому мы подмели пол.", "audioUrl": null, "attribution": null },
+        { "textEn": "The vacuum cleaner is in the cupboard under the stairs.", "textRu": "Пылесос в шкафу под лестницей.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "furniture",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈfɜːnɪtʃə/",
+      "ipaUs": "/ˈfɜːrnɪtʃər/",
+      "level": "A2",
+      "translations": [
+        { "text": "мебель", "sense": "быт", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We ordered new furniture for the living room.", "textRu": "Мы заказали новую мебель в гостиную.", "audioUrl": null, "attribution": null },
+        { "textEn": "The furniture in the rented flat was old but clean.", "textRu": "Мебель в съёмной квартире была старой, но чистой.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "groceries",
+      "partOfSpeech": "noun",
+      "ipaUk": "/ˈgrəʊsəriz/",
+      "ipaUs": "/ˈgroʊsəriz/",
+      "level": "A2",
+      "translations": [
+        { "text": "продукты (покупки)", "sense": "покупки", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "I buy groceries twice a week at the market.", "textRu": "Я покупаю продукты два раза в неделю на рынке.", "audioUrl": null, "attribution": null },
+        { "textEn": "Could you bring the groceries in from the car?", "textRu": "Можешь занести продукты из машины?", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "chore",
+      "partOfSpeech": "noun",
+      "ipaUk": "/tʃɔː/",
+      "ipaUs": "/tʃɔːr/",
+      "level": "B1",
+      "translations": [
+        { "text": "домашняя обязанность", "sense": "быт", "isPrimary": true },
+        { "text": "скучное дело", "sense": "переносное", "isPrimary": false }
+      ],
+      "examples": [
+        { "textEn": "We share the household chores between the four of us.", "textRu": "Мы делим домашние обязанности на четверых.", "audioUrl": null, "attribution": null },
+        { "textEn": "Washing the dishes is my least favourite chore.", "textRu": "Мытьё посуды — моя самая нелюбимая обязанность.", "audioUrl": null, "attribution": null }
+      ]
+    },
+    {
+      "lemma": "move in",
+      "partOfSpeech": "phrase",
+      "ipaUk": "/ˌmuːv ˈɪn/",
+      "ipaUs": "/ˌmuːv ˈɪn/",
+      "level": "A2",
+      "translations": [
+        { "text": "въезжать, переезжать (в жильё)", "sense": "жильё", "isPrimary": true }
+      ],
+      "examples": [
+        { "textEn": "We move in on Saturday and need help with boxes.", "textRu": "Мы въезжаем в субботу, и нам нужна помощь с коробками.", "audioUrl": null, "attribution": null },
+        { "textEn": "The new neighbours moved in while we were away.", "textRu": "Новые соседи въехали, пока нас не было.", "audioUrl": null, "attribution": null }
+      ]
+    }
+  ]
+}
