@@ -60,7 +60,11 @@ public sealed class SmtpEmailSender(
 
         using var client = new SmtpClient(smtp.Host, smtp.Port)
         {
-            EnableSsl = smtp.EnableSsl
+            EnableSsl = smtp.EnableSsl,
+
+            // Таймаут задаётся явно: умолчание в сто секунд превращает заблокированный
+            // исходящий порт в двухминутное ожидание на форме «забыли пароль».
+            Timeout = Math.Clamp(smtp.TimeoutSeconds, 5, 120) * 1000
         };
 
         if (!string.IsNullOrWhiteSpace(smtp.User))
