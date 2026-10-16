@@ -4,12 +4,22 @@ using EnglishTrainer.Api.Endpoints;
 using EnglishTrainer.Api.ErrorHandling;
 using EnglishTrainer.Api.Startup;
 using EnglishTrainer.Application;
+using EnglishTrainer.Application.Media;
 using EnglishTrainer.Infrastructure;
+using EnglishTrainer.Infrastructure.DependencyInjection;
 using EnglishTrainer.Infrastructure.Persistence;
 using EnglishTrainer.Infrastructure.Security;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// ── Локальные секреты ────────────────────────────────────────────────────────
+// Токен бота и строка подключения к своей базе лежат в appsettings.Local.json —
+// файле вне репозитория. Тот же файл читает процесс бота, поэтому секрет
+// задаётся один раз, а не по копии на каждый процесс.
+LocalSettings.AddLocalOverrides(builder.Configuration, builder.Environment.ContentRootPath);
 
 // ── Логирование ──────────────────────────────────────────────────────────────
 // Провайдеры заданы явно, и это не косметика. По умолчанию хост на Windows
@@ -30,7 +40,7 @@ builder.Logging.AddSimpleConsole(options =>
 // он лишь вызывает сервисы Application. Это и есть разделение ответственности
 // в действии — замена хранилища или алгоритма не трогает этот файл.
 builder.Services.AddApplication();
-builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddInfrastructure(builder.Configuration, builder.Environment.ContentRootPath);
 
 // ── Аутентификация по токену ─────────────────────────────────────────────────
 builder.Services
@@ -45,6 +55,40 @@ builder.Services.AddAuthorization();
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<AppExceptionHandler>();
 
+builder.Services.Configure<FormOptions>(options =>
+{
+    // Предел длины составной формы. Без него загружаемый файл целиком оказывался
+    // бы в памяти до первой проверки, и «аватар на 300 МиБ» стал бы способом
+    // уронить сервис. Предел чуть выше допустимого размера аватара, чтобы
+    // пользователь получил понятный текст, а не отказ конвейера.
+    options.MultipartBodyLengthLimit = AvatarPolicy.MaxBytes + (1024 * 1024);
+});
+
+// ── Обратный прокси ──────────────────────────────────────────────────────────
+// За прокси приложение видит только внутренний адрес, если не доверять
+// заголовкам X-Forwarded-*. Без них ссылка для сброса пароля собирается как
+// http://api:8080/…, а перенаправление на HTTPS зацикливается: прокси
+// присылает обычный HTTP, приложение отвечает «перейди на HTTPS», и так
+// по кругу.
+var trustProxy = builder.Configuration.GetValue<bool>("ReverseProxy:Enabled");
+
+if (trustProxy)
+{
+    builder.Services.Configure<ForwardedHeadersOptions>(options =>
+    {
+        options.ForwardedHeaders = ForwardedHeaders.XForwardedFor
+            | ForwardedHeaders.XForwardedProto
+            | ForwardedHeaders.XForwardedHost;
+
+        // Доверяем любому прокси внутри сети развёртывания. Это безопасно ровно
+        // до тех пор, пока порт приложения не опубликован наружу: иначе клиент
+        // подставит себе любую схему и адрес. В docker-compose наружу смотрит
+        // только Caddy, а порт API доступен лишь внутри сети.
+        options.KnownIPNetworks.Clear();
+        options.KnownProxies.Clear();
+    });
+}
+
 // ── Документация ─────────────────────────────────────────────────────────────
 builder.Services.AddOpenApi();
 
@@ -55,6 +99,13 @@ var app = builder.Build();
 if (MaintenanceCommands.IsMaintenanceCommand(args))
 {
     return await MaintenanceCommands.ExecuteAsync(args, app.Services);
+}
+
+// Заголовки прокси разбираются первыми: от них зависит и схема, и адрес,
+// а значит — и ссылки, которые приложение строит, и перенаправление на HTTPS.
+if (trustProxy)
+{
+    app.UseForwardedHeaders();
 }
 
 // ── Интерфейс тренировки ─────────────────────────────────────────────────────

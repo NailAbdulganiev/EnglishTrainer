@@ -4,11 +4,16 @@
 
 .DESCRIPTION
     Проходит полный путь пользователя: регистрация, профиль, колоды, сессия обучения,
-    ответы на карточки, статистика. Дополнительно проверяет обработку ошибок: неверный
-    пароль даёт 401, отсутствие токена 401, несуществующее слово 404.
+    ответы на карточки, статистика, избранное, друзья, аватар и Telegram. Дополнительно
+    проверяет обработку ошибок: неверный пароль даёт 401, отсутствие токена 401,
+    несуществующее слово 404, файл не-картинка 400.
 
     Скрипт только ходит по HTTP и ничего не меняет в репозитории. Пользователь
     создаётся со случайным email, поэтому запускать можно многократно.
+
+    Раздел проверок Telegram требует токена бота: он берётся из переменной
+    окружения Telegram__BotToken или из appsettings.Local.json. Без токена раздел
+    пропускается с явным сообщением — подпись initData иначе проверить нечем.
 
     Совместим с Windows PowerShell 5.1 (в нём нет -SkipHttpErrorCheck,
     а строковое тело запроса искажает кириллицу, поэтому тело кодируется в байты).
@@ -120,6 +125,111 @@ function Get-StatusCode {
         $response = $_.Exception.Response
         if ($null -eq $response) { throw }
         return [int] $response.StatusCode
+    }
+}
+
+<#
+.SYNOPSIS
+    Отправляет файл на эндпоинт, принимающий multipart/form-data.
+
+.DESCRIPTION
+    Windows PowerShell 5.1 не умеет -Form (это PowerShell 6+), поэтому
+    составное тело собирается через System.Net.Http. Статус возвращается
+    числом: проверяются и удачные загрузки, и отказы.
+#>
+function Send-AvatarFile {
+    param(
+        [Parameter(Mandatory = $true)][byte[]] $Bytes,
+        [Parameter(Mandatory = $true)][string] $FileName,
+        [Parameter(Mandatory = $true)][string] $ContentType
+    )
+
+    Add-Type -AssemblyName System.Net.Http
+
+    $client = New-Object System.Net.Http.HttpClient
+    $client.DefaultRequestHeaders.Authorization =
+        New-Object System.Net.Http.Headers.AuthenticationHeaderValue('Bearer', $script:token)
+
+    $form = New-Object System.Net.Http.MultipartFormDataContent
+    $part = New-Object System.Net.Http.ByteArrayContent(, $Bytes)
+    $part.Headers.ContentType = [System.Net.Http.Headers.MediaTypeHeaderValue]::Parse($ContentType)
+    $form.Add($part, 'file', $FileName)
+
+    try {
+        $response = $client.PostAsync("$BaseUrl/api/me/avatar", $form).Result
+        $body = $response.Content.ReadAsStringAsync().Result
+
+        return [pscustomobject]@{ Status = [int] $response.StatusCode; Body = $body }
+    }
+    finally {
+        $form.Dispose()
+        $client.Dispose()
+    }
+}
+
+<#
+.SYNOPSIS
+    Собирает строку initData, подписанную так же, как её подписывает Telegram.
+
+.DESCRIPTION
+    Это единственный способ проверить подпись без настоящего клиента Telegram:
+    строка собирается по документированному алгоритму — пары «ключ=значение»
+    соединены амперсандами, а подписывается другая строка, из тех же пар
+    через перевод строки. Ключ подписи — HMAC-SHA256 от токена бота
+    с ключом WebAppData.
+#>
+function New-TelegramInitData {
+    param(
+        [Parameter(Mandatory = $true)][string] $BotToken,
+        [Parameter(Mandatory = $true)][long] $UserId,
+        [string] $FirstName = 'Проверка',
+        [string] $Username = 'smoke_test'
+    )
+
+    $authDate = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds().ToString([Globalization.CultureInfo]::InvariantCulture)
+    $user = (@{ id = $UserId; first_name = $FirstName; username = $Username } | ConvertTo-Json -Compress)
+
+    $pairs = @(
+        [pscustomobject]@{ Key = 'auth_date'; Value = $authDate },
+        [pscustomobject]@{ Key = 'user'; Value = $user }
+    ) | Sort-Object -Property Key
+
+    $checkString = ($pairs | ForEach-Object { "$($_.Key)=$($_.Value)" }) -join "`n"
+
+    $secretBuilder = [System.Security.Cryptography.HMACSHA256]::new([Text.Encoding]::UTF8.GetBytes('WebAppData'))
+
+    try {
+        $secret = $secretBuilder.ComputeHash([Text.Encoding]::UTF8.GetBytes($BotToken))
+    }
+    finally {
+        $secretBuilder.Dispose()
+    }
+
+    $signer = [System.Security.Cryptography.HMACSHA256]::new($secret)
+
+    try {
+        $hash = ($signer.ComputeHash([Text.Encoding]::UTF8.GetBytes($checkString)) |
+            ForEach-Object { $_.ToString('x2') }) -join ''
+    }
+    finally {
+        $signer.Dispose()
+    }
+
+    $query = ($pairs | ForEach-Object { "$($_.Key)=$([Uri]::EscapeDataString($_.Value))" }) -join '&'
+
+    return "$query&hash=$hash"
+}
+
+# Токен бота нужен только разделу проверок Telegram. Берётся из переменной
+# окружения или из локального файла секретов — того же, что читает приложение.
+# Если его нет, раздел пропускается с явным сообщением, а не падает.
+$botToken = $env:Telegram__BotToken
+
+if (-not $botToken) {
+    $localSettings = Join-Path (Split-Path $PSScriptRoot -Parent) 'appsettings.Local.json'
+
+    if (Test-Path $localSettings) {
+        $botToken = [regex]::Match((Get-Content $localSettings -Raw), '"BotToken"\s*:\s*"([^"]*)"').Groups[1].Value
     }
 }
 
@@ -291,6 +401,13 @@ $firstCard = $session.currentCard
 Assert-That ($firstCard.prompt.Length -gt 0) "В карточке есть вопрос: $($firstCard.prompt)"
 Assert-That ($null -eq $firstCard.PSObject.Properties['lemma']) 'В карточке нет поля с ответом (lemma)'
 
+# Текст для произношения — это тоже правильный ответ, и уходить клиенту он может
+# только в упражнении «на слух». Проверка ловит регрессию, при которой озвучку
+# добавят «для удобства» и в задания на ввод: там браузер произнёс бы ответ
+# вслух до попытки, и упражнение потеряло бы смысл.
+Assert-That ($null -eq $firstCard.spokenText) `
+    'В задании на ввод текст для произношения клиенту не уходит'
+
 # Правильный ответ берётся из словарной статьи слова — так же, как это сделал бы
 # настоящий интерфейс с кнопкой «показать перевод».
 function Get-CorrectAnswer($card) {
@@ -382,6 +499,39 @@ Assert-That ($activity.retention.Count -gt 0) 'Кривая удержания �
 $decksAfter = Invoke-Api -Method GET -Path '/api/decks'
 $progressed = @($decksAfter | Where-Object { $_.startedWords -gt 0 })
 Assert-That ($progressed.Count -gt 0) "Прогресс виден в колодах, затронуто колод: $($progressed.Count)"
+
+# --- Достижения ------------------------------------------------------------
+Write-Step 'Достижения'
+
+$achievements = Invoke-Api -Method GET -Path '/api/achievements'
+Assert-That ($achievements.total -ge 9) "В каталоге достижений: $($achievements.total)"
+Assert-That ($achievements.items.Count -eq $achievements.total) 'Список достижений полный'
+
+# «100 слов», «7 дней подряд» и «колода пройдена» — те, ради которых раздел
+# и делался. Проверяются по коду: название может поменяться, код — нет.
+foreach ($code in 'words-100', 'streak-7', 'deck-master') {
+    Assert-That ($null -ne ($achievements.items | Where-Object { $_.code -eq $code })) "Есть достижение '$code'"
+}
+
+# Пользователь уже прошёл сессию, поэтому первое достижение обязано быть выдано —
+# причём именно чтением, без отдельной кнопки «проверить».
+$firstStep = $achievements.items | Where-Object { $_.code -eq 'first-step' }
+Assert-That ($firstStep.unlocked -eq $true) 'Достижение за первое слово выдано'
+Assert-That ($null -ne $firstStep.unlockedAt) 'У выданного достижения есть дата'
+
+Assert-That ($achievements.unlockedCount -ge 1) "Получено достижений: $($achievements.unlockedCount)"
+Assert-That ($null -ne $achievements.nextGoal) 'Ближайшая незакрытая цель определена'
+Assert-That ($achievements.nextGoal.unlocked -eq $false) 'Ближайшая цель — незакрытая'
+Assert-That ($achievements.nextGoal.progress -le $achievements.nextGoal.target) `
+    'Прогресс не превышает порог'
+
+# Прогресс обрезан по порогу: «120 из 100» читалось бы как ошибка, а не как успех.
+Assert-That (($achievements.items | Where-Object { $_.progress -gt $_.target }).Count -eq 0) `
+    'Ни у одного достижения прогресс не выше порога'
+
+# Повторное чтение не выдаёт то же достижение второй раз.
+$again = Invoke-Api -Method GET -Path '/api/achievements'
+Assert-That ($again.unlockedCount -eq $achievements.unlockedCount) 'Повторная проверка идемпотентна'
 
 # --- Профиль ---------------------------------------------------------------
 Write-Step 'Профиль'
@@ -509,6 +659,142 @@ Assert-That ((@($afterRemove.friends).Count) -eq 0) 'Друг удалён'
 $removedStatus = Get-StatusCode -Method DELETE -Path "/api/friends/$otherUsername"
 Assert-That ($removedStatus -eq 409) "Повторное удаление даёт конфликт (код $removedStatus)"
 
+# --- Рейтинг недели --------------------------------------------------------
+Write-Step 'Рейтинг недели'
+
+# Дружба к этому моменту расторгнута, поэтому рейтинг снова из одной строки:
+# проверяем и этот случай, и то, что своя строка помечена.
+$soloBoard = Invoke-Api -Method GET -Path '/api/friends/leaderboard'
+Assert-That ($soloBoard.entries.Count -eq 1) "Без друзей в рейтинге одна строка (получено $($soloBoard.entries.Count))"
+Assert-That ($soloBoard.entries[0].isMe -eq $true) 'Единственная строка — своя'
+Assert-That ($soloBoard.friendCount -eq 0) 'Друзей в рейтинге нет'
+Assert-That ($soloBoard.entries[0].rank -eq 1) 'Первое место у единственного участника'
+Assert-That ($soloBoard.entries[0].weeklyReviews -gt 0) `
+    "Ответы за неделю посчитаны: $($soloBoard.entries[0].weeklyReviews)"
+
+# Окно — семь дней: от сегодняшнего дня назад на шесть.
+$windowDays = ([datetime]$soloBoard.to - [datetime]$soloBoard.from).Days + 1
+Assert-That ($windowDays -eq 7) "Окно рейтинга — семь дней (получено $windowDays)"
+
+# Теперь возвращаем дружбу и проверяем рейтинг вдвоём.
+Invoke-Api -Method POST -Path '/api/friends' -Body @{ username = $otherUsername } | Out-Null
+$script:token = $other.accessToken
+Invoke-Api -Method POST -Path "/api/friends/$newUsername/accept" | Out-Null
+$script:token = $ownerToken
+
+$board = Invoke-Api -Method GET -Path '/api/friends/leaderboard'
+Assert-That ($board.entries.Count -eq 2) "В рейтинге я и друг (получено $($board.entries.Count))"
+Assert-That ($board.friendCount -eq 1) 'Один друг учтён'
+Assert-That ((@($board.entries | Where-Object { $_.isMe })).Count -eq 1) 'Своя строка ровно одна'
+Assert-That ($board.entries[0].rank -eq 1) 'Места начинаются с первого'
+
+# Места не убывают: список отсортирован, и «2, 1» в нём появиться не может.
+$ranks = @($board.entries | ForEach-Object { $_.rank })
+$sorted = @($ranks | Sort-Object)
+Assert-That (($ranks -join ',') -eq ($sorted -join ',')) "Места идут по возрастанию: $($ranks -join ', ')"
+
+# Оба участника — живые люди со своими данными, а не заглушки.
+Assert-That (($board.entries | Where-Object { $_.username.Length -lt 3 }).Count -eq 0) `
+    'У каждого участника есть ник'
+
+# Рейтинг доступен только участнику: без токена — 401.
+$anonymousBoard = Get-StatusCode -Method GET -Path '/api/friends/leaderboard' -Anonymous
+Assert-That ($anonymousBoard -eq 401) "Без токена рейтинг недоступен (код $anonymousBoard)"
+
+# --- Свои колоды и слова ---------------------------------------------------
+Write-Step 'Свои колоды и слова'
+
+$emptyTitle = Get-StatusCode -Method POST -Path '/api/decks' -Body @{ title = '   ' }
+Assert-That ($emptyTitle -eq 400) "Колода без названия отклонена (код $emptyTitle)"
+
+$ownDeck = Invoke-Api -Method POST -Path '/api/decks' -Body @{
+    title       = 'Слова с работы'
+    description = 'То, что встречается на созвонах'
+}
+Assert-That ($ownDeck.isOwned -eq $true) 'Созданная колода помечена своей'
+Assert-That ($ownDeck.title -eq 'Слова с работы') 'Название сохранено как есть'
+Assert-That ($ownDeck.slug.Length -gt 4) "У колоды есть адрес: $($ownDeck.slug)"
+Assert-That ($ownDeck.totalWords -eq 0) 'Новая колода пуста'
+
+$decksWithOwn = Invoke-Api -Method GET -Path '/api/decks'
+Assert-That ((@($decksWithOwn | Where-Object { $_.slug -eq $ownDeck.slug })).Count -eq 1) `
+    'Своя колода видна в общем списке'
+
+# Новое слово. «landscape» в поставляемом словаре нет, поэтому первый прогон
+# добавляет его по-настоящему — и это корректное слово с корректным переводом,
+# а не мусор, который потом попадался бы в неверных вариантах.
+$afterWord = Invoke-Api -Method POST -Path "/api/decks/$($ownDeck.slug)/words" -Body @{
+    word = @{ lemma = 'landscape'; translation = 'пейзаж'; partOfSpeech = 'noun' }
+}
+Assert-That ($afterWord.totalWords -eq 1) "Новое слово добавлено (слов: $($afterWord.totalWords))"
+
+$ownWords = Invoke-Api -Method GET -Path "/api/decks/$($ownDeck.slug)/words"
+Assert-That ($ownWords.Count -eq 1) 'Список слов колоды содержит слово'
+Assert-That ($ownWords[0].lemma -eq 'landscape') 'Слово сохранено с тем же написанием'
+
+$found = Invoke-Api -Method GET -Path '/api/words?query=landscape'
+Assert-That ((@($found | Where-Object { $_.lemma -eq 'landscape' })).Count -ge 1) `
+    'Слово попало в общий словарь и находится поиском'
+
+# Повторное добавление того же слова в ту же колоду — конфликт, а не дубль.
+$duplicateWord = Get-StatusCode -Method POST -Path "/api/decks/$($ownDeck.slug)/words" -Body @{
+    word = @{ lemma = 'landscape'; translation = 'пейзаж'; partOfSpeech = 'noun' }
+}
+Assert-That ($duplicateWord -eq 409) "Повторное добавление того же слова отклонено (код $duplicateWord)"
+
+$badPart = Get-StatusCode -Method POST -Path "/api/decks/$($ownDeck.slug)/words" -Body @{
+    word = @{ lemma = 'whatever'; translation = 'что-то'; partOfSpeech = 'существительное' }
+}
+Assert-That ($badPart -eq 400) "Часть речи вне списка отклонена (код $badPart)"
+
+$noTranslation = Get-StatusCode -Method POST -Path "/api/decks/$($ownDeck.slug)/words" -Body @{
+    word = @{ lemma = 'whatever'; translation = '  '; partOfSpeech = 'noun' }
+}
+Assert-That ($noTranslation -eq 400) "Слово без перевода отклонено (код $noTranslation)"
+
+$noWord = Get-StatusCode -Method POST -Path "/api/decks/$($ownDeck.slug)/words" -Body @{ }
+Assert-That ($noWord -eq 400) "Запрос без слова и без идентификатора отклонён (код $noWord)"
+
+# Существующее слово добавляется по идентификатору и не создаётся заново.
+$withExisting = Invoke-Api -Method POST -Path "/api/decks/$($ownDeck.slug)/words" -Body @{ wordId = $wordId }
+Assert-That ($withExisting.totalWords -eq 2) "Существующее слово добавлено (слов: $($withExisting.totalWords))"
+
+$afterRemoveWord = Invoke-Api -Method DELETE -Path "/api/decks/$($ownDeck.slug)/words/$wordId"
+Assert-That ($afterRemoveWord.totalWords -eq 1) 'Слово убрано из колоды'
+
+$removeMissing = Get-StatusCode -Method DELETE -Path "/api/decks/$($ownDeck.slug)/words/$wordId"
+Assert-That ($removeMissing -eq 404) "Повторное удаление слова даёт 404 (код $removeMissing)"
+
+# Системную колоду править нельзя — и она отвечает 404, а не 403: 403
+# подтверждал бы, что колода существует.
+$systemDeckWrite = Get-StatusCode -Method POST -Path "/api/decks/$($deck.slug)/words" -Body @{ wordId = $wordId }
+Assert-That ($systemDeckWrite -eq 404) "В системную колоду слово не добавить (код $systemDeckWrite)"
+
+$systemDeckDelete = Get-StatusCode -Method DELETE -Path "/api/decks/$($deck.slug)"
+Assert-That ($systemDeckDelete -eq 404) "Системную колоду не удалить (код $systemDeckDelete)"
+
+# Чужая личная колода не видна и не правится: второй пользователь получает 404
+# и на добавление слова, и на удаление колоды.
+$script:token = $other.accessToken
+
+$foreignAdd = Get-StatusCode -Method POST -Path "/api/decks/$($ownDeck.slug)/words" -Body @{ wordId = $wordId }
+Assert-That ($foreignAdd -eq 404) "В чужую колоду слово не добавить (код $foreignAdd)"
+
+$foreignDelete = Get-StatusCode -Method DELETE -Path "/api/decks/$($ownDeck.slug)"
+Assert-That ($foreignDelete -eq 404) "Чужую колоду не удалить (код $foreignDelete)"
+
+$script:token = $ownerToken
+
+$deleted = Get-StatusCode -Method DELETE -Path "/api/decks/$($ownDeck.slug)"
+Assert-That ($deleted -eq 204) "Своя колода удалена (код $deleted)"
+
+$goneDeck = Get-StatusCode -Method GET -Path "/api/decks/$($ownDeck.slug)"
+Assert-That ($goneDeck -eq 404) "Удалённая колода больше не отдаётся (код $goneDeck)"
+
+$wordSurvived = Invoke-Api -Method GET -Path '/api/words?query=landscape'
+Assert-That ((@($wordSurvived | Where-Object { $_.lemma -eq 'landscape' })).Count -ge 1) `
+    'Слово осталось в общем словаре после удаления колоды'
+
 # --- Прерывание сессии -----------------------------------------------------
 Write-Step 'Прерывание сессии'
 
@@ -517,6 +803,105 @@ Assert-That ($noContent -eq 204) "Сессия прервана (код $noConte
 
 $newSession = Invoke-Api -Method GET -Path "/api/study/session?deckId=$($deck.id)"
 Assert-That ($newSession.sessionId -ne $session.sessionId) 'После прерывания создаётся новая сессия'
+
+# --- Аватар ----------------------------------------------------------------
+Write-Step 'Аватар'
+
+# Картинка 1x1: проверяется не содержимое, а путь файла через сервер —
+# от проверки формата до отдачи статикой. Настоящий PNG нужен потому,
+# что формат определяется по сигнатуре, и «почти PNG» сервер отклонит.
+$pngBytes = [Convert]::FromBase64String(
+    'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==')
+
+$garbage = Send-AvatarFile -Bytes ([Text.Encoding]::UTF8.GetBytes('<?php echo 1; ?>')) `
+    -FileName 'evil.png' -ContentType 'image/png'
+Assert-That ($garbage.Status -eq 400) "Файл, только притворяющийся картинкой, отклонён (код $($garbage.Status))"
+
+$uploaded = Send-AvatarFile -Bytes $pngBytes -FileName 'avatar.png' -ContentType 'image/png'
+Assert-That ($uploaded.Status -eq 200) "Аватар загружен (код $($uploaded.Status))"
+
+$avatarUser = $uploaded.Body | ConvertFrom-Json
+Assert-That ($avatarUser.avatarUrl -like '/avatars/*') "Профиль вернул адрес аватара: $($avatarUser.avatarUrl)"
+
+$avatarFile = Invoke-WebRequest -Uri "$BaseUrl$($avatarUser.avatarUrl)" -UseBasicParsing
+Assert-That ($avatarFile.StatusCode -eq 200) 'Аватар отдаётся статикой'
+Assert-That ($avatarFile.Headers['Content-Type'] -like 'image/*') "Тип содержимого — изображение ($($avatarFile.Headers['Content-Type']))"
+
+$firstAvatarUrl = $avatarUser.avatarUrl
+$replaced = Send-AvatarFile -Bytes $pngBytes -FileName 'avatar2.png' -ContentType 'image/png'
+$secondAvatarUrl = ($replaced.Body | ConvertFrom-Json).avatarUrl
+Assert-That ($secondAvatarUrl -ne $firstAvatarUrl) 'Повторная загрузка меняет адрес — кеш браузера не покажет старое фото'
+Assert-That ((Get-StatusCode -Method GET -Path $firstAvatarUrl -Anonymous) -eq 404) 'Прежний файл удалён'
+
+$removedAvatar = Invoke-Api -Method DELETE -Path '/api/me/avatar'
+Assert-That ($null -eq $removedAvatar.avatarUrl) 'Аватар удалён из профиля'
+Assert-That ((Get-StatusCode -Method GET -Path $secondAvatarUrl -Anonymous) -eq 404) 'Файл аватара удалён'
+Assert-That ((Get-StatusCode -Method DELETE -Path '/api/me/avatar') -eq 200) 'Повторное удаление не ошибка'
+
+# --- Telegram --------------------------------------------------------------
+Write-Step 'Telegram'
+
+if (-not $botToken) {
+    Write-Host '   ПРОПУЩЕНО  Токен бота не задан (Telegram:BotToken) — проверки подписи пропущены.' -ForegroundColor Yellow
+}
+else {
+    # Идентификатор Telegram берётся случайным: проверку можно запускать
+    # многократно, и уникальный индекс по telegram_id не помешает.
+    $telegramId = 900000000000 + (Get-Random -Minimum 100000 -Maximum 999999)
+
+    $status = Invoke-Api -Method GET -Path '/api/me/telegram'
+    Assert-That ($status.linked -eq $false) 'Изначально Telegram не привязан'
+
+    $garbageInit = Get-StatusCode -Method POST -Path '/api/auth/telegram' -Anonymous `
+        -Body @{ initData = 'user=%7B%22id%22%3A1%7D&auth_date=1&hash=deadbeef' }
+    Assert-That ($garbageInit -eq 401) "Неподписанные данные отклонены (код $garbageInit)"
+
+    # Подпись настоящая, но сделана другим токеном: так выглядела бы попытка
+    # выдать себя за чужого пользователя.
+    $foreignToken = "0000000000:$([Guid]::NewGuid().ToString('N'))"
+    $foreignInit = New-TelegramInitData -BotToken $foreignToken -UserId $telegramId
+    $foreignStatus = Get-StatusCode -Method POST -Path '/api/auth/telegram' -Anonymous `
+        -Body @{ initData = $foreignInit }
+    Assert-That ($foreignStatus -eq 401) "Подпись чужим токеном отклонена (код $foreignStatus)"
+
+    $initData = New-TelegramInitData -BotToken $botToken -UserId $telegramId
+
+    $notLinked = Get-StatusCode -Method POST -Path '/api/auth/telegram' -Anonymous -Body @{ initData = $initData }
+    Assert-That ($notLinked -eq 403) "Непривязанный Telegram получает 403, а не 401 (код $notLinked)"
+
+    $link = Invoke-Api -Method POST -Path '/api/me/telegram/link'
+    Assert-That ($link.code.Length -ge 20) "Выдан код привязки длиной $($link.code.Length)"
+    Assert-That ($link.expiresAtUtc -gt (Get-Date)) 'Срок действия кода в будущем'
+
+    $linked = Invoke-Api -Method POST -Path '/api/auth/telegram/link' -Anonymous `
+        -Body @{ initData = $initData; code = $link.code }
+    Assert-That ($linked.accessToken.Length -gt 20) 'Привязка из мини-аппа вернула токен доступа'
+    Assert-That ($linked.user.telegramLinked -eq $true) 'Профиль подтверждает привязку'
+
+    $signedIn = Invoke-Api -Method POST -Path '/api/auth/telegram' -Anonymous -Body @{ initData = $initData }
+    Assert-That ($signedIn.accessToken.Length -gt 20) 'Повторный вход по данным Telegram работает'
+
+    $staleCode = Invoke-Api -Method POST -Path '/api/me/telegram/link'
+    $reused = Get-StatusCode -Method POST -Path '/api/auth/telegram/link' -Anonymous `
+        -Body @{ initData = $initData; code = $link.code }
+    Assert-That ($reused -eq 400) "Использованный код не срабатывает второй раз (код $reused)"
+    Assert-That ($staleCode.code -ne $link.code) 'Новый код отличается от прежнего'
+
+    # Один Telegram — один аккаунт: иначе непонятно, чей прогресс показывать.
+    $ownerToken = $script:token
+    $script:token = $other.accessToken
+    $otherLink = Invoke-Api -Method POST -Path '/api/me/telegram/link'
+    $conflict = Get-StatusCode -Method POST -Path '/api/auth/telegram/link' -Anonymous `
+        -Body @{ initData = $initData; code = $otherLink.code }
+    Assert-That ($conflict -eq 409) "Тот же Telegram нельзя привязать к другому аккаунту (код $conflict)"
+    $script:token = $ownerToken
+
+    $unlinked = Invoke-Api -Method DELETE -Path '/api/me/telegram'
+    Assert-That ($unlinked.linked -eq $false) 'Telegram отвязан'
+
+    $afterUnlink = Get-StatusCode -Method POST -Path '/api/auth/telegram' -Anonymous -Body @{ initData = $initData }
+    Assert-That ($afterUnlink -eq 403) "После отвязки вход в мини-апп снова недоступен (код $afterUnlink)"
+}
 
 # --- Итог ------------------------------------------------------------------
 Write-Host ''

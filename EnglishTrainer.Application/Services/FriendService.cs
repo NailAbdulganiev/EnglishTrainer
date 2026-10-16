@@ -63,11 +63,13 @@ public sealed class FriendService(
             friends,
             incoming
                 .Where(f => f.Requester is not null)
-                .Select(f => new FriendRequestDto(f.Requester!.Username, f.Requester.DisplayName, f.CreatedAt))
+                .Select(f => new FriendRequestDto(
+                    f.Requester!.Username, f.Requester.DisplayName, f.Requester.AvatarUrl, f.CreatedAt))
                 .ToList(),
             outgoing
                 .Where(f => f.Addressee is not null)
-                .Select(f => new FriendRequestDto(f.Addressee!.Username, f.Addressee.DisplayName, f.CreatedAt))
+                .Select(f => new FriendRequestDto(
+                    f.Addressee!.Username, f.Addressee.DisplayName, f.Addressee.AvatarUrl, f.CreatedAt))
                 .ToList());
     }
 
@@ -93,6 +95,7 @@ public sealed class FriendService(
             result.Add(new UserSearchResultDto(
                 candidate.Username,
                 candidate.DisplayName,
+                candidate.AvatarUrl,
                 await ResolveRelationAsync(userId, candidate.Id, ct)));
         }
 
@@ -186,6 +189,7 @@ public sealed class FriendService(
         return new FriendDto(
             friend.Username,
             friend.DisplayName,
+            friend.AvatarUrl,
             summary.Learned,
             streak.Current,
             todayStat?.ReviewedCount ?? 0,

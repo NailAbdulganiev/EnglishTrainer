@@ -13,7 +13,9 @@ public sealed class DeckService(
 {
     public async Task<IReadOnlyList<DeckDto>> GetDecksAsync(int userId, CancellationToken ct = default)
     {
-        var all = await decks.GetAllAsync(ct);
+        // Личные колоды пользователя идут в общем списке после системных:
+        // прогресс по ним считается так же, а редактируются только они.
+        var all = await decks.GetForUserAsync(userId, ct);
         if (all.Count == 0)
             return [];
 
@@ -32,7 +34,8 @@ public sealed class DeckService(
                 deck.Description,
                 wordIds.Count,
                 states.Count,
-                states.Count(s => s.IsLearned)));
+                states.Count(s => s.IsLearned),
+                deck.IsEditableBy(userId)));
         }
 
         return result;
@@ -53,7 +56,8 @@ public sealed class DeckService(
             deck.Description,
             wordIds.Count,
             states.Count,
-            states.Count(s => s.IsLearned));
+            states.Count(s => s.IsLearned),
+            deck.IsEditableBy(userId));
     }
 
     /// <summary>Слова колоды со статусом изучения — для просмотра «что внутри».</summary>

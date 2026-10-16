@@ -1,0 +1,164 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Развёртывание: сайт, мини-апп и бот на одном сервере.
+#
+# Отличается от docker-compose.yml, который лежит рядом: тот поднимает только
+# базу для разработки на localhost:5433. Здесь — всё сразу, с HTTPS и без
+# публикации базы наружу.
+#
+# Запуск:
+#   cp .env.example .env      # и заполнить
+#   docker compose -f docker-compose.prod.yml up -d --build
+#
+# Все секреты приходят переменными окружения: файла appsettings.Local.json
+# в развёртывании нет, и в образ он не попадает (см. .dockerignore).
+# ─────────────────────────────────────────────────────────────────────────────
+
+name: english-trainer
+
+# Общие настройки обоих процессов. Якорь, а не три копии одного списка:
+# разошедшиеся настройки у API и бота дают худший вид поломки — «сайт
+# работает, а мини-апп не пускает».
+x-app-environment: &app-environment
+  # Production, а не Development: автоприменение миграций и загрузка словаря
+  # при старте выключены, схему обновляет отдельный шаг.
+  ASPNETCORE_ENVIRONMENT: Production
+
+  # Строка подключения записана одной строкой намеренно: перенос внутри неё
+  # YAML превратил бы в пробел, а пробел в connection string — это лишний
+  # повод для загадочной ошибки «host not found» при разборе параметров.
+  ConnectionStrings__Postgres: "Host=postgres;Port=5432;Database=${POSTGRES_DB:-english_trainer};Username=${POSTGRES_USER:-postgres};Password=${POSTGRES_PASSWORD:?задайте POSTGRES_PASSWORD в .env}"
+
+  # Секрет подписи токенов. Приложение не стартует с пустым или коротким —
+  # это защита от развёртывания, где токены может подделать любой.
+  Jwt__Secret: ${JWT_SECRET:?задайте JWT_SECRET в .env}
+
+  Telegram__BotToken: ${TELEGRAM_BOT_TOKEN:?задайте TELEGRAM_BOT_TOKEN в .env}
+  Telegram__BotUsername: ${TELEGRAM_BOT_USERNAME:-}
+  # Публичный адрес мини-аппа. Обязателен HTTPS: по HTTP Telegram кнопку
+  # WebApp не открывает.
+  Telegram__WebAppUrl: ${PUBLIC_URL:?задайте PUBLIC_URL в .env}
+
+  # Приложение стоит за Caddy, поэтому доверяет его заголовкам X-Forwarded-*.
+  # Без этого ссылка для сброса пароля указывала бы на внутренний адрес.
+  ReverseProxy__Enabled: "true"
+
+services:
+  # ── База данных ────────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: english-trainer-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-english_trainer}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?задайте POSTGRES_PASSWORD в .env}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-english_trainer}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    # Порт публикуется ТОЛЬКО на петлевой интерфейс сервера — 127.0.0.1.
+    #
+    # Снаружи база недоступна: подключиться можно лишь с самого сервера или
+    # через SSH-туннель. Так сделано потому, что открытый в интернет
+    # PostgreSQL начинают перебирать пароли в первые же минуты, и эти попытки
+    # не прекращаются никогда — они лишь засоряют журнал и жгут процессор.
+    #
+    # DBeaver умеет это сам: вкладка SSH в настройках подключения открывает
+    # туннель, после чего «localhost:5432» на вкладке Main означает адрес
+    # с точки зрения сервера.
+    ports:
+      - "127.0.0.1:5432:5432"
+
+  # ── Схема и словарь ────────────────────────────────────────────────────────
+  # Одноразовый шаг, который выполняется до запуска приложения. Отдельным
+  # сервисом, а не «при старте»: при нескольких экземплярах одновременное
+  # применение миграций — это гонка, а не ускорение.
+  migrate:
+    build:
+      context: .
+      target: api
+    restart: "no"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment: *app-environment
+    command:
+      - sh
+      - -c
+      - |
+        dotnet EnglishTrainer.Api.dll migrate &&
+        dotnet EnglishTrainer.Api.dll seed
+
+  # ── Сайт и мини-апп ────────────────────────────────────────────────────────
+  api:
+    build:
+      context: .
+      target: api
+    container_name: english-trainer-api
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    environment: *app-environment
+    volumes:
+      # Аватары — единственные пользовательские файлы приложения. Без тома
+      # они исчезали бы при каждом обновлении образа.
+      - avatars:/app/wwwroot/avatars
+    expose:
+      - "8080"
+
+  # ── Бот ────────────────────────────────────────────────────────────────────
+  bot:
+    build:
+      context: .
+      target: bot
+    container_name: english-trainer-bot
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    environment: *app-environment
+    # Входящие соединения боту не нужны: он сам опрашивает Telegram.
+
+  # ── HTTPS ──────────────────────────────────────────────────────────────────
+  caddy:
+    image: caddy:2-alpine
+    container_name: english-trainer-proxy
+    restart: unless-stopped
+    depends_on:
+      - api
+    environment:
+      # Домен, на который выдан сертификат. Сертификат Caddy получает сам.
+      SITE_ADDRESS: ${PUBLIC_URL:?задайте PUBLIC_URL в .env}
+    ports:
+      # 80-й занят всегда: через него Let's Encrypt подтверждает владение
+      # доменом (HTTP-01). Сертификат на 443-м не выдаётся, если 443 занят
+      # чем-то другим, — а он на этом сервере занят VPN, поэтому проверка
+      # идёт именно через 80-й.
+      - "80:80"
+
+      # Порт HTTPS настраивается. Если 443 свободен — оставьте по умолчанию;
+      # если его занимает xray, панель или что-то ещё, укажите другой порт
+      # в .env (HTTPS_PORT=8443) — адрес станет https://домен:8443.
+      - "${HTTPS_PORT:-443}:${HTTPS_PORT:-443}"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  postgres-data:
+  avatars:
+  # Сертификаты и ключи Let's Encrypt. Без тома Caddy запрашивал бы новый
+  # сертификат после каждого пересоздания контейнера, а у Let's Encrypt
+  # на это есть недельный лимит.
+  caddy-data:
+  caddy-config:

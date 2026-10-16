@@ -142,18 +142,75 @@ public sealed class WordRepository(AppDbContext context) : IWordRepository
             .Select(dw => dw.WordId)
             .ToListAsync(ct);
 
+    public Task<int> CountAllAsync(CancellationToken ct = default) =>
+        context.Words.CountAsync(ct);
+
+    public Task<Word?> GetWithDetailsByOffsetAsync(int offset, CancellationToken ct = default) =>
+        // Тот же порядок, что и при отборе новых слов: сначала употребительные,
+        // затем по идентификатору. Без устойчивого порядка «слово дня» менялось бы
+        // от запуска к запуску при одном и том же смещении.
+        context.Words
+            .OrderBy(w => w.FrequencyRank == null)
+            .ThenBy(w => w.FrequencyRank)
+            .ThenBy(w => w.Id)
+            .Skip(offset)
+            .Take(1)
+            .Include(w => w.Translations)
+            .Include(w => w.Examples)
+            .AsSplitQuery()
+            .AsNoTracking()
+            .FirstOrDefaultAsync(ct);
+
     public async Task AddRangeAsync(IEnumerable<Word> words, CancellationToken ct = default)
     {
         await context.Words.AddRangeAsync(words, ct);
+    }
+
+    public async Task AddAsync(Word word, CancellationToken ct = default)
+    {
+        await context.Words.AddAsync(word, ct);
+    }
+
+    public async Task<IReadOnlyList<Word>> SearchAsync(
+        string query, int limit, CancellationToken ct = default)
+    {
+        if (string.IsNullOrWhiteSpace(query) || limit <= 0)
+            return [];
+
+        var normalized = query.Trim().ToLowerInvariant();
+
+        // Совпадение ищется с начала строки: так запрос опирается на индексы
+        // и не деградирует с ростом словаря. Заодно это предсказуемее для
+        // человека — «land» находит landscape, но не «island».
+        return await context.Words
+            .Where(w => w.Lemma.ToLower().StartsWith(normalized)
+                        || w.Translations.Any(t => t.Text.ToLower().StartsWith(normalized)))
+            .OrderBy(w => w.Lemma)
+            .Take(limit)
+            .Include(w => w.Translations)
+            .AsNoTracking()
+            .ToListAsync(ct);
     }
 }
 
 /// <summary>Колоды.</summary>
 public sealed class DeckRepository(AppDbContext context) : IDeckRepository
 {
-    public async Task<IReadOnlyList<Deck>> GetAllAsync(CancellationToken ct = default) =>
+    public async Task<IReadOnlyList<Deck>> GetSystemAsync(CancellationToken ct = default) =>
         await context.Decks
+            .Where(d => d.IsSystem)
             .OrderBy(d => d.SortOrder)
+            .AsNoTracking()
+            .ToListAsync(ct);
+
+    public async Task<IReadOnlyList<Deck>> GetForUserAsync(int userId, CancellationToken ct = default) =>
+        await context.Decks
+            // Личные колоды идут после системных: порядок задан SortOrder
+            // у системных, а личные добавляются в конец списка по дате создания.
+            .Where(d => d.IsSystem || d.OwnerId == userId)
+            .OrderBy(d => d.IsSystem ? 0 : 1)
+            .ThenBy(d => d.SortOrder)
+            .ThenBy(d => d.Id)
             .AsNoTracking()
             .ToListAsync(ct);
 
@@ -162,6 +219,62 @@ public sealed class DeckRepository(AppDbContext context) : IDeckRepository
 
     public Task<Deck?> GetByIdAsync(int id, CancellationToken ct = default) =>
         context.Decks.FirstOrDefaultAsync(d => d.Id == id, ct);
+
+    public Task<bool> SlugExistsAsync(string slug, CancellationToken ct = default) =>
+        context.Decks.AnyAsync(d => d.Slug == slug, ct);
+
+    public async Task RemoveAsync(Deck deck, CancellationToken ct = default)
+    {
+        // Связи «слово в колоде» уходят каскадом на стороне базы, но контекст
+        // о них не знает; удаление сущности без загрузки связей EF выполнит
+        // одним DELETE, а каскад сделает PostgreSQL.
+        context.Decks.Remove(deck);
+
+        await Task.CompletedTask;
+    }
+
+    public Task<DeckWord?> GetWordLinkAsync(int deckId, int wordId, CancellationToken ct = default) =>
+        context.DeckWords.FirstOrDefaultAsync(dw => dw.DeckId == deckId && dw.WordId == wordId, ct);
+
+    public async Task AddWordAsync(DeckWord link, CancellationToken ct = default)
+    {
+        await context.DeckWords.AddAsync(link, ct);
+    }
+
+    public async Task RemoveWordAsync(DeckWord link, CancellationToken ct = default)
+    {
+        context.DeckWords.Remove(link);
+
+        await Task.CompletedTask;
+    }
+
+    public async Task<int> NextWordOrderAsync(int deckId, CancellationToken ct = default)
+    {
+        // Пустая колода начинается с нуля: Max по пустому множеству не определён,
+        // и без запасного значения первое слово получило бы позицию по умолчанию.
+        var max = await context.DeckWords
+            .Where(dw => dw.DeckId == deckId)
+            .Select(dw => (int?)dw.Order)
+            .MaxAsync(ct);
+
+        return (max ?? -1) + 1;
+    }
+
+    public Task<int> CountCompletedAsync(
+        int userId, double learnedIntervalDays, CancellationToken ct = default) =>
+        // Колода пройдена, когда в ней есть слова и каждое из них выучено.
+        // Пустая колода не считается пройденной: «нет слов» и «все слова
+        // выучены» — не одно и то же, и награда за пустую колоду была бы
+        // наградой ни за что.
+        context.Decks.CountAsync(
+            deck => context.DeckWords.Any(dw => dw.DeckId == deck.Id)
+                    && !context.DeckWords.Any(dw =>
+                        dw.DeckId == deck.Id
+                        && !context.CardStates.Any(state =>
+                            state.UserId == userId
+                            && state.WordId == dw.WordId
+                            && state.IntervalDays >= learnedIntervalDays)),
+            ct);
 
     public async Task AddAsync(Deck deck, CancellationToken ct = default)
     {
@@ -204,12 +317,38 @@ public sealed class UserRepository(AppDbContext context) : IUserRepository
     }
 
     public Task<User?> GetByTelegramIdAsync(long telegramId, CancellationToken ct = default) =>
-        context.Users.FirstOrDefaultAsync(u => u.TelegramId == telegramId, ct);
+        // Настройки загружаются сразу: и напоминания, и сводка дня обращаются
+        // к ним постоянно, а строка настроек одна на пользователя — лишним
+        // этот Include не бывает.
+        context.Users
+            .Include(u => u.Settings)
+            .FirstOrDefaultAsync(u => u.TelegramId == telegramId, ct);
 
     public Task<User?> GetWithSettingsAsync(int userId, CancellationToken ct = default) =>
         context.Users
             .Include(u => u.Settings)
             .FirstOrDefaultAsync(u => u.Id == userId, ct);
+
+    public async Task<IReadOnlyList<User>> GetDueRemindersAsync(
+        DateTime nowUtc, int limit, CancellationToken ct = default)
+    {
+        if (limit <= 0)
+            return [];
+
+        // Отслеживаемые сущности, а не AsNoTracking: после отправки расписание
+        // каждого из этих пользователей сдвигается, и изменение должно попасть
+        // в базу тем же SaveChanges.
+        return await context.Users
+            .Include(u => u.Settings)
+            .Where(u => u.TelegramId != null
+                        && u.Settings != null
+                        && u.Settings.DailyReminderEnabled
+                        && u.Settings.NextReminderAtUtc != null
+                        && u.Settings.NextReminderAtUtc <= nowUtc)
+            .OrderBy(u => u.Settings!.NextReminderAtUtc)
+            .Take(limit)
+            .ToListAsync(ct);
+    }
 
     public async Task AddAsync(User user, CancellationToken ct = default)
     {

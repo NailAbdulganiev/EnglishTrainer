@@ -61,6 +61,13 @@ export async function render(container, context) {
                         в день через неделю накопится несколько сотен карточек к повторению.
                     </p>
 
+                    <p class="hint">
+                        ${state.user?.telegramLinked
+                            ? 'Напоминание приходит в Telegram в выбранное время по вашему часовому поясу.'
+                            : 'Напоминания отправляются в Telegram, а браузерные не работают при закрытой вкладке. '
+                              + 'Привяжите Telegram в профиле — без него напоминать некуда.'}
+                    </p>
+
                     <div class="row" style="margin-top: 18px">
                         <button type="submit" class="btn btn--primary">Сохранить</button>
                         <button type="button" class="btn btn--ghost" id="reset-settings">Вернуть значения</button>

@@ -2,10 +2,39 @@
 <html lang="ru">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>EnglishTrainer — тренажёр словарного запаса</title>
     <link rel="stylesheet" href="/styles.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>📘</text></svg>">
+
+    <!--
+        Тема выставляется до первой отрисовки. Без этого скрипта тёмная палитра
+        применялась бы только после загрузки модулей, и страница успевала мигнуть
+        белым — на тёмном экране телефона это заметно и выглядит как дефект.
+    -->
+    <script>
+        (function () {
+            try {
+                var mode = localStorage.getItem('englishtrainer.theme') || 'auto';
+                var dark = mode === 'dark'
+                    || (mode === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+                document.documentElement.dataset.themeMode = mode;
+            } catch (e) {
+                document.documentElement.dataset.theme = 'light';
+            }
+        })();
+    </script>
+
+    <!--
+        Скрипт Telegram. Подключается с defer и до модулей приложения: модули
+        тоже отложены, а порядок между отложенными скриптами — документный,
+        поэтому window.Telegram успевает появиться раньше.
+
+        Если сети нет или страница открыта в обычном браузере, скрипт просто
+        не загрузится. Это не поломка: приложение работает как веб-версия.
+    -->
+    <script defer src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
 
@@ -34,6 +63,11 @@
          иконка сбивала бы с толку. Описан здесь, чтобы не дублировать пути. -->
     <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.7-6.5 10-6.5S22 12 22 12s-3.7 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
     <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="m4 5 16 14"/><path d="M10.1 6.1A9.9 9.9 0 0 1 12 5.5c6.3 0 10 6.5 10 6.5a17.4 17.4 0 0 1-3.4 4"/><path d="M6.5 8.3A17.4 17.4 0 0 0 2 12s3.7 6.5 10 6.5a10 10 0 0 0 3-.4"/><path d="M10.2 10.3a3 3 0 0 0 4.2 4.2"/></symbol>
+    <!-- Иконки переключателя темы: солнце и месяц. Показывается та, которая
+         соответствует действию, а не текущему состоянию. -->
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M21.5 3.5 2.5 10.6l6.4 2.5 2.5 6.4z"/><path d="M21.5 3.5 8.9 13.1"/></symbol>
 </svg>
 
 <!-- ── Экран входа и регистрации ─────────────────────────────────────────── -->
@@ -174,6 +208,54 @@
     </div>
 </div>
 
+<!-- ── Экран для мини-аппа без привязки ──────────────────────────────────── -->
+<!--
+     Отдельный экран, а не форма входа. Внутри Telegram пароля нет и быть
+     не может: человек уже подтвердил, кто он, но этот Telegram не связан
+     ни с каким прогрессом. Показать ему форму входа значило бы предложить
+     ввести пароль от аккаунта, о котором он, возможно, уже забыл.
+-->
+<div class="auth-screen" id="screen-telegram" hidden>
+    <div class="auth-card">
+        <div class="brand brand--lg">English<span>Trainer</span></div>
+        <h1>Осталось привязать аккаунт</h1>
+
+        <p class="lead" id="telegram-lead">
+            Этот Telegram ещё не связан с аккаунтом тренажёра, поэтому показать
+            прогресс нечего.
+        </p>
+
+        <ol class="steps">
+            <li>Откройте тренажёр в браузере.</li>
+            <li>Зайдите в «Профиль» и нажмите «Привязать Telegram».</li>
+            <li>Отправьте боту команду <code>/link</code> и через пробел код из профиля.</li>
+        </ol>
+
+        <div class="row">
+            <button type="button" class="btn btn--primary btn--wide" id="telegram-open-site">
+                Открыть тренажёр в браузере
+            </button>
+        </div>
+
+        <form id="telegram-code-form" class="stack" novalidate>
+            <div class="form-alert" id="telegram-alert" role="alert" hidden></div>
+
+            <label class="field">
+                <span>Код привязки <em class="muted">— если уже получили его на сайте</em></span>
+                <input type="text" id="telegram-code" autocomplete="off" placeholder="вставьте код из профиля">
+            </label>
+
+            <div class="row">
+                <button type="submit" class="btn btn--ghost btn--wide" id="telegram-code-submit">
+                    Привязать и войти
+                </button>
+            </div>
+        </form>
+
+        <p class="hint"><a href="#/" id="telegram-retry">Я уже привязал — попробовать снова</a></p>
+    </div>
+</div>
+
 <!-- ── Приложение ───────────────────────────────────────────────────────── -->
 <div class="app" id="app" hidden>
     <aside class="sidebar">
@@ -186,6 +268,11 @@
         <header class="topbar">
             <h1 id="page-title"></h1>
             <div class="topbar-actions" id="topbar-actions"></div>
+
+            <!-- Переключатель темы стоит в шапке, а не в меню: он нужен на любой
+                 странице, а в мини-аппе бокового меню с подписью нет вовсе. -->
+            <button type="button" class="btn btn--ghost btn--icon topbar__theme" id="theme-toggle"
+                    aria-label="Переключить тему" title="Переключить тему"></button>
         </header>
         <div class="content" id="content"></div>
     </div>

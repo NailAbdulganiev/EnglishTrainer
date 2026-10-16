@@ -19,6 +19,7 @@ public static class DtoMapper
         user.Email,
         user.Username,
         user.DisplayName,
+        user.AvatarUrl,
         user.TimeZoneId,
         user.CreatedAt,
         user.TelegramId.HasValue);
@@ -73,6 +74,11 @@ public static class DtoMapper
     /// аргументами <paramref name="prompt"/> и <paramref name="promptLanguage"/>:
     /// при выборе варианта вопрос — английское слово, при вводе — перевод.
     /// </remarks>
+    /// <param name="spokenText">
+    /// Текст для озвучивания браузером. Заполняется только у упражнения на слух:
+    /// в остальных оно было бы подсказкой — клиент произнёс бы ответ вслух
+    /// до попытки.
+    /// </param>
     public static StudyCardDto ToStudyCard(
         this StudySessionItem item,
         ExerciseKind exercise,
@@ -82,7 +88,8 @@ public static class DtoMapper
         string? ipaUs,
         string? audioUrl,
         IReadOnlyList<string>? options = null,
-        int? answerLength = null)
+        int? answerLength = null,
+        string? spokenText = null)
     {
         var word = item.Word ?? throw new InvalidOperationException(
             "Слово не загружено вместе с элементом сессии. Нужен Include(x => x.Word).");
@@ -100,6 +107,7 @@ public static class DtoMapper
             ipaUs,
             audioUrl,
             options ?? [],
-            answerLength);
+            answerLength,
+            spokenText);
     }
 }

@@ -26,6 +26,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<FavoriteWord> FavoriteWords => Set<FavoriteWord>();
     public DbSet<Friendship> Friendships => Set<Friendship>();
     public DbSet<PasswordResetToken> PasswordResetTokens => Set<PasswordResetToken>();
+    public DbSet<TelegramLinkCode> TelegramLinkCodes => Set<TelegramLinkCode>();
+    public DbSet<UserAchievement> UserAchievements => Set<UserAchievement>();
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {

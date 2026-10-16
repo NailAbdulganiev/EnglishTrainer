@@ -18,13 +18,18 @@ public static class ApplicationServiceCollectionExtensions
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         services.AddScoped<AuthService>();
+        services.AddScoped<AchievementService>();
+        services.AddScoped<CustomDeckService>();
         services.AddScoped<DeckService>();
         services.AddScoped<FavoriteService>();
         services.AddScoped<FriendService>();
+        services.AddScoped<LeaderboardService>();
         services.AddScoped<PasswordResetService>();
         services.AddScoped<ProfileService>();
         services.AddScoped<StudySessionService>();
         services.AddScoped<StatsService>();
+        services.AddScoped<TelegramService>();
+        services.AddScoped<TelegramReminderService>();
 
         services.AddSingleton<ISrsScheduler>(_ => new Sm2SrsScheduler());
         services.AddSingleton<SrsOptions>();

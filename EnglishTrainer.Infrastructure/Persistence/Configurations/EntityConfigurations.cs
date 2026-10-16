@@ -30,6 +30,13 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(u => u.TimeZoneId).IsRequired().HasMaxLength(64).HasDefaultValue("UTC");
 
+        // Имя файла аватара. Необязательное: у большинства пользователей фото нет,
+        // и заставлять их загружать картинку при регистрации незачем.
+        builder.Property(u => u.AvatarFileName).HasMaxLength(64);
+
+        // Адрес аватара — вычисляемое свойство, в базе ему делать нечего.
+        builder.Ignore(u => u.AvatarUrl);
+
         builder.Property(u => u.CreatedAt).IsRequired();
 
         // TelegramId уникален, но допускает NULL (пользователь без бота).
@@ -62,6 +69,56 @@ public sealed class UserSettingsConfiguration : IEntityTypeConfiguration<UserSet
         // time без зоны: напоминание задаётся в локальном времени пользователя,
         // а не в UTC, иначе при смене пояса оно «уезжает».
         builder.Property(s => s.ReminderTime).HasColumnType("time without time zone");
+
+        // Момент следующего напоминания — он-то как раз в UTC, потому что по нему
+        // идёт выборка «кому пора», а она не должна зависеть от пояса сервера.
+        // Индекс нужен именно под этот запрос: планировщик просыпается каждую
+        // минуту и не должен читать таблицу настроек целиком.
+        builder.HasIndex(s => s.NextReminderAtUtc);
+    }
+}
+
+public sealed class UserAchievementConfiguration : IEntityTypeConfiguration<UserAchievement>
+{
+    public void Configure(EntityTypeBuilder<UserAchievement> builder)
+    {
+        builder.ToTable("user_achievements");
+        builder.HasKey(a => a.Id);
+
+        builder.Property(a => a.Code).IsRequired().HasMaxLength(64);
+
+        // Достижение выдаётся один раз. Гарантия на уровне базы, а не проверкой
+        // в коде: выдача идёт после каждого ответа, и два одновременных запроса
+        // без этого индекса выдали бы награду дважды.
+        builder.HasIndex(a => new { a.UserId, a.Code }).IsUnique();
+
+        builder.HasOne(a => a.User)
+            .WithMany()
+            .HasForeignKey(a => a.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+    }
+}
+
+public sealed class TelegramLinkCodeConfiguration : IEntityTypeConfiguration<TelegramLinkCode>
+{
+    public void Configure(EntityTypeBuilder<TelegramLinkCode> builder)
+    {
+        builder.ToTable("telegram_link_codes");
+        builder.HasKey(c => c.Id);
+
+        builder.Property(c => c.CodeHash).IsRequired().HasMaxLength(64);
+
+        // Поиск идёт строго по хешу кода, поэтому индекс уникальный: совпадение
+        // хешей означало бы, что два человека получили один и тот же код.
+        builder.HasIndex(c => c.CodeHash).IsUnique();
+
+        // Погашение действующих кодов пользователя при новой привязке.
+        builder.HasIndex(c => new { c.UserId, c.ExpiresAt });
+
+        builder.HasOne(c => c.User)
+            .WithMany()
+            .HasForeignKey(c => c.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
 
@@ -139,6 +196,18 @@ public sealed class DeckConfiguration : IEntityTypeConfiguration<Deck>
         builder.Property(d => d.Title).IsRequired().HasMaxLength(128);
         builder.Property(d => d.Description).HasMaxLength(512);
         builder.Property(d => d.IsSystem).HasDefaultValue(true);
+
+        // Личные колоды ищутся по владельцу: список колод для пользователя
+        // собирается как «системные плюс мои», и без индекса это чтение всей
+        // таблицы на каждое открытие страницы.
+        builder.HasIndex(d => d.OwnerId);
+
+        builder.HasOne(d => d.Owner)
+            .WithMany()
+            .HasForeignKey(d => d.OwnerId)
+            // Удаление аккаунта уносит его личные колоды, но не слова: слова
+            // живут в общем справочнике и могут использоваться в других колодах.
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
 

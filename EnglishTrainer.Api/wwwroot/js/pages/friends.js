@@ -4,7 +4,7 @@
 
 import { api } from '../api.js';
 import { state } from '../state.js';
-import { esc, icon, toast, emptyState, avatar } from '../ui.js';
+import { esc, icon, plural, toast, emptyState, avatar } from '../ui.js';
 
 // Значения FriendRelation на сервере.
 const RELATION = { NONE: 0, OUTGOING: 1, INCOMING: 2, FRIENDS: 3 };
@@ -16,11 +16,31 @@ export async function render(container, context) {
     container.innerHTML = '<p class="hint">Загрузка…</p>';
 
     try {
-        const overview = await api('/api/friends');
+        const [overview, leaderboard] = await Promise.all([
+            api('/api/friends'),
+            // Рейтинг запрашивается вместе со списком: это две части одного
+            // экрана, и последовательные запросы заставили бы ждать дважды.
+            api('/api/friends/leaderboard')
+        ]);
 
         state.badges.friends = overview.incoming.length;
 
         container.innerHTML = `
+            ${leaderboard.entries.length > 1 ? `
+                <div class="section-title">
+                    ${icon('chart', 'icon--sm')} Рейтинг недели
+                    <span class="badge">${leaderboard.friendCount + 1}</span>
+                </div>
+                <div class="card">
+                    <p class="hint" style="margin-bottom: 12px">
+                        Последние семь дней по вашему часовому поясу. Порядок: слова за неделю,
+                        затем ответы, затем серия дней.
+                    </p>
+                    <ol class="leaderboard">
+                        ${leaderboard.entries.map(leaderboardRow).join('')}
+                    </ol>
+                </div>` : ''}
+
             <div class="card">
                 <div class="section-title" style="margin: 0 0 12px">
                     ${icon('search', 'icon--sm')} Найти человека
@@ -84,6 +104,33 @@ export async function render(container, context) {
 
         container.querySelector('#retry').addEventListener('click', () => render(container, context));
     }
+}
+
+/**
+ * Строка рейтинга.
+ *
+ * Своя строка подсвечивается: искать себя глазами в списке из десяти человек —
+ * лишняя работа, а сравнение с соседями и есть смысл экрана. Серия показывается
+ * отдельным столбцом, потому что она не зависит от того, сколько слов человек
+ * взял на этой неделе, и по ней видно, кто занимается ровно, а кто рывками.
+ */
+function leaderboardRow(entry) {
+    return `
+        <li class="leaderboard__row ${entry.isMe ? 'is-me' : ''}">
+            <span class="leaderboard__rank">${entry.rank}</span>
+            ${avatar(entry, 'avatar--sm')}
+            <span class="leaderboard__name">
+                <b>${esc(entry.displayName)}${entry.isMe ? ' <em class="muted">— вы</em>' : ''}</b>
+                <span class="hint">@${esc(entry.username)}</span>
+            </span>
+            <span class="leaderboard__score">
+                <b>${entry.weeklyWords}</b>
+                <span class="hint">${plural(entry.weeklyWords, ['слово', 'слова', 'слов'])} за неделю</span>
+            </span>
+            <span class="leaderboard__streak" title="Серия дней">
+                ${entry.currentStreak > 0 ? `🔥 ${entry.currentStreak}` : '—'}
+            </span>
+        </li>`;
 }
 
 function requestRow(request) {

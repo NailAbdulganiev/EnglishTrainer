@@ -56,3 +56,69 @@ public interface IEmailSender
 {
     Task SendAsync(EmailMessage message, CancellationToken ct = default);
 }
+
+/// <summary>Загруженное изображение: то, что пришло от клиента, до проверки.</summary>/// <param name="Content">Поток с содержимым файла.</param>
+/// <param name="ContentType">Тип, объявленный клиентом. Проверяется, а не принимается на веру.</param>
+/// <param name="Length">Размер, объявленный клиентом.</param>
+public readonly record struct AvatarUpload(Stream Content, string? ContentType, long Length);
+
+/// <summary>
+/// Хранилище аватаров.
+/// </summary>
+/// <remarks>
+/// Порт, а не прямая запись в каталог: сегодня это файлы на диске, завтра —
+/// S3 или диск, общий для нескольких экземпляров приложения. Application
+/// о способе хранения не знает и знать не должен.
+/// </remarks>
+public interface IAvatarStorage
+{
+    /// <summary>
+    /// Сохраняет изображение и возвращает имя файла, под которым оно лежит.
+    /// Имя генерирует хранилище: клиент не должен влиять на путь.
+    /// </summary>
+    Task<string> SaveAsync(byte[] content, string extension, CancellationToken ct = default);
+
+    /// <summary>Удаляет файл. Отсутствие файла ошибкой не считается.</summary>
+    Task DeleteAsync(string fileName, CancellationToken ct = default);
+}
+
+/// <summary>
+/// Разобранные и проверенные данные мини-аппа Telegram.
+/// </summary>
+/// <param name="UserId">Идентификатор пользователя в Telegram.</param>
+/// <param name="Username">Ник в Telegram, если он у человека есть.</param>
+/// <param name="FirstName">Имя из профиля Telegram — для приветствия.</param>
+/// <param name="LanguageCode">Язык клиента, например <c>ru</c>.</param>
+/// <param name="AuthDateUtc">Когда Telegram подписал эти данные.</param>
+public sealed record TelegramInitData(
+    long UserId,
+    string? Username,
+    string? FirstName,
+    string? LanguageCode,
+    DateTime AuthDateUtc);
+
+/// <summary>
+/// Проверка подписи данных, которые мини-апп получает от Telegram.
+/// </summary>
+/// <remarks>
+/// <para>
+/// Это единственная защита входа в мини-апп: пароля там нет, а есть строка
+/// <c>initData</c>, подписанная токеном бота. Если подпись не проверять,
+/// любой желающий отправит чужой идентификатор Telegram и войдёт в аккаунт
+/// без пароля — то есть проверка здесь не «дополнительная», а основная.
+/// </para>
+/// <para>
+/// Реализация живёт в Infrastructure: она знает токен бота, а Domain — нет
+/// и знать не должен.
+/// </para>
+/// </remarks>
+public interface ITelegramInitDataValidator
+{
+    /// <summary>
+    /// Проверяет подпись и разбирает данные.
+    /// </summary>
+    /// <returns><c>null</c>, если подпись неверна, данные испорчены или срок их жизни истёк.</returns>
+    TelegramInitData? Validate(string? initData);
+}
+
+

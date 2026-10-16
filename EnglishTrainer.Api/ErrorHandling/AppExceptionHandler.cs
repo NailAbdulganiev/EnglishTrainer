@@ -30,6 +30,7 @@ public sealed class AppExceptionHandler(ILogger<AppExceptionHandler> logger) : I
             ConflictException => (StatusCodes.Status409Conflict, "Конфликт состояния"),
             ValidationException => (StatusCodes.Status400BadRequest, "Некорректные данные"),
             UnauthorizedException => (StatusCodes.Status401Unauthorized, "Требуется аутентификация"),
+            ForbiddenException => (StatusCodes.Status403Forbidden, "Действие запрещено"),
             _ => (StatusCodes.Status500InternalServerError, "Внутренняя ошибка сервера")
         };
 

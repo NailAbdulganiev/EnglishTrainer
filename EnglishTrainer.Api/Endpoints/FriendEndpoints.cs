@@ -24,6 +24,22 @@ public static class FriendEndpoints
         .WithSummary("Друзья, входящие и исходящие заявки")
         .WithDescription("Для каждого друга возвращается его прогресс: выучено слов, серия дней, ответы за сегодня.");
 
+        // Маршрут объявлен до /{username}: иначе «leaderboard» можно было бы
+        // принять за ник, и запрос уходил бы в обработчик удаления друга.
+        group.MapGet("/leaderboard", async (
+            HttpContext context,
+            LeaderboardService service,
+            CancellationToken ct) =>
+        {
+            var leaderboard = await service.GetAsync(context.User.GetUserId(), ct);
+            return Results.Ok(leaderboard);
+        })
+        .WithSummary("Недельный рейтинг среди друзей")
+        .WithDescription(
+            "Окно — последние семь дней; считается в часовом поясе каждого участника, " +
+            "поэтому у друзей из разных поясов «неделя» своя. " +
+            "Порядок: слова за неделю, затем ответы, затем серия дней.");
+
         group.MapPost("/", async (
             AddFriendRequestDto request,
             HttpContext context,

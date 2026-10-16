@@ -1,5 +1,6 @@
 using EnglishTrainer.Application.Dtos;
 using EnglishTrainer.Application.Mapping;
+using EnglishTrainer.Application.Media;
 using EnglishTrainer.Application.Text;
 using EnglishTrainer.Domain.Abstractions;
 using EnglishTrainer.Domain.Entities;
@@ -17,6 +18,7 @@ public sealed class ProfileService(
     IReviewLogRepository reviewLogs,
     IFavoriteWordRepository favorites,
     IFriendshipRepository friendships,
+    IAvatarStorage avatars,
     IClock clock,
     IUnitOfWork unitOfWork)
 {
@@ -85,6 +87,70 @@ public sealed class ProfileService(
         }
 
         await unitOfWork.SaveChangesAsync(ct);
+        return user.ToDto();
+    }
+
+    /// <summary>
+    /// Загружает новый аватар, заменяя прежний.
+    /// </summary>
+    /// <remarks>
+    /// Порядок действий выбран осознанно: сначала на диск пишется новый файл,
+    /// потом обновляется строка в базе, и только затем удаляется старый.
+    /// Любой обрыв на этом пути оставляет пользователя с рабочим аватаром —
+    /// худшее, что может случиться, это забытый файл на диске. Обратный порядок
+    /// дал бы профиль со ссылкой на уже удалённый файл, то есть пустой кружок
+    /// без объяснения причины.
+    /// </remarks>
+    public async Task<UserDto> SetAvatarAsync(
+        int userId, AvatarUpload upload, CancellationToken ct = default)
+    {
+        var user = await users.GetByIdAsync(userId, ct)
+            ?? throw NotFoundException.For("Пользователь", userId);
+
+        // Проверка содержимого идёт до записи на диск: недопустимый файл
+        // не должен оказаться в каталоге, который раздаётся статикой.
+        var image = await AvatarPolicy.ReadAsync(upload, ct);
+        var previous = user.AvatarFileName;
+
+        user.AvatarFileName = await avatars.SaveAsync(image.Content, image.Extension, ct);
+
+        await unitOfWork.SaveChangesAsync(ct);
+
+        if (!string.IsNullOrEmpty(previous) && previous != user.AvatarFileName)
+        {
+            await avatars.DeleteAsync(previous, ct);
+        }
+
+        return user.ToDto();
+    }
+
+    /// <summary>
+    /// Удаляет аватар. После этого в интерфейсе снова показываются инициалы.
+    /// </summary>
+    /// <remarks>
+    /// Повторный вызов не ошибка: удаление — идемпотентное действие, и «удалить
+    /// то, чего нет» должно приводить к тому же результату, а не к отказу.
+    /// </remarks>
+    public async Task<UserDto> RemoveAvatarAsync(int userId, CancellationToken ct = default)
+    {
+        var user = await users.GetByIdAsync(userId, ct)
+            ?? throw NotFoundException.For("Пользователь", userId);
+
+        var previous = user.AvatarFileName;
+
+        if (string.IsNullOrEmpty(previous))
+        {
+            return user.ToDto();
+        }
+
+        user.AvatarFileName = null;
+
+        await unitOfWork.SaveChangesAsync(ct);
+
+        // Файл удаляется после базы. Оставшийся файл — мусор, который никому
+        // не виден; ссылка на удалённый файл была бы видимой поломкой.
+        await avatars.DeleteAsync(previous, ct);
+
         return user.ToDto();
     }
 }

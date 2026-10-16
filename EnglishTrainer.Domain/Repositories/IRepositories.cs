@@ -44,19 +44,87 @@ public interface IWordRepository
     /// <summary>Идентификаторы слов колоды — для подсчёта прогресса пользователя.</summary>
     Task<IReadOnlyList<int>> GetWordIdsInDeckAsync(int deckId, CancellationToken ct = default);
 
+    /// <summary>Сколько всего слов в словаре.</summary>
+    Task<int> CountAllAsync(CancellationToken ct = default);
+
+    /// <summary>
+    /// Слово по порядковому номеру в словаре, вместе с переводами и примерами.
+    /// </summary>
+    /// <remarks>
+    /// Нужно для «слова дня» у человека, который ещё ничего не начал учить:
+    /// выбирать его из карточек нечем, а показать что-то полезное нужно.
+    /// Порядок задан частотностью, поэтому смещение устойчиво между запусками.
+    /// </remarks>
+    Task<Word?> GetWithDetailsByOffsetAsync(int offset, CancellationToken ct = default);
+
+    /// <summary>
+    /// Поиск слов по началу написания или перевода.
+    /// </summary>
+    /// <remarks>
+    /// Нужен, чтобы добавить в свою колоду уже существующее слово, а не заводить
+    /// его второй раз: словарь общий, и «landscape» в нём должно остаться одним
+    /// словом, сколько бы колод его ни включали.
+    /// </remarks>
+    Task<IReadOnlyList<Word>> SearchAsync(string query, int limit, CancellationToken ct = default);
+
+    Task AddAsync(Word word, CancellationToken ct = default);
+
     Task AddRangeAsync(IEnumerable<Word> words, CancellationToken ct = default);
 }
 
 /// <summary>Хранилище колод.</summary>
 public interface IDeckRepository
 {
-    Task<IReadOnlyList<Deck>> GetAllAsync(CancellationToken ct = default);
+    /// <summary>
+    /// Системные колоды, поставляемые с приложением.
+    /// </summary>
+    /// <remarks>
+    /// Имя намеренно говорит «системные», а не «все»: личные колоды выбираются
+    /// отдельно, потому что нужны далеко не везде. Например, новые слова берутся
+    /// из самой приоритетной системной колоды — пополнять словарь из чужой
+    /// личной колоды было бы странно.
+    /// </remarks>
+    Task<IReadOnlyList<Deck>> GetSystemAsync(CancellationToken ct = default);
+
+    /// <summary>Системные колоды плюс личные колоды пользователя.</summary>
+    Task<IReadOnlyList<Deck>> GetForUserAsync(int userId, CancellationToken ct = default);
 
     Task<Deck?> GetBySlugAsync(string slug, CancellationToken ct = default);
 
     Task<Deck?> GetByIdAsync(int id, CancellationToken ct = default);
 
+    Task<bool> SlugExistsAsync(string slug, CancellationToken ct = default);
+
     Task AddAsync(Deck deck, CancellationToken ct = default);
+
+    Task RemoveAsync(Deck deck, CancellationToken ct = default);
+
+    /// <summary>Связь «слово в колоде», если она есть.</summary>
+    Task<DeckWord?> GetWordLinkAsync(int deckId, int wordId, CancellationToken ct = default);
+
+    Task AddWordAsync(DeckWord link, CancellationToken ct = default);
+
+    Task RemoveWordAsync(DeckWord link, CancellationToken ct = default);
+
+    /// <summary>Следующий порядковый номер в колоде — новое слово идёт в конец.</summary>
+    Task<int> NextWordOrderAsync(int deckId, CancellationToken ct = default);
+
+    /// <summary>
+    /// Сколько колод пользователь выучил целиком.
+    /// </summary>
+    /// <param name="learnedIntervalDays">
+    /// Порог «выучено» из <c>CardState.LearnedIntervalDays</c>. Передаётся
+    /// параметром, а не берётся здесь: правило принадлежит домену, и это
+    /// единственный способ не завести вторую копию числа.
+    /// </param>
+    /// <remarks>
+    /// Отдельный запрос, а не пересчёт прогресса по всем колодам: страница
+    /// достижений обращается к этому показателю, а перебор 18 колод с отдельным
+    /// запросом на каждую — это три с лишним десятка обращений к базе ради
+    /// одного числа.
+    /// </remarks>
+    Task<int> CountCompletedAsync(
+        int userId, double learnedIntervalDays, CancellationToken ct = default);
 }
 
 /// <summary>Хранилище пользователей.</summary>
@@ -86,6 +154,18 @@ public interface IUserRepository
     /// Совпадение ищется с начала строки: так работает индекс по нику.
     /// </summary>
     Task<IReadOnlyList<User>> SearchByUsernameAsync(string query, int limit, CancellationToken ct = default);
+
+    /// <summary>
+    /// Пользователи, которым пора отправить напоминание в Telegram.
+    /// </summary>
+    /// <remarks>
+    /// Отбор идёт по сохранённому моменту следующего напоминания, а не по
+    /// сравнению локального времени каждого пользователя с его настройками:
+    /// во втором случае планировщик читал бы таблицу пользователей целиком
+    /// каждую минуту, а в первом — только строки по индексу.
+    /// </remarks>
+    Task<IReadOnlyList<User>> GetDueRemindersAsync(
+        DateTime nowUtc, int limit, CancellationToken ct = default);
 }
 
 /// <summary>Хранилище избранных слов.</summary>
@@ -225,6 +305,18 @@ public interface IDailyStatRepository
 
     /// <summary>Последние <paramref name="days"/> дней, свежие первыми — для серии дней.</summary>
     Task<IReadOnlyList<DailyStat>> GetRecentAsync(int userId, int days, CancellationToken ct = default);
+
+    /// <summary>
+    /// Дневная статистика нескольких пользователей за период.
+    /// </summary>
+    /// <remarks>
+    /// Отдельный метод ради рейтинга: собрать статистику десяти друзей по
+    /// одному запросу на каждого — это десять обращений к базе там, где
+    /// хватает одного. Период задаётся диапазоном, потому что недельное окно
+    /// у каждого участника своё: считается оно в его часовом поясе.
+    /// </remarks>
+    Task<IReadOnlyList<DailyStat>> GetRangeForUsersAsync(
+        IReadOnlyCollection<int> userIds, DateOnly from, DateOnly to, CancellationToken ct = default);
 }
 
 /// <summary>Хранилище токенов сброса пароля.</summary>
@@ -241,6 +333,52 @@ public interface IPasswordResetTokenRepository
         int userId, DateTime nowUtc, CancellationToken ct = default);
 
     Task AddAsync(PasswordResetToken token, CancellationToken ct = default);
+}
+
+/// <summary>Хранилище кодов привязки Telegram.</summary>
+public interface ITelegramLinkCodeRepository
+{
+    /// <summary>
+    /// Код по хешу. Возвращается отслеживаемым: при использовании меняется
+    /// его состояние, и это изменение должно попасть в базу.
+    /// </summary>
+    Task<TelegramLinkCode?> GetByHashAsync(string codeHash, CancellationToken ct = default);
+
+    /// <summary>Действующие коды пользователя — нужны, чтобы погасить их при новой привязке.</summary>
+    Task<IReadOnlyList<TelegramLinkCode>> GetActiveAsync(
+        int userId, DateTime nowUtc, CancellationToken ct = default);
+
+    Task AddAsync(TelegramLinkCode code, CancellationToken ct = default);
+}
+
+/// <summary>Хранилище полученных достижений.</summary>
+public interface IUserAchievementRepository
+{
+    /// <summary>
+    /// Коды полученных достижений.
+    /// </summary>
+    /// <remarks>
+    /// Отдельный метод для кодов, а не чтение всех строк: проверка достижений
+    /// идёт после каждого ответа, и ей нужно только «что уже есть» — несколько
+    /// коротких строк вместо всей истории с датами.
+    /// </remarks>
+    Task<IReadOnlyCollection<string>> GetCodesAsync(int userId, CancellationToken ct = default);
+
+    /// <summary>Полученные достижения с датами — для страницы достижений.</summary>
+    Task<IReadOnlyList<UserAchievement>> GetAsync(int userId, CancellationToken ct = default);
+
+    /// <summary>
+    /// Выдаёт достижения, пропуская уже выданные.
+    /// </summary>
+    /// <returns>Сколько достижений выдано на самом деле.</returns>
+    /// <remarks>
+    /// Идемпотентность обеспечивает база, а не проверка перед вставкой: между
+    /// проверкой и вставкой есть окно, и два одновременных запроса его
+    /// используют. Повторная выдача награды — не ошибка, а нормальный исход
+    /// гонки, поэтому и метод её не считает ошибкой.
+    /// </remarks>
+    Task<int> UnlockAsync(
+        int userId, IReadOnlyCollection<string> codes, DateTime unlockedAt, CancellationToken ct = default);
 }
 
 /// <summary>

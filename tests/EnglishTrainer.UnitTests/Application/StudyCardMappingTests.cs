@@ -9,9 +9,18 @@ namespace EnglishTrainer.UnitTests.Application;
 /// Проверка преобразования сущностей в DTO.
 /// </summary>
 /// <remarks>
+/// <para>
 /// Главное правило контракта: карточка задания не содержит правильного ответа.
 /// Если однажды кто-то вернёт в неё английское слово «для удобства клиента»,
-/// упражнения потеряют смысл, а заметят это не сразу. Поэтому правило закреплено тестом.
+/// упражнения потеряют смысл, а заметят это не сразу. Поэтому правило закреплено
+/// тестом.
+/// </para>
+/// <para>
+/// Исключение ровно одно — упражнение на слух, и оно разобрано отдельным тестом:
+/// произносит слово браузер, поэтому текст обязан быть на клиенте. Правило при
+/// этом не нарушено по существу: оно защищало от того, что ответ <b>виден
+/// на экране</b> до попытки, а там его на экране нет.
+/// </para>
 /// </remarks>
 public sealed class StudyCardMappingTests
 {
@@ -33,6 +42,25 @@ public sealed class StudyCardMappingTests
         Assert.Equal(Translation, card.Prompt);
         Assert.Equal("ru", card.PromptLanguage);
         Assert.Equal(Lemma.Length, card.AnswerLength);
+        Assert.Null(card.SpokenText);
+    }
+
+    [Fact]
+    public void CardForListeningExercise_CarriesTextToPronounce()
+    {
+        var item = ItemWithWord();
+
+        var card = item.ToStudyCard(
+            ExerciseKind.Listening, Translation, "ru", null, null, null,
+            options: null, answerLength: Lemma.Length, spokenText: Lemma);
+
+        // Текст для произношения есть, и он же — правильный ответ. По-другому
+        // не выходит: записи в словаре нет, а озвучивает браузер, то есть
+        // слово должно быть у него. Экран при этом остаётся чистым — вопросом
+        // служит звук, а не текст.
+        Assert.Equal(Lemma, card.SpokenText);
+        Assert.Equal(Translation, card.Prompt);
+        Assert.Equal(Lemma.Length, card.AnswerLength);
     }
 
     [Fact]
@@ -48,6 +76,10 @@ public sealed class StudyCardMappingTests
         Assert.Equal(Lemma, card.Prompt);
         Assert.Equal("en", card.PromptLanguage);
         Assert.Equal(2, card.Options.Count);
+
+        // Произносить здесь нечего: слово и так на экране, а озвученный ответ
+        // выдал бы его до попытки в заданиях на ввод.
+        Assert.Null(card.SpokenText);
     }
 
     [Fact]

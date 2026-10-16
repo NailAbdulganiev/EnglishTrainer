@@ -31,6 +31,18 @@ public class UserSettings : Entity
     /// <summary>Локальное время напоминания (в часовом поясе пользователя).</summary>
     public TimeOnly ReminderTime { get; set; } = new(19, 0);
 
+    /// <summary>
+    /// Когда отправить следующее напоминание в Telegram, в UTC.
+    /// <c>null</c> — напоминания выключены или Telegram не привязан.
+    /// </summary>
+    /// <remarks>
+    /// Момент хранится, а не вычисляется на каждом тике планировщика. Разница
+    /// видна на запросе: «все, кому пора напомнить» — это выборка по индексу,
+    /// а «все, у кого локальное время совпало с их временем напоминания» —
+    /// это чтение всей таблицы пользователей раз в минуту.
+    /// </remarks>
+    public DateTime? NextReminderAtUtc { get; set; }
+
     /// <summary>Показывать ли транскрипцию сразу вместе со словом.</summary>
     public bool ShowTranscriptionUpfront { get; set; } = true;
 

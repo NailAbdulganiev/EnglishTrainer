@@ -3,7 +3,7 @@ using EnglishTrainer.Application.Services;
 
 namespace EnglishTrainer.Api.Endpoints;
 
-/// <summary>Прогресс: сводка и активность по дням.</summary>
+/// <summary>Прогресс: сводка, активность по дням и достижения.</summary>
 public static class StatsEndpoints
 {
     public static IEndpointRouteBuilder MapStatsEndpoints(this IEndpointRouteBuilder app)
@@ -40,6 +40,25 @@ public static class StatsEndpoints
         })
         .WithSummary("Активность по дням и кривая удержания")
         .WithDescription("Дни без занятий возвращаются с нулями, чтобы на графике были видны пропуски.");
+
+        // Достижения лежат под /api/stats, а не под своим корнем: это тот же
+        // прогресс, только поданный наградами. Отдельный корень заставлял бы
+        // клиента держать в голове ещё одну ветку маршрутов ради одного метода.
+        app.MapGet("/api/achievements", async (
+            HttpContext context,
+            AchievementService service,
+            CancellationToken ct) =>
+        {
+            var achievements = await service.GetAsync(context.User.GetUserId(), ct);
+            return Results.Ok(achievements);
+        })
+        .WithTags("Прогресс")
+        .RequireAuthorization()
+        .WithSummary("Достижения с прогрессом и ближайшая цель")
+        .WithDescription(
+            "Чтение выдаёт заработанное: прогресс считается из накопленных данных, " +
+            "а не хранится отдельно, поэтому достижение, порог которого уже пройден, " +
+            "закрывается при первом же обращении.");
 
         return app;
     }

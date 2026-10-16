@@ -1,7 +1,7 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace EnglishTrainer.UnitTests;
+namespace EnglishTrainer.TestRunner;
 
 /// <summary>
 /// Автономный запуск тестов без VSTest.
@@ -19,16 +19,26 @@ namespace EnglishTrainer.UnitTests;
 /// Меняется только способ запуска, набор тестов остаётся общим — он лежит
 /// в обычных классах с атрибутами xUnit.
 /// </para>
+/// <para>
+/// Раннер живёт в отдельной библиотеке, потому что проектов с тестами два —
+/// модульные и интеграционные — и копия этого файла в каждом разошлась бы.
+/// </para>
 /// </remarks>
-internal static class StandaloneRunner
+public static class StandaloneRunner
 {
-    public static async Task<int> RunAsync(Assembly assembly)
+    /// <summary>Выполняет все тесты сборки. Возвращает код возврата процесса.</summary>
+    /// <param name="assembly">Сборка с тестами.</param>
+    /// <param name="testNamespace">
+    /// Префикс пространства имён, которым ограничивается поиск тестов. Он нужен,
+    /// чтобы раннер не подхватывал чужие типы из подключённых сборок.
+    /// </param>
+    public static async Task<int> RunAsync(Assembly assembly, string testNamespace)
     {
         var passed = 0;
         var failures = new List<string>();
 
         var testClasses = assembly.GetTypes()
-            .Where(IsTestClass)
+            .Where(type => IsTestClass(type, testNamespace))
             .Select(type => (Type: type, Methods: TestMethods(type).ToList()))
             .Where(entry => entry.Methods.Count > 0)
             .OrderBy(entry => entry.Type.FullName, StringComparer.Ordinal);
@@ -152,9 +162,9 @@ internal static class StandaloneRunner
     /// Класс с тестами. Служебные типы компилятора (замыкания, итераторы)
     /// и вспомогательные классы без тестов пропускаются.
     /// </summary>
-    private static bool IsTestClass(Type type) =>
+    private static bool IsTestClass(Type type, string testNamespace) =>
         type is { IsClass: true, IsAbstract: false, IsGenericTypeDefinition: false }
-        && type.Namespace?.StartsWith("EnglishTrainer.UnitTests", StringComparison.Ordinal) == true
+        && type.Namespace?.StartsWith(testNamespace, StringComparison.Ordinal) == true
         && !type.IsDefined(typeof(CompilerGeneratedAttribute), inherit: false);
 
     private static bool IsTestMethod(MethodInfo method) =>

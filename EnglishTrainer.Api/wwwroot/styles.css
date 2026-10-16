@@ -4,6 +4,13 @@
  * Собирается в один файл без сборщика: так интерфейс работает сразу после
  * dotnet run. Переменные в :root играют роль дизайн-токенов — цвета, радиусы
  * и тени заданы в одном месте, поэтому тема меняется правкой нескольких строк.
+ *
+ * Тема выбирается атрибутом на <html>: `data-theme="light"` или `"dark"`.
+ * Разрешённое значение выставляет theme.js (или крошечный скрипт в index.html,
+ * который успевает раньше первой отрисовки), а `data-theme-mode` хранит выбор
+ * пользователя — `auto`, `light` или `dark`. Разделение намеренное: иначе
+ * тёмную палитру пришлось бы описывать дважды — отдельно для ручного выбора
+ * и отдельно для системного предпочтения.
  */
 
 :root {
@@ -29,6 +36,15 @@
     --sidebar-2: #16233a;
     --sidebar-ink: #cbd5e1;
 
+    /* Фон шапки. Полупрозрачный, потому что шапка липкая и под неё
+       прокручивается содержимое страницы. */
+    --topbar: rgba(244, 246, 251, .82);
+
+    /* Свечения на экранах входа. В тёмной теме они приглушены: иначе
+       страница входа светилась бы ярче самого приложения. */
+    --glow-1: #dbe2ff;
+    --glow-2: #d8f3e7;
+
     /* Форма */
     --r-sm: 8px;
     --r: 12px;
@@ -42,6 +58,47 @@
 
     --sidebar-w: 248px;
 }
+
+/*
+ * Тёмная палитра.
+ *
+ * Не инверсия светлой: фон не чёрный, а глубокий синевато-серый, а акцент
+ * светлее исходного. Инвертированные цвета дают на тёмном фоне либо грязь
+ * на границах, либо нечитаемый текст — контраст в тёмной теме устроен иначе,
+ * и подбирать его нужно отдельно.
+ */
+:root[data-theme="dark"] {
+    --bg: #0f1420;
+    --surface: #171d2b;
+    --surface-2: #1e2637;
+    --surface-3: #263048;
+    --ink: #e8edf7;
+    --ink-2: #c3cddf;
+    --muted: #8b98b0;
+    --line: #263048;
+    --brand: #7c74f0;
+    --brand-dark: #6a61e8;
+    --brand-soft: #232a44;
+    --ok: #3ecf8e;
+    --ok-soft: #12291f;
+    --no: #f2607a;
+    --no-soft: #2c1620;
+    --warn: #f0b429;
+    --warn-soft: #2c2410;
+    --sidebar: #121826;
+    --sidebar-2: #182031;
+    --sidebar-ink: #b9c4d8;
+
+    --topbar: rgba(15, 20, 32, .82);
+
+    --glow-1: #1b2440;
+    --glow-2: #16302c;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, .4);
+    --shadow: 0 1px 3px rgba(0, 0, 0, .4), 0 10px 30px rgba(0, 0, 0, .35);
+    --shadow-lg: 0 24px 60px rgba(0, 0, 0, .55);
+}
+
 
 * { box-sizing: border-box; }
 
@@ -70,6 +127,9 @@ body {
     color: var(--ink);
     font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
+    /* Переключение темы не должно выглядеть как перезагрузка: короткий переход
+       сглаживает смену палитры, но остаётся незаметным при первой отрисовке. */
+    transition: background-color .18s ease, color .18s ease;
 }
 
 .sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
@@ -112,8 +172,8 @@ a:hover { text-decoration: underline; }
     place-items: center;
     padding: 32px 20px;
     background:
-        radial-gradient(1100px 500px at 15% -10%, #dbe2ff 0%, transparent 60%),
-        radial-gradient(900px 500px at 110% 10%, #d8f3e7 0%, transparent 55%),
+        radial-gradient(1100px 500px at 15% -10%, var(--glow-1) 0%, transparent 60%),
+        radial-gradient(900px 500px at 110% 10%, var(--glow-2) 0%, transparent 55%),
         var(--bg);
 }
 
@@ -199,7 +259,7 @@ a:hover { text-decoration: underline; }
     align-items: center;
     gap: 14px;
     padding: 20px 32px;
-    background: rgba(244, 246, 251, .82);
+    background: var(--topbar);
     backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--line);
     position: sticky;
@@ -208,6 +268,11 @@ a:hover { text-decoration: underline; }
 }
 
 .topbar-actions { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+
+/* Кнопка переключателя темы: идёт после блока действий, поэтому не участвует
+   в его выравнивании по правому краю. */
+.topbar__theme { margin-left: 10px; }
+.topbar-actions:not(:empty) + .topbar__theme { margin-left: 0; }
 
 .content { padding: 26px 32px 70px; max-width: 1040px; width: 100%; }
 
@@ -300,6 +365,164 @@ input:focus, select:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rg
 }
 
 .section-title .badge { text-transform: none; letter-spacing: 0; }
+
+/* ── Достижения ─────────────────────────────────────────────────────────── */
+
+/*
+ * Полоска прогресса. Отдельным элементом, а не псевдоэлементом: значение
+ * приходит с сервера и подставляется в ширину, поэтому разметка проще
+ * и её видно в инспекторе.
+ */
+.bar {
+    height: 7px;
+    border-radius: var(--r-full);
+    background: var(--surface-3);
+    overflow: hidden;
+    margin: 8px 0 4px;
+}
+
+.bar > span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--brand), #7c74f0);
+    transition: width .3s ease;
+}
+
+/* Ближайшая цель: заметнее плиток статистики, потому что это призыв к действию,
+   а не справка. */
+.goal {
+    margin-top: 18px;
+    border-left: 3px solid var(--brand);
+}
+
+.goal__head { display: flex; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+.goal__head .hint { margin-top: 2px; }
+.goal__mark { font-size: 22px; line-height: 1.2; }
+
+.achievement-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 12px;
+}
+
+/*
+ * Закрытое достижение приглушено, но не спрятано.
+ *
+ * Показывать только полученное — значит терять главное: список закрытых
+ * наград и есть список целей. Приглушение отделяет одно от другого, не
+ * убирая ориентир с глаз.
+ */
+.achievement {
+    display: flex;
+    gap: 12px;
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    background: var(--surface);
+    opacity: .72;
+}
+
+.achievement.is-unlocked {
+    opacity: 1;
+    border-color: var(--brand);
+    background: var(--brand-soft);
+}
+
+.achievement__mark { font-size: 20px; line-height: 1.3; }
+.achievement__body { min-width: 0; flex: 1; }
+.achievement__body b { display: block; font-size: 14.5px; }
+.achievement__body .hint { display: block; margin: 2px 0 0; }
+
+/* ── Рейтинг недели ─────────────────────────────────────────────────────── */
+
+.leaderboard { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+
+.leaderboard__row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: var(--r);
+    background: var(--surface-2);
+}
+
+/* Своя строка выделяется фоном и рамкой, а не жирным шрифтом: сравнение
+   идёт по столбцам, и менять их начертание значило бы ломать сравнение. */
+.leaderboard__row.is-me {
+    background: var(--brand-soft);
+    box-shadow: inset 0 0 0 1px var(--brand);
+}
+
+.leaderboard__rank {
+    flex: 0 0 26px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--muted);
+}
+
+.leaderboard__row.is-me .leaderboard__rank { color: var(--brand); }
+
+.leaderboard__name { flex: 1; min-width: 0; }
+.leaderboard__name b { display: block; font-size: 15px; }
+.leaderboard__name .hint { display: block; margin: 0; }
+
+.leaderboard__score { text-align: right; }
+.leaderboard__score b { display: block; font-size: 18px; line-height: 1.1; }
+.leaderboard__score .hint { margin: 0; }
+
+.leaderboard__streak { flex: 0 0 auto; font-size: 14px; color: var(--muted); }
+
+/* ── Свои колоды ────────────────────────────────────────────────────────── */
+
+/*
+ * Свёрнутый блок с формой.
+ *
+ * «Создать колоду» и «добавить слово» нужны редко, но должны быть под рукой.
+ * Развёрнутая по умолчанию форма отодвигала бы вниз то, ради чего страница
+ * открыта, поэтому блок свёрнут, а сводка выглядит как заголовок раздела.
+ */
+.new-deck, .add-word { margin-top: 18px; }
+
+.new-deck > summary,
+.add-word > summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--ink-2);
+    list-style: none;
+}
+
+/* Свой маркер вместо системного треугольника: он рисуется по-разному
+   в браузерах и не совпадает по цвету с остальной страницей. */
+.new-deck > summary::-webkit-details-marker,
+.add-word > summary::-webkit-details-marker { display: none; }
+
+.new-deck > summary::after,
+.add-word > summary::after {
+    content: "▾";
+    margin-left: auto;
+    color: var(--muted);
+    transition: transform .15s;
+}
+
+.new-deck[open] > summary::after,
+.add-word[open] > summary::after { transform: rotate(180deg); }
+
+.new-deck[open] > summary,
+.add-word[open] > summary { margin-bottom: 4px; }
+
+/* Строка рейтинга и строки слов на узком экране переносятся: иначе столбцы
+   сжимаются до нечитаемого, а подписи уезжают под край. */
+@media (max-width: 560px) {
+    .leaderboard__row { flex-wrap: wrap; }
+    .leaderboard__score { text-align: left; margin-left: 38px; }
+    .leaderboard__streak { margin-left: auto; }
+}
 
 /* ── Плитки статистики ──────────────────────────────────────────────────── */
 
@@ -493,7 +716,18 @@ audio { width: 100%; margin-bottom: 18px; }
 .verdict--ok { color: var(--ok); }
 .verdict--no { color: var(--no); }
 
-.answer-line { font-size: 22px; font-weight: 650; margin-bottom: 14px; }
+/* Кнопка «Прослушать» стоит рядом со словом, а не отдельной строкой:
+   она относится именно к нему. */
+.answer-line {
+    font-size: 22px;
+    font-weight: 650;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
 .answer-line .ipa { display: inline; margin-left: 10px; font-size: 15px; font-weight: 400; }
 
 .examples { list-style: none; padding: 0; margin: 0 0 16px; display: grid; gap: 10px; }
@@ -528,10 +762,33 @@ audio { width: 100%; margin-bottom: 18px; }
     color: #fff;
     background: linear-gradient(135deg, var(--brand), #7c74f0);
     text-transform: uppercase;
+    /* Фото обрезается по кругу: без этого прямоугольная картинка вылезала бы
+       за границы аватара и наезжала на соседние элементы. */
+    overflow: hidden;
+}
+
+/* Загруженный аватар. Инициалы остаются запасным вариантом: сетка с
+   place-items центрирует их, а картинка занимает всю площадь. */
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 .avatar--sm { width: 34px; height: 34px; flex-basis: 34px; font-size: 13px; }
 .avatar--lg { width: 64px; height: 64px; flex-basis: 64px; font-size: 22px; }
+
+/* ── Редактор аватара в профиле ─────────────────────────────────────────── */
+
+.avatar-editor { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+.avatar-editor__actions { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.avatar-editor__actions .hint { margin: 0; }
+
+/* Поле выбора файла скрыто: системная кнопка «Выберите файл» выглядит
+   по-разному в каждом браузере и ломает вид карточки. Нажимает её
+   всё равно кнопка «Загрузить фото» — она вызывает click() по этому полю. */
+.avatar-editor input[type="file"] { display: none; }
 
 .friend-row__name { flex: 1; min-width: 0; }
 .friend-row__name b { display: block; font-size: 15px; }
@@ -675,3 +932,162 @@ audio { width: 100%; margin-bottom: 18px; }
  */
 .field[hidden],
 .form-alert[hidden] { display: none; }
+
+/* ── Мелкие элементы, которых не было в исходном наборе ─────────────────── */
+
+/* Код привязки Telegram: его переписывают или копируют, поэтому он крупный,
+   моноширинный и с разрядкой — так меньше шансов перепутать похожие символы. */
+.link-code {
+    margin-top: 14px;
+    padding: 14px;
+    border: 1px dashed var(--line);
+    border-radius: var(--r);
+    background: var(--surface-2);
+}
+
+.link-code__value {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    color: var(--ink);
+    margin: 10px 0;
+    word-break: break-all;
+    user-select: all;
+}
+
+/* Кнопка-иконка без подписи: переключатель темы, действия в списках. */
+.btn--icon { padding: 8px; line-height: 0; }
+
+/* Нумерованный список шагов на экране привязки Telegram. */
+.steps {
+    margin: 0 0 16px;
+    padding-left: 22px;
+    color: var(--ink-2);
+    font-size: 14.5px;
+    line-height: 1.6;
+}
+
+.steps li { margin-bottom: 6px; }
+
+/* Команда бота внутри текста: моноширинный шрифт отделяет её от обычных слов,
+   иначе «/link» читается как часть предложения. */
+code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .92em;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: var(--r-sm);
+    padding: 1px 5px;
+}
+
+/* ── Telegram Mini App ──────────────────────────────────────────────────── */
+
+/*
+ * Палитра внутри Telegram берётся у клиента.
+ *
+ * Переменные --tg-theme-* выставляет сам скрипт Telegram и обновляет их
+ * при смене оформления, поэтому мини-апп совпадает с мессенджером, а не
+ * спорит с ним: человек переключил тему в Telegram — приложение потемнело.
+ *
+ * Запасные значения — светлая палитра, и это осознанное ограничение:
+ * сослаться здесь на собственные --bg и --surface нельзя, получилась бы
+ * циклическая ссылка, и оба значения стали бы недействительными. На практике
+ * запасной вариант не нужен: Telegram передаёт эти цвета начиная с Bot API 6.1,
+ * а в тёмной теме цвет фона приходит тёмным.
+ */
+body.is-telegram {
+    --bg: var(--tg-theme-secondary-bg-color, #f4f6fb);
+    --surface: var(--tg-theme-bg-color, #ffffff);
+    --surface-2: var(--tg-theme-secondary-bg-color, #eef1f8);
+    --surface-3: var(--tg-theme-section-separator-color, #e3e8f3);
+    --ink: var(--tg-theme-text-color, #0f172a);
+    --ink-2: var(--tg-theme-text-color, #334155);
+    --muted: var(--tg-theme-hint-color, #6b7a90);
+    --line: var(--tg-theme-section-separator-color, #e2e8f2);
+    --brand: var(--tg-theme-button-color, #4f46e5);
+    --brand-dark: var(--tg-theme-button-color, #4038c9);
+    --brand-soft: var(--tg-theme-secondary-bg-color, #eef0ff);
+    --topbar: var(--tg-theme-header-bg-color, #f4f6fb);
+
+    /* Внутри Telegram страница живёт в окне клиента, а не во вкладке браузера:
+       высота приходит из viewportStableHeight, а системные панели перекрывают
+       края. Без этих отступов нижний ряд кнопок недоступен. */
+    --inset-top: var(--tg-inset-top, 0px);
+    --inset-bottom: var(--tg-inset-bottom, env(safe-area-inset-bottom, 0px));
+}
+
+/*
+ * Боковое меню превращается в нижнюю панель с вкладками.
+ *
+ * Мини-апп открывается на телефоне, где вертикального места мало, а до
+ * верхнего левого угла не дотянуться большим пальцем. Горизонтальный список
+ * разделов внизу — привычная форма для мобильного приложения.
+ */
+body.is-telegram .app {
+    min-height: var(--app-height, 100vh);
+}
+
+body.is-telegram .sidebar {
+    order: 2;
+    width: 100%;
+    flex: 0 0 auto;
+    height: auto;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: auto;
+    flex-direction: row;
+    align-items: stretch;
+    padding: 4px 6px calc(4px + var(--inset-bottom));
+    background: var(--tg-theme-bottom-bar-bg-color, var(--surface));
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    z-index: 20;
+}
+
+body.is-telegram .brand,
+body.is-telegram .sidebar-foot { display: none; }
+
+body.is-telegram .nav {
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    width: 100%;
+    gap: 2px;
+}
+
+body.is-telegram .nav-item {
+    flex-direction: column;
+    gap: 3px;
+    padding: 7px 4px;
+    border-radius: var(--r-sm);
+    font-size: 11px;
+    color: var(--muted);
+    text-align: center;
+}
+
+body.is-telegram .nav-item:hover { background: var(--surface-2); color: var(--ink); }
+body.is-telegram .nav-item.is-active {
+    background: transparent;
+    box-shadow: none;
+    color: var(--brand);
+}
+
+body.is-telegram .main { padding-bottom: calc(62px + var(--inset-bottom)); }
+
+body.is-telegram .topbar {
+    padding: calc(10px + var(--inset-top)) 14px 10px;
+}
+
+body.is-telegram .content { padding: 14px 14px 24px; }
+
+/* Внутри Telegram тему диктует клиент, и переключатель только мешал бы:
+   он менял бы палитру, которую тут же перезаписывает Telegram. */
+body.is-telegram .topbar__theme { display: none; }
+
+@media (max-width: 820px) {
+    /* На узком экране в браузере меню и так становится горизонтальным,
+       поэтому правила выше для него не нужны. */
+    body.is-telegram .sidebar { flex-direction: row; }
+}

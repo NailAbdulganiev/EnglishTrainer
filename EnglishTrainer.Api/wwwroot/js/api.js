@@ -56,6 +56,31 @@ export async function api(path, { method = 'GET', body, anonymous = false, quiet
         body: body === undefined ? undefined : JSON.stringify(body)
     });
 
+    return unwrap(response, method, path, anonymous, quiet);
+}
+
+/**
+ * Запрос с телом в виде формы — так загружаются файлы.
+ *
+ * Отдельная функция, а не режим `api()`: у составной формы нельзя выставлять
+ * Content-Type вручную — браузер обязан сам добавить в него границу частей,
+ * и подставленный «application/json» сломал бы разбор на сервере.
+ */
+export async function apiUpload(path, formData, method = 'POST') {
+    const headers = {};
+    const token = getToken();
+
+    if (token) {
+        headers.Authorization = `Bearer ${token}`;
+    }
+
+    const response = await fetch(path, { method, headers, body: formData });
+
+    return unwrap(response, method, path, false, false);
+}
+
+/** Общий разбор ответа: коды, текст ошибки и признак истёкшего сеанса. */
+async function unwrap(response, method, path, anonymous, quiet) {
     // 401 означает, что токен истёк или отозван: показать форму входа честнее,
     // чем бесконечно повторять запросы, которые всё равно не пройдут.
     if (response.status === 401 && !anonymous) {

@@ -114,6 +114,20 @@ public sealed class DailyStatRepository(AppDbContext context) : IDailyStatReposi
             .AsNoTracking()
             .ToListAsync(ct);
     }
+
+    public async Task<IReadOnlyList<DailyStat>> GetRangeForUsersAsync(
+        IReadOnlyCollection<int> userIds, DateOnly from, DateOnly to, CancellationToken ct = default)
+    {
+        if (userIds.Count == 0)
+            return [];
+
+        return await context.DailyStats
+            .Where(s => userIds.Contains(s.UserId) && s.Date >= from && s.Date <= to)
+            .OrderBy(s => s.UserId)
+            .ThenBy(s => s.Date)
+            .AsNoTracking()
+            .ToListAsync(ct);
+    }
 }
 
 /// <summary>

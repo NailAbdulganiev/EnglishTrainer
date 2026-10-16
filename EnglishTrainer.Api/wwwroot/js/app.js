@@ -13,6 +13,9 @@
 import { api, getToken, setToken, onUnauthorized } from './api.js';
 import { state, refreshFavorites, setUser } from './state.js';
 import { esc, icon, setLoading, avatar } from './ui.js';
+import { initTheme, toggleTheme, resolvedTheme } from './theme.js';
+import { initSpeech } from './speech.js';
+import { initTelegram, signInWithTelegram, telegramInitData, openExternal } from './telegram.js';
 import { stopSession } from './session.js';
 
 import * as study from './pages/study.js';
@@ -36,6 +39,7 @@ const elements = {
     auth: $('screen-auth'),
     forgot: $('screen-forgot'),
     reset: $('screen-reset'),
+    telegram: $('screen-telegram'),
     app: $('app'),
     nav: $('nav'),
     foot: $('sidebar-foot'),
@@ -43,17 +47,46 @@ const elements = {
     content: $('content')
 };
 
-const context = { navigate, refreshShell };
+const context = { navigate, refreshShell, logout };
 
 let currentPath = null;
 let authMode = 'login';
 let resetToken = '';
 
+/* ── Оформление и Telegram ──────────────────────────────────────────────── */
+
+// И то и другое настраивается до первой отрисовки: тема — чтобы страница
+// не мигнула светлым, Telegram — чтобы интерфейс сразу занял нужную высоту
+// и получил палитру клиента.
+initTheme();
+const inTelegram = initTelegram();
+
+// Список голосов браузер отдаёт асинхронно. Если его не дождаться заранее,
+// первое упражнение на слух прозвучит голосом по умолчанию — а он вполне
+// может читать английские слова с русским акцентом.
+initSpeech();
+
+bindThemeToggle();
+
 /* ── Запуск ─────────────────────────────────────────────────────────────── */
 
-onUnauthorized(() => {
+onUnauthorized(async () => {
     setToken(null);
     setUser(null);
+
+    if (inTelegram) {
+        // Внутри Telegram сеанс восстанавливается сам: подпись initData живёт
+        // сутки, и требовать пароль там, где пароля нет, бессмысленно.
+        // Если и это не выйдет, человека встретит экран привязки.
+        try {
+            await enterWithTelegram();
+            return;
+        } catch {
+            showTelegramLink();
+            return;
+        }
+    }
+
     showAuth('Сеанс истёк — войдите заново.');
 });
 
@@ -63,6 +96,7 @@ async function boot() {
     bindAuthForm();
     bindForgotForm();
     bindResetForm();
+    bindTelegramForm();
     bindPasswordToggles();
     window.addEventListener('hashchange', route);
 
@@ -80,6 +114,13 @@ async function boot() {
     }
 
     if (!getToken()) {
+        if (inTelegram) {
+            // Внутри Telegram формы входа нет: человек уже подтвердил, кто он.
+            // Остаётся понять, привязан ли этот аккаунт к прогрессу.
+            await bootInTelegram();
+            return;
+        }
+
         showAuth();
         return;
     }
@@ -95,6 +136,129 @@ async function boot() {
     } finally {
         setLoading(false);
     }
+}
+
+/**
+ * Вход внутри мини-аппа.
+ *
+ * Отдельная ветка, потому что исходов здесь не два, а три: вошёл, не привязан
+ * и «Telegram не ответил». Показать форму входа во втором и третьем случае
+ * нельзя — пароля человек всё равно не помнит, а приложение выглядело бы
+ * сломанным.
+ */
+async function bootInTelegram() {
+    setLoading(true);
+
+    try {
+        await enterWithTelegram();
+    } catch (error) {
+        // 403 — «этот Telegram не привязан»; остальное — сеть, истёкшая подпись,
+        // недоступный сервер. Тексты разные, потому что и делать нужно разное:
+        // в первом случае идти привязывать аккаунт, во втором — просто повторить.
+        showTelegramLink(error.status === 403
+            ? error.message
+            : `Не удалось войти через Telegram: ${error.message}`);
+    } finally {
+        setLoading(false);
+    }
+}
+
+/** Вход по подписи Telegram: токен, оболочка, приложение. */
+async function enterWithTelegram() {
+    const response = await signInWithTelegram();
+
+    setToken(response.accessToken);
+    setUser(response.user);
+
+    await loadShell();
+    await enterApp();
+}
+
+function showTelegramLink(message) {
+    stopSession();
+    showAuthScreen('telegram');
+
+    if (message) {
+        setNotice('telegram-alert', message, 'error');
+    } else {
+        clearNotice('telegram-alert');
+    }
+}
+
+function bindTelegramForm() {
+    $('telegram-open-site').addEventListener('click', () => openExternal(location.origin));
+
+    $('telegram-retry').addEventListener('click', async (event) => {
+        event.preventDefault();
+        await bootInTelegram();
+    });
+
+    $('telegram-code-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const submit = $('telegram-code-submit');
+        const code = $('telegram-code').value.trim();
+
+        clearNotice('telegram-alert');
+
+        if (!code) {
+            setNotice('telegram-alert', 'Вставьте код из профиля на сайте.', 'error');
+            $('telegram-code').focus();
+            return;
+        }
+
+        setButtonBusy(submit, true, 'Привязываем…');
+
+        try {
+            // Код переносится без бота: мини-апп уже знает, какой это аккаунт
+            // Telegram, и знает код. Отправлять человека в чат с командой
+            // ради того же результата — лишний шаг, а на телефоне неудобный.
+            const response = await api('/api/auth/telegram/link', {
+                method: 'POST',
+                body: { initData: telegramInitData(), code },
+                anonymous: true
+            });
+
+            setToken(response.accessToken);
+            setUser(response.user);
+
+            setLoading(true);
+            await loadShell();
+            await enterApp();
+        } catch (error) {
+            setNotice('telegram-alert', error.message, 'error');
+        } finally {
+            setLoading(false);
+            setButtonBusy(submit, false, 'Привязать и войти');
+        }
+    });
+}
+
+/* ── Переключатель темы ─────────────────────────────────────────────────── */
+
+function bindThemeToggle() {
+    const button = $('theme-toggle');
+
+    renderThemeIcon();
+    document.addEventListener('themechange', renderThemeIcon);
+    button.addEventListener('click', toggleTheme);
+}
+
+/**
+ * Иконка показывает, что произойдёт, а не то, что сейчас.
+ *
+ * На тёмной теме нарисовано солнце: нажатие включает светлую. Обратный
+ * вариант («показано то, что сейчас») заставляет нажимать кнопку мысленно
+ * наугад — а это половина всех жалоб на переключатели темы.
+ */
+function renderThemeIcon() {
+    const button = $('theme-toggle');
+    const dark = resolvedTheme() === 'dark';
+    const label = dark ? 'Светлая тема' : 'Тёмная тема';
+
+    button.innerHTML = icon(dark ? 'sun' : 'moon');
+    button.title = label;
+    button.setAttribute('aria-label', label);
 }
 
 /* ── Вход и регистрация ─────────────────────────────────────────────────── */
@@ -195,6 +359,7 @@ function showAuthScreen(name) {
     elements.auth.hidden = name !== 'auth';
     elements.forgot.hidden = name !== 'forgot';
     elements.reset.hidden = name !== 'reset';
+    elements.telegram.hidden = name !== 'telegram';
     elements.app.hidden = true;
 }
 
@@ -551,6 +716,7 @@ async function enterApp() {
     elements.auth.hidden = true;
     elements.forgot.hidden = true;
     elements.reset.hidden = true;
+    elements.telegram.hidden = true;
     elements.app.hidden = false;
 
     if (!location.hash) {
@@ -586,11 +752,23 @@ function renderUserChip() {
             <button type="button" class="star" id="logout" title="Выйти">${icon('logout')}</button>
         </div>`;
 
-    document.getElementById('logout').addEventListener('click', () => {
-        setToken(null);
-        setUser(null);
-        showAuth();
-    });
+    document.getElementById('logout').addEventListener('click', logout);
+}
+
+/** Выход из аккаунта: токен и данные пользователя стираются, показывается вход. */
+function logout() {
+    setToken(null);
+    setUser(null);
+
+    // В мини-аппе пароля нет: «выйти» там означает лишь сбросить токен, и войти
+    // заново можно тем же аккаунтом Telegram. Показывать форму входа
+    // бессмысленно — вводить в неё нечего.
+    if (inTelegram) {
+        void bootInTelegram();
+        return;
+    }
+
+    showAuth();
 }
 
 function renderNav() {

@@ -79,6 +79,35 @@ public static class AuthEndpoints
         .WithSummary("Установить новый пароль по ссылке")
         .WithDescription("Ссылка действует ограниченное время и срабатывает один раз.");
 
+        group.MapPost("/telegram", async (
+            TelegramSignInRequestDto request,
+            TelegramService telegram,
+            CancellationToken ct) =>
+        {
+            var response = await telegram.SignInAsync(request.InitData, ct);
+            return Results.Ok(response);
+        })
+        .WithSummary("Вход в мини-апп по данным Telegram")
+        .WithDescription(
+            "Принимает строку initData, подписанную Telegram, проверяет подпись токеном бота " +
+            "и выдаёт обычный токен доступа. Пароль не участвует: подпись Telegram — " +
+            "единственное доказательство, что запрос пришёл из его клиента. " +
+            "Telegram, не привязанный ни к одному аккаунту, получает 403 с инструкцией.");
+
+        group.MapPost("/telegram/link", async (
+            TelegramLinkFromMiniAppRequestDto request,
+            TelegramService telegram,
+            CancellationToken ct) =>
+        {
+            var response = await telegram.LinkFromInitDataAsync(request.InitData, request.Code, ct);
+            return Results.Ok(response);
+        })
+        .WithSummary("Привязать Telegram по коду из мини-аппа")
+        .WithDescription(
+            "То же, что команда /link у бота, но без бота: мини-апп уже знает свой аккаунт " +
+            "Telegram, и человеку достаточно вставить код из профиля. Подпись initData " +
+            "проверяется так же строго — иначе обходной путь стал бы дырой.");
+
         return app;
     }
 }

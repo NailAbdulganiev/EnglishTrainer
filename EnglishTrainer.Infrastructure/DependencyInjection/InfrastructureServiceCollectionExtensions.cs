@@ -1,10 +1,13 @@
 using System.Text;
+using EnglishTrainer.Application.Telegram;
 using EnglishTrainer.Domain.Abstractions;
 using EnglishTrainer.Domain.Repositories;
 using EnglishTrainer.Infrastructure.Persistence;
 using EnglishTrainer.Infrastructure.Repositories;
 using EnglishTrainer.Infrastructure.Security;
 using EnglishTrainer.Infrastructure.Seed;
+using EnglishTrainer.Infrastructure.Storage;
+using EnglishTrainer.Infrastructure.Telegram;
 using EnglishTrainer.Infrastructure.Time;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,12 +29,18 @@ public static class InfrastructureServiceCollectionExtensions
     /// <summary>Имя строки подключения в конфигурации.</summary>
     public const string ConnectionStringName = "Postgres";
 
+    /// <summary>Настройка с каталогом аватаров.</summary>
+    public const string AvatarRootKey = "Storage:AvatarRoot";
+
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
-        IConfiguration configuration)
+        IConfiguration configuration,
+        string contentRootPath)
     {
         AddPersistence(services, configuration);
         AddSecurity(services, configuration);
+        AddStorage(services, configuration, contentRootPath);
+        AddTelegram(services, configuration);
 
         // Часы — синглтон: состояние им не хранится, а создавать объект на каждый
         // запрос незачем. Репозитории и контекст — scoped, по одному на HTTP-запрос.
@@ -52,12 +61,47 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddScoped<IFavoriteWordRepository, FavoriteWordRepository>();
         services.AddScoped<IFriendshipRepository, FriendshipRepository>();
         services.AddScoped<IPasswordResetTokenRepository, PasswordResetTokenRepository>();
+        services.AddScoped<ITelegramLinkCodeRepository, TelegramLinkCodeRepository>();
+        services.AddScoped<IUserAchievementRepository, AchievementRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddScoped<VocabularySeeder>();
         services.AddScoped<DatabaseInitializer>();
 
         return services;
+    }
+
+    /// <summary>
+    /// Аватары. Каталог по умолчанию лежит внутри <c>wwwroot</c>, поэтому
+    /// отдельный маршрут отдачи не нужен — файлы раздаёт статика интерфейса.
+    /// </summary>
+    private static void AddStorage(
+        IServiceCollection services, IConfiguration configuration, string contentRootPath)
+    {
+        var configured = configuration[AvatarRootKey];
+
+        // Относительный путь считается от каталога приложения, а не от текущего
+        // каталога процесса: иначе запуск из другого места (двойной клик по exe,
+        // служба Windows) уводил бы аватары в непредсказуемую папку.
+        var root = string.IsNullOrWhiteSpace(configured)
+            ? Path.Combine(contentRootPath, "wwwroot", "avatars")
+            : Path.GetFullPath(configured, contentRootPath);
+
+        services.AddSingleton<IAvatarStorage>(_ => new FileSystemAvatarStorage(root));
+    }
+
+    /// <summary>
+    /// Telegram. Настройки читаются здесь, а не в точке входа, потому что их
+    /// используют оба процесса — и API, и бот: разошедшись, они дадут «мини-апп
+    /// открывается, а вход в нём не работает».
+    /// </summary>
+    private static void AddTelegram(IServiceCollection services, IConfiguration configuration)
+    {
+        var telegram = configuration.GetSection(TelegramOptions.SectionName).Get<TelegramOptions>()
+            ?? new TelegramOptions();
+
+        services.AddSingleton(Options.Create(telegram));
+        services.AddSingleton<ITelegramInitDataValidator, TelegramInitDataValidator>();
     }
 
     private static void AddPersistence(IServiceCollection services, IConfiguration configuration)

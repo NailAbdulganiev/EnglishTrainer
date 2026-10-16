@@ -1,0 +1,18 @@
+{
+  // Профиль запуска для `dotnet run`. Браузер здесь не открывается: бот —
+  // фоновый процесс, у него нет страницы. Адрес тоже не задаётся: веб-сервер
+  // не поднимается, и `applicationUrl` только сбивал бы с толку.
+  //
+  // Окружение Development включено локально: в нём подхватываются секреты
+  // разработчика, и токен можно положить вторым способом — через
+  // `dotnet user-secrets`, а не только в appsettings.Local.json.
+  "profiles": {
+    "EnglishTrainer.Bot": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

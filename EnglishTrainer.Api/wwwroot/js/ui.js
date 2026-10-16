@@ -100,7 +100,19 @@ export function initials(user) {
     return source.slice(0, 2).toUpperCase();
 }
 
+/**
+ * Аватар пользователя: загруженное фото, а при его отсутствии — инициалы.
+ *
+ * alt пустой намеренно: имя пользователя стоит рядом с кружком, и голосовой
+ * диктор, прочитав его дважды, превратил бы список друзей в кашу.
+ */
 export function avatar(user, className = '') {
+    const url = user?.avatarUrl;
+
+    if (url) {
+        return `<div class="avatar ${className}"><img src="${esc(url)}" alt="" loading="lazy"></div>`;
+    }
+
     return `<div class="avatar ${className}">${esc(initials(user))}</div>`;
 }
 
@@ -137,4 +149,64 @@ export function starButton(wordId, isFavorite) {
     return `<button type="button" class="star ${isFavorite ? 'is-on' : ''}"
                     data-favorite="${wordId}" title="${isFavorite ? 'Убрать из избранного' : 'В избранное'}"
                     aria-pressed="${isFavorite}">${icon('star')}</button>`;
+}
+
+/* ── Достижения ─────────────────────────────────────────────────────────── */
+
+/**
+ * Полоска прогресса.
+ *
+ * Значение выше максимума обрезается: «120%» читается как ошибка, а не как
+ * перевыполнение — награда не выдаётся дважды, и показывать больше нечего.
+ */
+export function progressBar(value, max) {
+    const percent = max > 0 ? Math.min(100, Math.round((value / max) * 100)) : 100;
+
+    return `<div class="bar"><span style="width: ${percent}%"></span></div>`;
+}
+
+/** Плашка достижения: полученное светится, закрытое показывает, сколько осталось. */
+export function achievementBadge(item) {
+    return `
+        <div class="achievement ${item.unlocked ? 'is-unlocked' : ''}">
+            <div class="achievement__mark" aria-hidden="true">${item.unlocked ? '🏆' : '🔒'}</div>
+            <div class="achievement__body">
+                <b>${esc(item.title)}</b>
+                <span class="hint">${item.unlocked
+                    ? `получено ${esc(formatDate(item.unlockedAt))}`
+                    : esc(item.description)}</span>
+                ${item.unlocked ? '' : progressBar(item.progress, item.target)}
+                ${item.unlocked ? '' : `<span class="hint">${item.progress} из ${item.target}</span>`}
+            </div>
+        </div>`;
+}
+
+/**
+ * Ближайшая незакрытая цель.
+ *
+ * Показывается отдельно от полного списка: именно она превращает набор наград
+ * в план на завтра. «Осталось два слова» тянет вернуться сильнее, чем список,
+ * в котором всё закрыто, кроме тысячи ответов.
+ */
+export function achievementGoal(achievements) {
+    const goal = achievements?.nextGoal;
+
+    if (!goal) {
+        return '';
+    }
+
+    return `
+        <div class="card goal">
+            <div class="goal__head">
+                <span class="goal__mark" aria-hidden="true">🎯</span>
+                <div>
+                    <b>${esc(goal.title)}</b>
+                    <p class="hint">${esc(goal.description)}</p>
+                </div>
+                <span class="spacer"></span>
+                <span class="badge">${goal.progress} из ${goal.target}</span>
+            </div>
+            ${progressBar(goal.progress, goal.target)}
+            <p class="hint">Достижений получено: ${achievements.unlockedCount} из ${achievements.total}</p>
+        </div>`;
 }

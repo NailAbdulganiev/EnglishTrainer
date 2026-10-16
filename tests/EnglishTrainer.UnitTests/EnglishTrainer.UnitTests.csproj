@@ -41,6 +41,8 @@
     <ProjectReference Include="..\..\EnglishTrainer.Domain\EnglishTrainer.Domain.csproj" />
     <ProjectReference Include="..\..\EnglishTrainer.Application\EnglishTrainer.Application.csproj" />
     <ProjectReference Include="..\..\EnglishTrainer.Infrastructure\EnglishTrainer.Infrastructure.csproj" />
+    <!-- Автономный запуск тестов общий для двух тестовых проектов. -->
+    <ProjectReference Include="..\EnglishTrainer.TestRunner\EnglishTrainer.TestRunner.csproj" />
   </ItemGroup>
 
 </Project>

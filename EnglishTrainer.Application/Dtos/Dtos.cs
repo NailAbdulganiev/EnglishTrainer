@@ -42,6 +42,8 @@ public sealed record UserDto(
     string Email,
     string Username,
     string DisplayName,
+    /// <summary>Адрес аватара или <c>null</c>, если фото не загружено: тогда рисуются инициалы.</summary>
+    string? AvatarUrl,
     string TimeZoneId,
     DateTime CreatedAt,
     bool TelegramLinked);
@@ -94,6 +96,10 @@ public sealed record WordDetailDto(
     IReadOnlyList<WordExampleDto> Examples);
 
 /// <summary>Колода вместе с прогрессом конкретного пользователя.</summary>
+/// <param name="IsOwned">
+/// Личная колода этого пользователя: её можно дополнять и удалять. Системные
+/// и чужие колоды в списке тоже видны (первые — всегда), но правки запрещены.
+/// </param>
 public sealed record DeckDto(
     int Id,
     string Slug,
@@ -101,7 +107,8 @@ public sealed record DeckDto(
     string? Description,
     int TotalWords,
     int StartedWords,
-    int LearnedWords);
+    int LearnedWords,
+    bool IsOwned = false);
 
 // ─────────────────────────── Обучение ───────────────────────────
 
@@ -132,7 +139,26 @@ public sealed record StudyCardDto(
     /// <summary>Варианты ответа для упражнения с выбором. Пусто для ввода.</summary>
     IReadOnlyList<string> Options,
     /// <summary>Подсказка: сколько букв в слове — для упражнений на написание.</summary>
-    int? AnswerLength);
+    int? AnswerLength,
+    /// <summary>
+    /// Текст, который клиент должен произнести вслух, а не показать.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Появляется только у упражнения на слух, и это единственное место, где
+    /// правильный ответ всё-таки уходит в карточку. По-другому не выходит:
+    /// озвучивает браузер, а значит, текст должен быть на клиенте — файлов
+    /// с записями в словаре нет.
+    /// </para>
+    /// <para>
+    /// Правило «карточка не содержит ответа» при этом не нарушено по существу:
+    /// оно защищало от того, что ответ <b>виден на экране</b> до попытки.
+    /// Здесь его на экране нет — клиент обязан произнести текст и не рисовать
+    /// его. Упражнения на ввод и на написание, как и раньше, не содержат ответа
+    /// ни в одном поле, и это закреплено тестом.
+    /// </para>
+    /// </remarks>
+    string? SpokenText = null);
 
 public sealed record StudySessionDto(
     int SessionId,
@@ -265,13 +291,14 @@ public sealed record WordWithFavoriteDto(WordDto Word, bool IsFavorite);
 public sealed record FriendDto(
     string Username,
     string DisplayName,
+    string? AvatarUrl,
     int LearnedCards,
     int CurrentStreak,
     int ReviewedToday,
     DateTime FriendsSince);
 
 /// <summary>Заявка в друзья: входящая или исходящая.</summary>
-public sealed record FriendRequestDto(string Username, string DisplayName, DateTime RequestedAt);
+public sealed record FriendRequestDto(string Username, string DisplayName, string? AvatarUrl, DateTime RequestedAt);
 
 /// <summary>Страница друзей целиком: подтверждённые, входящие и исходящие заявки.</summary>
 public sealed record FriendsOverviewDto(
@@ -280,7 +307,8 @@ public sealed record FriendsOverviewDto(
     IReadOnlyList<FriendRequestDto> Outgoing);
 
 /// <summary>Найденный человек и то, как он связан с текущим пользователем.</summary>
-public sealed record UserSearchResultDto(string Username, string DisplayName, FriendRelation Relation);
+public sealed record UserSearchResultDto(
+    string Username, string DisplayName, string? AvatarUrl, FriendRelation Relation);
 
 /// <summary>Заявка в друзья по нику.</summary>
 public sealed record AddFriendRequestDto(string Username);

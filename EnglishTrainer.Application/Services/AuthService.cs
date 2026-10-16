@@ -13,7 +13,8 @@ public sealed class AuthService(
     IUserRepository users,
     IUnitOfWork unitOfWork,
     IPasswordHasher passwordHasher,
-    ITokenIssuer tokenIssuer)
+    ITokenIssuer tokenIssuer,
+    IClock clock)
 {
     public async Task<AuthResponseDto> RegisterAsync(RegisterRequestDto request, CancellationToken ct = default)
     {
@@ -139,16 +140,27 @@ public sealed class AuthService(
         if (request.ShowTranscriptionUpfront is { } transcription)
             settings.ShowTranscriptionUpfront = transcription;
 
+        // Расписание напоминаний пересчитывается после любой правки настроек,
+        // а не только когда менялось время: включение и выключение тоже меняют
+        // расписание, а часовой пояс и признак привязки Telegram берутся
+        // из самого пользователя.
+        user.ScheduleReminder(clock.UtcNow);
+
         await unitOfWork.SaveChangesAsync(ct);
         return settings.ToDto();
     }
 
     public async Task UpdateTimeZoneAsync(int userId, string timeZoneId, CancellationToken ct = default)
     {
-        var user = await users.GetByIdAsync(userId, ct)
+        var user = await users.GetWithSettingsAsync(userId, ct)
             ?? throw NotFoundException.For("Пользователь", userId);
 
         user.TimeZoneId = NormalizeTimeZone(timeZoneId);
+
+        // Смена пояса переносит и напоминание: «19:00» — это 19:00 пользователя,
+        // и после переезда оно обязано означать новое местное время.
+        user.ScheduleReminder(clock.UtcNow);
+
         await unitOfWork.SaveChangesAsync(ct);
     }
 

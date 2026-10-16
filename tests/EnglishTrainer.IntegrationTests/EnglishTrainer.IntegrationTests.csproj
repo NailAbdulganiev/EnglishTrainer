@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Интеграционные тесты: репозитории на настоящем PostgreSQL.
+
+    Отдельный проект, а не папка в модульных тестах. Причина не в аккуратности:
+    эти тесты требуют запущенной базы, идут секунды вместо миллисекунд и падают
+    по причинам, которых у модульных не бывает. Смешав их, нельзя ни запустить
+    быстрый набор без базы, ни в CI отделить «сломался код» от «не поднялась база».
+  -->
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+
+    <!-- Точка входа для автономного запуска: в ограниченных окружениях
+         тестовый хост VSTest не стартует, а тесты запускать нужно. -->
+    <OutputType>Exe</OutputType>
+    <GenerateProgramFile>false</GenerateProgramFile>
+
+    <!-- Microsoft.NET.Test.Sdk 17.5.0 рассчитан на .NET 7; на .NET 10
+         тестовый хост поднимается через roll-forward. -->
+    <RollForward>LatestMajor</RollForward>
+
+    <RootNamespace>EnglishTrainer.IntegrationTests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+    <PackageReference Include="xunit" Version="2.4.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+
+    <!-- Подключение к базе напрямую: тестам нужно создать её, если её нет,
+         и открыть транзакцию, которая откатывается после каждого теста. -->
+    <PackageReference Include="Npgsql" Version="9.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\EnglishTrainer.Domain\EnglishTrainer.Domain.csproj" />
+    <ProjectReference Include="..\..\EnglishTrainer.Application\EnglishTrainer.Application.csproj" />
+    <ProjectReference Include="..\..\EnglishTrainer.Infrastructure\EnglishTrainer.Infrastructure.csproj" />
+    <ProjectReference Include="..\EnglishTrainer.TestRunner\EnglishTrainer.TestRunner.csproj" />
+  </ItemGroup>
+
+</Project>

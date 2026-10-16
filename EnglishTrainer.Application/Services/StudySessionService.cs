@@ -329,7 +329,7 @@ public sealed class StudySessionService(
         var targetDeckId = deckId;
         if (targetDeckId is null)
         {
-            var allDecks = await decks.GetAllAsync(ct);
+            var allDecks = await decks.GetSystemAsync(ct);
             targetDeckId = allDecks.OrderBy(d => d.SortOrder).FirstOrDefault()?.Id;
         }
 
@@ -595,11 +595,6 @@ public sealed class StudySessionService(
         var audioUrl = FindAudioUrl(word);
         var exercise = item.Exercise;
 
-        // Упражнение на слух без записи — это пустой экран вместо задания,
-        // поэтому при отсутствии аудио оно превращается в задание на написание.
-        if (exercise == ExerciseKind.Listening && audioUrl is null)
-            exercise = ExerciseKind.Spelling;
-
         if (exercise == ExerciseKind.MultipleChoice)
         {
             var options = await BuildOptionsAsync(word, item.WordId, userId, ct);
@@ -624,10 +619,22 @@ public sealed class StudySessionService(
             ? (word.Lemma, PromptLanguageEnglish)
             : (translation, PromptLanguageRussian);
 
-        var answerLength = exercise is ExerciseKind.Spelling ? word.Lemma.Length : (int?)null;
+        // Подсказка о длине нужна там, где ответ вводят по памяти: на слух
+        // «deposit» и «deposit» с лишней буквой неразличимы, а без подсказки
+        // диктант превращается в угадывание.
+        var answerLength = exercise is ExerciseKind.Spelling or ExerciseKind.Listening
+            ? word.Lemma.Length
+            : (int?)null;
+
+        // Текст для озвучивания заполняется только у упражнения на слух.
+        // Записи в словаре нет, поэтому произносит браузер — и ему нужен текст.
+        // Для остальных упражнений это была бы подсказка: клиент произнёс бы
+        // ответ вслух до попытки.
+        var spokenText = exercise == ExerciseKind.Listening ? word.Lemma : null;
 
         return item.ToStudyCard(
-            exercise, prompt, promptLanguage, word.IpaUk, word.IpaUs, audioUrl, null, answerLength);
+            exercise, prompt, promptLanguage, word.IpaUk, word.IpaUs, audioUrl,
+            options: null, answerLength: answerLength, spokenText: spokenText);
     }
 
     /// <summary>

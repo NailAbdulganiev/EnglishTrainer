@@ -80,8 +80,6 @@ public sealed class CardStateRepository(AppDbContext context) : ICardStateReposi
     public async Task<CardStateSummary> GetSummaryAsync(
         int userId, DateTime nowUtc, CancellationToken ct = default)
     {
-        var learnedThreshold = nowUtc.AddDays(CardState.LearnedIntervalDays);
-
         // Порог «выучено» вычисляется на сервере: пересылать DueAt всех карточек
         // ради одной цифры — заведомо плохая идея.
         // SingleOrDefault, а не FirstOrDefault: группировка без условия даёт ровно
@@ -93,8 +91,14 @@ public sealed class CardStateRepository(AppDbContext context) : ICardStateReposi
             .Select(g => new
             {
                 Total = g.Count(),
-                Learned = g.Count(c => c.DueAt > learnedThreshold
-                                       && c.Phase == CardPhase.Review),
+                // «Выучено» считается по интервалу — по тому же признаку, что и
+                // CardState.IsLearned и прогресс колоды. Раньше здесь стояло
+                // условие «срок повторения дальше чем через месяц», и это было
+                // второе определение того же слова: карточка с интервалом ровно
+                // 30 дней попадала в «выучено» в колоде и не попадала в сводку.
+                // Два определения одного числа расходятся — это не теория,
+                // а разные цифры на двух экранах.
+                Learned = g.Count(c => c.IntervalDays >= CardState.LearnedIntervalDays),
                 DueNow = g.Count(c => c.DueAt <= nowUtc)
             })
             .SingleOrDefaultAsync(ct);

@@ -7,9 +7,24 @@
 
 import { api, ApiError } from './api.js';
 import { isFavorite, toggleFavorite } from './state.js';
+import { canSpeak, speak, stopSpeaking } from './speech.js';
+import { hideBackButton, showBackButton } from './telegram.js';
 import {
     esc, icon, emptyState, toast, humanInterval, kindLabel, exerciseLabel, starButton
 } from './ui.js';
+
+/**
+ * Значение <c>ExerciseKind.Listening</c> в перечислении на сервере.
+ *
+ * Число, а не строка: сервер отдаёт перечисление числом, и это осознанный
+ * выбор — так же устроены Kind и Rating. Константа названа, потому что
+ * «card.exercise === 2» в условии не читается.
+ */
+const LISTENING = 2;
+
+/** Скорость обычного и замедленного произношения. */
+const SPEECH_RATE = 0.9;
+const SLOW_SPEECH_RATE = 0.55;
 
 /**
  * Обработчики текущей сессии.
@@ -31,6 +46,47 @@ export function stopSession() {
     }
 
     cleanups = [];
+
+    // Произношение обрывается вместе с сессией: иначе голос продолжает читать
+    // слово, которого на экране уже нет.
+    stopSpeaking();
+
+    // Кнопка «назад» принадлежит Telegram, а не странице: если её не спрятать,
+    // она останется висеть в заголовке после выхода из тренировки и будет
+    // выглядеть как кнопка выхода из приложения.
+    hideBackButton();
+}
+
+/**
+ * Вопрос карточки.
+ *
+ * Упражнение на слух — единственное, где текст вопроса не показывается вовсе:
+ * слово произносится. Перевод на экране был бы подсказкой, поэтому он остаётся
+ * только запасным вариантом — для браузеров без синтеза речи. В этом случае
+ * упражнение превращается в написание по переводу, и оценка от этого не
+ * меняется: принимается всё то же английское слово.
+ *
+ * @param {object} card карточка с сервера
+ * @param {boolean} speechAvailable можно ли рассчитывать на произношение
+ */
+function renderQuestion(card, speechAvailable) {
+    if (!speechAvailable) {
+        return `<p class="prompt">${esc(card.prompt)}</p>`;
+    }
+
+    // Запись, если она когда-нибудь появится в словаре, важнее синтеза:
+    // живой голос точнее любого синтезатора.
+    const player = card.audioUrl
+        ? `<audio controls autoplay src="${esc(card.audioUrl)}"></audio>`
+        : `<div class="row">
+               <button type="button" class="btn btn--primary" id="listen">
+                   ${icon('play', 'icon--sm')} Прослушать
+               </button>
+               <button type="button" class="btn btn--ghost" id="listen-slow">Медленнее</button>
+           </div>`;
+
+    return `${player}
+            <p class="hint">Напишите слово, которое услышали.</p>`;
 }
 
 /**
@@ -92,6 +148,18 @@ export function runSession(container, session, onExit) {
         const hasChoices = card.options && card.options.length > 0;
         const transcription = [card.ipaUk, card.ipaUs].filter(Boolean).join('   ');
 
+        // Диктант возможен, если есть запись или браузер умеет говорить.
+        // Записей в словаре нет, поэтому на практике решает второе.
+        const isDictation = card.exercise === LISTENING && !hasChoices;
+        const speechAvailable = isDictation && (Boolean(card.audioUrl) || canSpeak());
+
+        // Без произношения задание на слух превращается в написание по переводу,
+        // и подпись обязана это отражать: «напишите слово, которое слышите»,
+        // когда ничего не слышно, читается как поломка.
+        const label = isDictation && !speechAvailable
+            ? 'Напишите слово по переводу'
+            : exerciseLabel(card.exercise);
+
         container.innerHTML = `
             <div class="session-bar">
                 <span class="pill">${icon('book', 'icon--sm')}карточка ${card.position} из ${run.totalItems}</span>
@@ -104,16 +172,14 @@ export function runSession(container, session, onExit) {
 
             <div class="card-view">
                 <div class="row" style="justify-content: space-between; align-items: flex-start">
-                    <p class="prompt-label">${esc(exerciseLabel(card.exercise))}</p>
+                    <p class="prompt-label">${esc(label)}</p>
                     ${starButton(card.wordId, isFavorite(card.wordId))}
                 </div>
 
-                <p class="prompt">${esc(card.prompt)}</p>
+                ${renderQuestion(card, speechAvailable)}
 
-                ${card.promptLanguage === 'en' && transcription
+                ${!speechAvailable && card.promptLanguage === 'en' && transcription
                     ? `<p class="ipa">${esc(transcription)}</p>` : ''}
-
-                ${card.audioUrl ? `<audio controls src="${esc(card.audioUrl)}"></audio>` : ''}
 
                 ${hasChoices
                     ? `<div class="choices">
@@ -143,6 +209,24 @@ export function runSession(container, session, onExit) {
         container.querySelector('[data-favorite]').addEventListener('click', (event) => {
             toggleStar(event.currentTarget, card.wordId);
         });
+
+        // В мини-аппе своего заголовка нет, и выйти из тренировки можно только
+        // прокруткой вверх. Кнопка «назад» у Telegram уже есть — она и
+        // выполняет то же действие, что «Прервать».
+        showBackButton(exit);
+
+        if (speechAvailable && !card.audioUrl) {
+            const say = (rate) => speak(card.spokenText, rate);
+
+            container.querySelector('#listen').addEventListener('click', () => say(SPEECH_RATE));
+            container.querySelector('#listen-slow').addEventListener('click', () => say(SLOW_SPEECH_RATE));
+
+            // Первое произношение запускается сразу при показе карточки: иначе
+            // непонятно, что вообще нужно делать, пока не догадаешься нажать
+            // кнопку. Часть браузеров (iOS Safari) без жеста пользователя
+            // произношение игнорирует — на этот случай кнопка и остаётся.
+            say(SPEECH_RATE);
+        }
 
         if (hasChoices) {
             container.querySelectorAll('.choice').forEach((button) => {
@@ -226,6 +310,12 @@ export function runSession(container, session, onExit) {
                 <p class="answer-line">
                     ${esc(result.correctAnswer)}
                     ${transcription ? `<span class="ipa">${esc(transcription)}</span>` : ''}
+                    ${canSpeak()
+                        ? `<button type="button" class="btn btn--ghost btn--icon" id="say-answer"
+                                   title="Прослушать" aria-label="Прослушать">
+                               ${icon('play', 'icon--sm')}
+                           </button>`
+                        : ''}
                 </p>
 
                 ${result.examples?.length
@@ -250,6 +340,12 @@ export function runSession(container, session, onExit) {
 
         container.querySelector('#next').addEventListener('click', proceed);
         container.querySelector('#next').focus();
+
+        // Разбор — самое подходящее место, чтобы услышать слово ещё раз:
+        // ответ уже показан, скрывать нечего, а связь «написание — звучание»
+        // как раз и закрепляется повторением.
+        container.querySelector('#say-answer')
+            ?.addEventListener('click', () => speak(result.correctAnswer, SPEECH_RATE));
     }
 
     function proceed() {
