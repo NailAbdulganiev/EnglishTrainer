@@ -44,6 +44,15 @@ export async function render(container, context) {
                         </label>
                     </div>
 
+                    <!-- Цель — не украшение: именно она решает, засчитается ли день
+                         в серию. Без этой подписи связь между двумя экранами
+                         («ответов сегодня» и «серия дней») приходится угадывать. -->
+                    <p class="hint" style="margin-top: 12px">
+                        День идёт в серию, когда ответов набралось не меньше дневной цели.
+                        Цель можно менять когда угодно: сегодняшний день считается по новой,
+                        прошлые — по той, что действовала тогда.
+                    </p>
+
                     <div class="stack" style="margin-top: 18px">
                         <label class="toggle">
                             <input type="checkbox" id="dailyReminderEnabled" ${settings.dailyReminderEnabled ? 'checked' : ''}>

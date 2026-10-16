@@ -23,13 +23,21 @@ import * as favorites from './pages/favorites.js';
 import * as friends from './pages/friends.js';
 import * as settings from './pages/settings.js';
 import * as profile from './pages/profile.js';
+import * as player from './pages/user.js';
 
+/*
+ * Разделы меню. Адрес профиля игрока — единственный с переменной частью
+ * (#/user/ник), и в меню он не показывается: это не раздел, а экран, который
+ * открывается из списка друзей и из рейтинга. Активным при этом остаётся
+ * «Друзья» — nav указывает, какой пункт подсвечивать.
+ */
 const routes = [
     { path: 'study', title: 'Тренировка', icon: 'book', page: study },
     { path: 'favorites', title: 'Избранное', icon: 'star', page: favorites, badge: 'favorites' },
     { path: 'friends', title: 'Друзья', icon: 'users', page: friends, badge: 'friends' },
     { path: 'settings', title: 'Настройки', icon: 'settings', page: settings },
-    { path: 'profile', title: 'Профиль', icon: 'user', page: profile }
+    { path: 'profile', title: 'Профиль', icon: 'user', page: profile },
+    { path: 'user', title: 'Профиль игрока', page: player, nav: 'friends', menu: false }
 ];
 
 /** Элементы разметки адресуются по id, поэтому короткая ссылка читается легче. */
@@ -459,6 +467,26 @@ function failAuth(message, focusId) {
 
 /* ── Забыли пароль ──────────────────────────────────────────────────────── */
 
+/**
+ * Показывает экран «Забыли пароль?».
+ *
+ * Своя функция, а не пара строк в обработчике ссылки: экран открывается и из
+ * роутера (#/forgot), и с формы входа. Раньше этой функции не было вовсе —
+ * ссылка вызывала несуществующее имя, обработчик падал с ReferenceError,
+ * и нажатие «Забыли пароль?» не делало ничего.
+ */
+function showForgot() {
+    stopSession();
+
+    showAuthScreen('forgot');
+
+    // Сообщение прошлого захода не должно встречать человека при новом открытии
+    // формы: он мог вернуться сюда через час, и «ссылка отправлена» относилось бы
+    // к другому вводу.
+    clearNotice('forgot-alert');
+    $('forgot-login').focus();
+}
+
 function bindForgotForm() {
     $('forgot-form').addEventListener('submit', (event) => {
         event.preventDefault();
@@ -493,14 +521,54 @@ async function sendResetLink() {
         await api('/api/auth/forgot-password',
             { method: 'POST', body: { login }, anonymous: true });
 
-        setNotice('forgot-alert',
-            'Если такой пользователь есть, ссылка для сброса отправлена. ' +
-            'В этой сборке письмо пишется в лог сервера — посмотрите окно, где запущен API.',
-            'ok');
+        setNotice('forgot-alert', resetSentMessage(await passwordResetMethod()), 'ok');
     } catch (error) {
         setNotice('forgot-alert', error.message, 'error');
     } finally {
         setButtonBusy(submit, false, 'Отправить ссылку');
+    }
+}
+
+/**
+ * Куда уходит письмо со ссылкой.
+ *
+ * Спрашивается у сервера, а не угадывается: без почтового провайдера письмо
+ * пишется в журнал сервера, и отправлять человека проверять почту, которой он
+ * не получит, — худшее, что может сделать форма восстановления доступа.
+ * Ответ кэшируется: настройка меняется только перезапуском сервера.
+ */
+let resetMethod = null;
+
+async function passwordResetMethod() {
+    if (resetMethod) {
+        return resetMethod;
+    }
+
+    try {
+        const answer = await api('/api/auth/password-reset-method', { anonymous: true });
+        resetMethod = answer.delivery === 'email' ? 'email' : 'log';
+    } catch {
+        // Не смогли спросить — обещаем только то, что верно в обоих случаях.
+        resetMethod = 'unknown';
+    }
+
+    return resetMethod;
+}
+
+function resetSentMessage(method) {
+    switch (method) {
+        case 'email':
+            return 'Если такой пользователь есть, письмо со ссылкой для сброса пароля '
+                + 'отправлено. Проверьте почту — и папку «Спам»: письма от новых '
+                + 'отправителей часто попадают туда.';
+
+        case 'log':
+            return 'Если такой пользователь есть, ссылка для сброса отправлена. '
+                + 'В этой сборке почтовый провайдер не настроен, поэтому письмо пишется '
+                + 'в журнал сервера — посмотрите окно, где запущен API.';
+
+        default:
+            return 'Если такой пользователь есть, ссылка для сброса отправлена.';
     }
 }
 
@@ -772,7 +840,7 @@ function logout() {
 }
 
 function renderNav() {
-    elements.nav.innerHTML = routes.map((route) => {
+    elements.nav.innerHTML = routes.filter((route) => route.menu !== false).map((route) => {
         const count = route.badge ? state.badges[route.badge] ?? 0 : 0;
 
         return `
@@ -826,9 +894,14 @@ async function route() {
     }
 
     const requested = location.hash.replace(/^#\/?/, '').split('?')[0];
-    const matched = routes.find((route) => route.path === requested) ?? routes[0];
 
-    currentPath = matched.path;
+    // Точное совпадение проверяется первым, затем — раздел с переменной частью
+    // адреса: #/user/ivan открывает профиль игрока, а не «Тренировку».
+    const matched = routes.find((route) => route.path === requested)
+        ?? routes.find((route) => requested.startsWith(`${route.path}/`))
+        ?? routes[0];
+
+    currentPath = matched.nav ?? matched.path;
     elements.title.textContent = matched.title;
 
     stopSession();

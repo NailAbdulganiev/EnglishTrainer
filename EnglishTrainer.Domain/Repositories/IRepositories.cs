@@ -218,8 +218,13 @@ public interface ICardStateRepository
     /// Карточки, которые пора повторить, — самые просроченные первыми.
     /// Это самый горячий запрос системы: под него нужен индекс (UserId, DueAt).
     /// </summary>
+    /// <param name="deckId">
+    /// Колода, если человек выбрал её явно. Без ограничения по колоде очередь
+    /// «по колоде B» состояла бы из слов колоды A: долг по повторениям общий
+    /// для пользователя, а не для колоды.
+    /// </param>
     Task<IReadOnlyList<CardState>> GetDueAsync(
-        int userId, DateTime nowUtc, int limit, CancellationToken ct = default);
+        int userId, DateTime nowUtc, int limit, int? deckId = null, CancellationToken ct = default);
 
     Task<int> CountDueAsync(int userId, DateTime nowUtc, CancellationToken ct = default);
 
@@ -240,7 +245,12 @@ public interface ICardStateRepository
     /// во времени, но человеку иногда нужно заниматься именно сейчас, и запрещать
     /// ему это было бы странно.
     /// </remarks>
-    Task<IReadOnlyList<CardState>> GetSoonestAsync(int userId, int limit, CancellationToken ct = default);
+    /// <param name="deckId">
+    /// Колода, если человек выбрал её явно: «заниматься этой колодой» не должно
+    /// означать «получить слова другой».
+    /// </param>
+    Task<IReadOnlyList<CardState>> GetSoonestAsync(
+        int userId, int limit, int? deckId = null, CancellationToken ct = default);
 
     Task<IReadOnlyList<CardState>> GetForWordsAsync(
         int userId, IReadOnlyCollection<int> wordIds, CancellationToken ct = default);

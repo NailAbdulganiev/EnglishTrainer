@@ -118,6 +118,73 @@ if (-not $BotToken) {
     throw "Не задан токен бота. Укажите его в appsettings.Local.json или параметром -BotToken."
 }
 
+# ── Почта ────────────────────────────────────────────────────────────────────
+# Настройки берутся из того же appsettings.Local.json, что и токен бота:
+# в развёртывании этого файла нет, поэтому единственный источник правды для
+# локальной копии — он, а на сервере значения приходят переменными окружения.
+# Так письмо со ссылкой для сброса пароля работает и на сервере, без отдельной
+# правки .env руками — а забытая правка выглядела бы как «почта настроена,
+# а письма не приходят».
+function Read-LocalEmailSettings([string] $path) {
+    if (-not (Test-Path $path)) {
+        return $null
+    }
+
+    $json = Get-Content $path -Raw
+
+    # Читается регулярками, а не ConvertFrom-Json: в файле есть комментарии,
+    # а Windows PowerShell 5.1 разбирать такой JSON не умеет.
+    $settings = [ordered]@{
+        Host     = [regex]::Match($json, '"Host"\s*:\s*"([^"]*)"').Groups[1].Value
+        Port     = [regex]::Match($json, '"Port"\s*:\s*(\d+)').Groups[1].Value
+        User     = [regex]::Match($json, '"User"\s*:\s*"([^"]*)"').Groups[1].Value
+        Password = [regex]::Match($json, '"Password"\s*:\s*"([^"]*)"').Groups[1].Value
+        EnableSsl = [regex]::Match($json, '"EnableSsl"\s*:\s*(true|false)').Groups[1].Value
+        From     = [regex]::Match($json, '"From"\s*:\s*"([^"]*)"').Groups[1].Value
+        FromName = [regex]::Match($json, '"FromName"\s*:\s*"([^"]*)"').Groups[1].Value
+    }
+
+    # Настроенной почта считается только целиком: сервер и адрес отправителя
+    # обязательны, а логин без пароля приложение считает незаполненной настройкой.
+    if (-not $settings.Host -or -not $settings.From) {
+        return $null
+    }
+
+    if ($settings.User -and -not $settings.Password) {
+        Write-Host 'ВНИМАНИЕ: в appsettings.Local.json задан логин почты без пароля.' -ForegroundColor Yellow
+        Write-Host '         Приложение будет писать письма в журнал сервера. Пароль —' -ForegroundColor Yellow
+        Write-Host '         «пароль для внешнего приложения», а не пароль от ящика.' -ForegroundColor Yellow
+        return $null
+    }
+
+    if (-not $settings.Port) { $settings.Port = '587' }
+    if (-not $settings.EnableSsl) { $settings.EnableSsl = 'true' }
+    if (-not $settings.FromName) { $settings.FromName = 'EnglishTrainer' }
+
+    return $settings
+}
+
+# Значение для .env.
+#
+# Простое значение пишется как есть, остальное — в одинарных кавычках: в .env
+# символы #, $, пробелы и кавычки значат больше, чем значат, и пароль, попавший
+# туда без кавычек, был бы обрезан или разобран как подстановка. Одинарная
+# кавычка внутри значения не экранируется вовсе, поэтому такой пароль честнее
+# отклонить, чем записать испорченным.
+function Format-EnvValue([string] $name, [string] $value) {
+    if ($value -match "^[A-Za-z0-9._@:/+=-]*$") {
+        return $value
+    }
+
+    if ($value -match "'") {
+        throw "Значение $name содержит одинарную кавычку — её нельзя записать в .env. Смените пароль приложения."
+    }
+
+    return "'$value'"
+}
+
+$emailSettings = Read-LocalEmailSettings $configFile
+
 # ── Ключ SSH ─────────────────────────────────────────────────────────────────
 Write-Step "Ключ SSH"
 
@@ -208,6 +275,18 @@ JWT_SECRET=$jwtSecret
 TELEGRAM_BOT_TOKEN=$BotToken
 TELEGRAM_BOT_USERNAME=$BotUsername
 "@
+
+        if ($emailSettings) {
+            $envText += @"
+EMAIL_SMTP_HOST=$($emailSettings.Host)
+EMAIL_SMTP_PORT=$($emailSettings.Port)
+EMAIL_SMTP_USER=$($emailSettings.User)
+EMAIL_SMTP_PASSWORD=$(Format-EnvValue 'EMAIL_SMTP_PASSWORD' $emailSettings.Password)
+EMAIL_SMTP_SSL=$($emailSettings.EnableSsl)
+EMAIL_FROM=$($emailSettings.From)
+EMAIL_FROM_NAME=$($emailSettings.FromName)
+"@
+        }
     }
 }
 
@@ -237,8 +316,44 @@ else {
     $envText = $envText.TrimEnd("`r", "`n") + "`nHTTPS_PORT=$httpsPort`n"
 }
 
+# ── Почта в .env ─────────────────────────────────────────────────────────────
+# Ключи обновляются, а не добавляются один раз: пароль приложения меняют, и
+# старый, оставшийся в .env, давал бы «Authentication failed» при живом
+# локальном конфиге — самую неприятную поломку, потому что искать причину
+# в серверном файле никто не идёт.
+function Set-EnvValue([string] $text, [string] $name, [string] $value) {
+    $line = "$name=$value"
+    $pattern = "(?m)^$([regex]::Escape($name))=.*$"
+
+    if ($text -match $pattern) {
+        return [regex]::Replace($text, $pattern, $line)
+    }
+
+    return $text.TrimEnd("`r", "`n") + "`n$line`n"
+}
+
+if ($emailSettings) {
+    $envText = Set-EnvValue $envText 'EMAIL_SMTP_HOST' (Format-EnvValue 'EMAIL_SMTP_HOST' $emailSettings.Host)
+    $envText = Set-EnvValue $envText 'EMAIL_SMTP_PORT' $emailSettings.Port
+    $envText = Set-EnvValue $envText 'EMAIL_SMTP_USER' (Format-EnvValue 'EMAIL_SMTP_USER' $emailSettings.User)
+    $envText = Set-EnvValue $envText 'EMAIL_SMTP_PASSWORD' (Format-EnvValue 'EMAIL_SMTP_PASSWORD' $emailSettings.Password)
+    $envText = Set-EnvValue $envText 'EMAIL_SMTP_SSL' $emailSettings.EnableSsl
+    $envText = Set-EnvValue $envText 'EMAIL_FROM' (Format-EnvValue 'EMAIL_FROM' $emailSettings.From)
+    $envText = Set-EnvValue $envText 'EMAIL_FROM_NAME' (Format-EnvValue 'EMAIL_FROM_NAME' $emailSettings.FromName)
+}
+
 [System.IO.File]::WriteAllText($envFile, $envText, [System.Text.UTF8Encoding]::new($false))
+
 Write-Note "Адрес: $PublicUrl (порт HTTPS: $httpsPort)"
+
+if ($emailSettings) {
+    Write-Note "Почта: $($emailSettings.Host):$($emailSettings.Port), отправитель $($emailSettings.From)"
+}
+else {
+    Write-Note 'Почта не настроена: письмо со ссылкой будет выводиться в журнал сервера'
+}
+
+[System.IO.File]::WriteAllText($envFile, $envText, [System.Text.UTF8Encoding]::new($false))
 
 if ($freshSecrets) {
     $dbPasswordShown = [regex]::Match($envText, '(?m)^POSTGRES_PASSWORD=(.*)$').Groups[1].Value
@@ -300,6 +415,29 @@ Write-Host ''
 Write-Host 'Готово.' -ForegroundColor Green
 Write-Host "  Сайт и мини-апп: $PublicUrl"
 Write-Host "  Журналы:         ssh $Server 'cd $RemotePath && docker compose -f docker-compose.prod.yml logs -f api bot'"
+
+# ── Почта: что решило приложение ─────────────────────────────────────────────
+# Строку о почте api пишет при запуске, и она же отвечает на вопрос «уходит
+# письмо или остаётся в журнале». Проверять это по журналу, а не надеяться на
+# настройку: половина настройки не даёт ошибки, а «почта настроена, а письма
+# нет» выясняется обычно на живом человеке, который ждёт ссылку.
+Write-Step 'Почта на сервере'
+
+$mailLine = & ssh $Server "cd '$RemotePath' && docker compose -f docker-compose.prod.yml logs api 2>&1 | grep -m1 'Почта' || true"
+
+if ($mailLine) {
+    foreach ($line in @($mailLine)) {
+        if ($line.Trim()) { Write-Note $line.Trim() }
+    }
+}
+else {
+    Write-Host '   Строка о почте в журнале не найдена — посмотрите сами:' -ForegroundColor Yellow
+    Write-Host "   ssh $Server `"cd $RemotePath && docker compose -f docker-compose.prod.yml logs --tail 50 api`"" -ForegroundColor Yellow
+}
+
+Write-Host ''
+Write-Host 'Проверить восстановление пароля: откройте сайт, «Забыли пароль?» —' -ForegroundColor DarkGray
+Write-Host 'письмо должно прийти на почту. Если письма нет, причина будет в журнале api.' -ForegroundColor DarkGray
 Write-Host ''
 Write-Host 'Если мини-апп не открывается с телефона, а сайт открывается —' -ForegroundColor Yellow
 Write-Host 'значит IP сервера недоступен из вашей мобильной сети, и дело не в приложении.' -ForegroundColor Yellow

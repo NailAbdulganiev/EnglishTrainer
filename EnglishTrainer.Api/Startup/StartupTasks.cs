@@ -2,7 +2,9 @@ using System.Data.Common;
 using System.Text.RegularExpressions;
 using EnglishTrainer.Infrastructure;
 using EnglishTrainer.Infrastructure.Persistence;
+using EnglishTrainer.Infrastructure.Security;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace EnglishTrainer.Api.Startup;
 
@@ -41,10 +43,42 @@ internal static partial class StartupTasks
                 AutoMigrateKey);
         }
 
+        ReportEmail(app, logger);
+
         if (configuration.GetValue(SeedOnStartupKey, false))
         {
             await initializer.SeedIfEmptyAsync();
         }
+    }
+
+    /// <summary>
+    /// Пишет в журнал, куда уходят письма.
+    /// </summary>
+    /// <remarks>
+    /// Половина настройки почты не даёт ни ошибки, ни предупреждения: письмо
+    /// просто уходит в журнал, и в развёртывании это выглядит как «почта
+    /// настроена, а письма не приходят». Одна строка при запуске снимает этот
+    /// вопрос: видно и адрес отправителя, и то, что отправка выключена.
+    /// </remarks>
+    private static void ReportEmail(WebApplication app, ILogger logger)
+    {
+        var email = app.Services.GetRequiredService<IOptions<EmailOptions>>().Value;
+
+        if (!email.IsConfigured)
+        {
+            logger.LogWarning(
+                "Почта не настроена: письмо со ссылкой для сброса пароля будет выводиться в журнал. " +
+                "Для отправки задайте Email:Smtp:Host, Email:From и пароль приложения " +
+                "(в развёртывании — EMAIL_SMTP_HOST, EMAIL_FROM, EMAIL_SMTP_PASSWORD).");
+
+            return;
+        }
+
+        logger.LogInformation(
+            "Почта: {Host}:{Port}, отправитель {From}.",
+            email.Smtp.Host,
+            email.Smtp.Port,
+            email.From);
     }
 
     /// <summary>

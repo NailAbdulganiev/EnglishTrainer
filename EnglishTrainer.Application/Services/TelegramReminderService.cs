@@ -131,14 +131,14 @@ public sealed class TelegramReminderService(
     {
         var now = clock.UtcNow;
 
-        var due = await cardStates.GetDueAsync(user.Id, now, 1, ct);
+        var due = await cardStates.GetDueAsync(user.Id, now, 1, ct: ct);
 
         if (due.Count > 0)
         {
             return await DescribeAsync(due[0].WordId, WordOfDaySource.Review, ct);
         }
 
-        var soonest = await cardStates.GetSoonestAsync(user.Id, 1, ct);
+        var soonest = await cardStates.GetSoonestAsync(user.Id, 1, ct: ct);
 
         if (soonest.Count > 0)
         {

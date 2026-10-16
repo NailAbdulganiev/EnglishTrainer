@@ -1,5 +1,7 @@
 using EnglishTrainer.Application.Dtos;
 using EnglishTrainer.Application.Services;
+using EnglishTrainer.Infrastructure.Security;
+using Microsoft.Extensions.Options;
 
 namespace EnglishTrainer.Api.Endpoints;
 
@@ -50,12 +52,14 @@ public static class AuthEndpoints
             ForgotPasswordRequestDto request,
             HttpContext context,
             PasswordResetService service,
+            IOptions<EmailOptions> email,
             CancellationToken ct) =>
         {
             // Адрес формы сброса собирается из самого запроса: интерфейс отдаёт
             // тот же сервер, поэтому отдельная настройка адреса не нужна.
-            // За обратным прокси адрес придётся задавать явно.
-            var resetLink = $"{context.Request.Scheme}://{context.Request.Host}/#/reset";
+            // За обратным прокси адрес придётся задавать явно — внутренний
+            // адрес контейнера человеку в письме бесполезен.
+            var resetLink = $"{PublicBaseUrl(context, email.Value)}/#/reset";
 
             await service.RequestAsync(request.Login, resetLink, ct);
 
@@ -65,8 +69,19 @@ public static class AuthEndpoints
         })
         .WithSummary("Запросить ссылку для сброса пароля")
         .WithDescription(
-            "Всегда отвечает 204. Почтовый провайдер в этой сборке не настроен, " +
-            "поэтому письмо со ссылкой выводится в журнал сервера.");
+            "Всегда отвечает 204. Если почта настроена (Email), письмо со ссылкой уходит " +
+            "на адрес пользователя; иначе оно выводится в журнал сервера.");
+
+        // Спрашивается отдельным запросом, а не полем в ответе на восстановление:
+        // тот ответ одинаков для существующего и несуществующего адреса, и любое
+        // отличие в нём — утечка. Здесь же ничего о пользователе не сообщается.
+        group.MapGet("/password-reset-method", (IOptions<EmailOptions> email) =>
+            Results.Ok(new PasswordResetMethodDto(email.Value.Delivery)))
+        .WithSummary("Куда уходит письмо для сброса пароля")
+        .WithDescription(
+            "«email» — письмо отправляется почтой, «log» — выводится в журнал сервера, " +
+            "потому что почтовый провайдер не настроен. Нужно форме «забыли пароль», " +
+            "чтобы она не отправляла человека проверять почту, которой он не получит.");
 
         group.MapPost("/reset-password", async (
             ResetPasswordRequestDto request,
@@ -110,4 +125,17 @@ public static class AuthEndpoints
 
         return app;
     }
+
+    /// <summary>
+    /// Внешний адрес приложения — основа для ссылок в письмах.
+    /// </summary>
+    /// <remarks>
+    /// Заданный в настройках адрес важнее вычисленного: за обратным прокси
+    /// схема и хост запроса могут быть внутренними, и ссылка для сброса пароля
+    /// увела бы человека на адрес, недоступный снаружи.
+    /// </remarks>
+    private static string PublicBaseUrl(HttpContext context, EmailOptions email) =>
+        string.IsNullOrWhiteSpace(email.PublicUrl)
+            ? $"{context.Request.Scheme}://{context.Request.Host}"
+            : email.PublicUrl.TrimEnd('/');
 }

@@ -41,15 +41,12 @@ public static class InfrastructureServiceCollectionExtensions
         AddSecurity(services, configuration);
         AddStorage(services, configuration, contentRootPath);
         AddTelegram(services, configuration);
+        AddEmail(services, configuration);
 
         // Часы — синглтон: состояние им не хранится, а создавать объект на каждый
         // запрос незачем. Репозитории и контекст — scoped, по одному на HTTP-запрос.
         services.AddSingleton<IClock, SystemClock>();
         services.AddSingleton<IPasswordHasher, Pbkdf2PasswordHasher>();
-
-        // Письма пока уходят в журнал: своего почтового провайдера у приложения нет,
-        // а ссылку для сброса пароля администратору видно в консоли запуска.
-        services.AddSingleton<IEmailSender, LogEmailSender>();
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IWordRepository, WordRepository>();
@@ -102,6 +99,29 @@ public static class InfrastructureServiceCollectionExtensions
 
         services.AddSingleton(Options.Create(telegram));
         services.AddSingleton<ITelegramInitDataValidator, TelegramInitDataValidator>();
+    }
+
+    /// <summary>
+    /// Почта.
+    /// </summary>
+    /// <remarks>
+    /// Реализация выбирается по настройкам, а не по режиму запуска: приложение
+    /// должно работать и без почтового провайдера, но если он задан — письмо
+    /// со ссылкой для сброса пароля обязано уйти на адрес, а не в журнал.
+    /// Настройки читаются здесь, потому что их использует и HTTP-слой — из них
+    /// берётся адрес формы сброса и способ доставки для интерфейса.
+    /// </remarks>
+    private static void AddEmail(IServiceCollection services, IConfiguration configuration)
+    {
+        var email = configuration.GetSection(EmailOptions.SectionName).Get<EmailOptions>()
+            ?? new EmailOptions();
+
+        services.AddSingleton(Options.Create(email));
+
+        if (email.IsConfigured)
+            services.AddSingleton<IEmailSender, SmtpEmailSender>();
+        else
+            services.AddSingleton<IEmailSender, LogEmailSender>();
     }
 
     private static void AddPersistence(IServiceCollection services, IConfiguration configuration)

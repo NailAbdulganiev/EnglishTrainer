@@ -295,8 +295,18 @@ Write-Step 'Восстановление пароля'
 $forgotKnown = Get-StatusCode -Method POST -Path '/api/auth/forgot-password' -Anonymous -Body @{ login = $Email }
 $forgotUnknown = Get-StatusCode -Method POST -Path '/api/auth/forgot-password' -Anonymous -Body @{ login = "no-such-$Email" }
 
-Assert-That ($forgotKnown -eq 204) "Ссылка запрошена для существующего пользователя (код $forgotKnown)"
-Assert-That ($forgotUnknown -eq 204) "Ответ для несуществующего тот же (код $forgotUnknown) — адреса не раскрываются"
+# Существующий адрес: 204, если письмо ушло (или легло в журнал), и 502, если
+# почтовый сервер отказался его принять. Второй код — не поломка, а честный
+# ответ: раньше форма одинаково рапортовала об отправке, и человек ждал письмо,
+# которого никто не отправлял. Тестовый адрес на @example.com недоставляемый,
+# поэтому при настроенной почте этот случай как раз и даёт 502.
+Assert-That ($forgotKnown -eq 204 -or $forgotKnown -eq 502) `
+    "Запрос ссылки обработан для существующего пользователя (код $forgotKnown)"
+
+# Несуществующий адрес молчит всегда: ни письма, ни ошибки — по ответу нельзя
+# понять, зарегистрирован ли адрес (иначе это перебор адресов).
+Assert-That ($forgotUnknown -eq 204) `
+    "Ответ для несуществующего адреса — 204 (код $forgotUnknown)"
 
 $forgedToken = Get-StatusCode -Method POST -Path '/api/auth/reset-password' -Anonymous -Body @{
     token       = 'поддельный-токен'
@@ -352,6 +362,10 @@ Assert-That ($anonymous -eq 401) "Профиль без токена недос�
 $profile = Invoke-Api -Method GET -Path '/api/me'
 Assert-That ($profile.user.email -eq $Email) 'Профиль вернул текущего пользователя'
 Assert-That ($profile.settings.newWordsPerDay -eq 10) 'Лимит новых слов по умолчанию равен 10'
+
+# Цель по умолчанию равна дневному лимиту новых слов: цель выше него нельзя было бы
+# выполнить в первый день, и серия не начиналась бы вовсе.
+Assert-That ($profile.settings.dailyGoal -eq 10) "Дневная цель по умолчанию — 10 ответов (получено $($profile.settings.dailyGoal))"
 Assert-That ($profile.user.timeZoneId -eq 'Europe/Moscow') 'Часовой пояс сохранён'
 
 $updated = Invoke-Api -Method PUT -Path '/api/me/settings' -Body @{
@@ -450,6 +464,45 @@ Assert-That ($answered -gt 0) "Отправлено ответов: $answered"
 Assert-That ($correct -gt 0) "Верных ответов распознано: $correct"
 Assert-That ($requeued -gt 0) "Ответ «не помню» вернул карточку в сессию: $requeued"
 
+# --- Вторая тема в тот же день ---------------------------------------------
+Write-Step 'Вторая тема в тот же день'
+
+# Именно этот случай и был жалобой: дневной лимит новых слов забирает первый
+# прогон, и запрос другой колоды возвращал «повторять нечего», хотя колода
+# нетронута. Выбранная человеком колода лимитом не ограничивается — иначе
+# заниматься второй темой в тот же день было бы нельзя вообще.
+$otherDeck = $decks | Where-Object { $_.id -ne $deck.id } | Sort-Object slug | Select-Object -First 1
+$second = Invoke-Api -Method GET -Path "/api/study/session?deckId=$($otherDeck.id)"
+Assert-That ($second.totalItems -gt 0) "Вторая колода в тот же день даёт карточки: $($second.totalItems)"
+
+$otherWords = Invoke-Api -Method GET -Path "/api/decks/$($otherDeck.slug)/words"
+$otherIds = @($otherWords | ForEach-Object { $_.id })
+Assert-That ($otherIds -contains $second.currentCard.wordId) `
+    'Карточка второй сессии — из выбранной колоды, а не из первой'
+
+# Целая колода за раз не выдаётся даже по явному выбору: за заход вводится
+# обычная дневная норма новых слов, иначе выбор темы превращался бы в «всё сразу».
+Assert-That ($second.totalItems -le $updated.newWordsPerDay) `
+    "Вторая колода даёт не больше дневной нормы: $($second.totalItems) из $($updated.newWordsPerDay)"
+
+# Вторую сессию проходим до конца: незакрытая осталась бы активной и перехватила
+# бы следующий запрос, а её новые карточки — просроченными.
+$card = $second.currentCard
+$secondAnswered = 0
+
+while ($null -ne $card -and $secondAnswered -lt 30) {
+    $result = Invoke-Api -Method POST -Path '/api/study/review' -Body @{
+        itemId    = $card.itemId
+        answer    = Get-CorrectAnswer $card
+        elapsedMs = 1200
+    }
+
+    $secondAnswered++
+    $card = $result.nextCard
+}
+
+Assert-That ($secondAnswered -gt 0) "Вторая сессия пройдена, ответов: $secondAnswered"
+
 # --- Пустая очередь --------------------------------------------------------
 Write-Step 'Пустая очередь'
 
@@ -486,7 +539,25 @@ Write-Step 'Статистика'
 $summary = Invoke-Api -Method GET -Path '/api/stats/summary'
 Assert-That ($summary.totalCards -gt 0) "Слов в изучении: $($summary.totalCards)"
 Assert-That ($summary.reviewedToday -gt 0) "Ответов сегодня: $($summary.reviewedToday)"
-Assert-That ($summary.currentStreak -ge 1) "Серия дней считается: $($summary.currentStreak)"
+Assert-That ($summary.dailyGoal -eq $updated.dailyGoal) `
+    "Сводка отдаёт дневную цель: $($summary.dailyGoal)"
+
+# День идёт в серию только при выполненной дневной цели. Здесь ответов меньше
+# цели, поэтому серии быть не должно: раньше она начислялась за любой ответ,
+# и человек видел «серия 1» при дневной цели, до которой не дошёл.
+Assert-That ($summary.reviewedToday -lt $summary.dailyGoal) `
+    "Ответов ($($summary.reviewedToday)) меньше дневной цели ($($summary.dailyGoal))"
+Assert-That ($summary.currentStreak -eq 0) `
+    "Невыполненная цель серию не продлевает: $($summary.currentStreak)"
+
+# Понижаем цель до уже сделанного: сегодняшний день ещё не закончился, поэтому
+# новая цель применяется к нему сразу, и серия появляется без новых ответов.
+Invoke-Api -Method PUT -Path '/api/me/settings' -Body @{ dailyGoal = 5 } | Out-Null
+
+$afterGoal = Invoke-Api -Method GET -Path '/api/stats/summary'
+Assert-That ($afterGoal.dailyGoal -eq 5) "Новая дневная цель применена: $($afterGoal.dailyGoal)"
+Assert-That ($afterGoal.currentStreak -ge 1) "Выполненная цель засчитывает день: $($afterGoal.currentStreak)"
+
 Assert-That ($summary.accuracyLast30Days -gt 0) "Удержание за 30 дней: $($summary.accuracyLast30Days)%"
 
 $today = Get-Date
@@ -609,6 +680,12 @@ $search = Invoke-Api -Method GET -Path "/api/users/search?query=$otherUsername"
 Assert-That (@($search).Count -eq 1) 'Поиск по нику нашёл человека'
 Assert-That ($search[0].relation -eq 0) 'До заявки связи нет'
 
+# Профиль незнакомца не открывается. Ответ 404, а не 403: «запрещено»
+# подтверждало бы, что такой ник существует, и перебором ников можно было бы
+# выяснить, кто вообще зарегистрирован в сервисе.
+$strangerProfile = Get-StatusCode -Method GET -Path "/api/users/$otherUsername/profile"
+Assert-That ($strangerProfile -eq 404) "Профиль незнакомца недоступен (код $strangerProfile)"
+
 Invoke-Api -Method POST -Path '/api/friends' -Body @{ username = $otherUsername } | Out-Null
 $afterRequest = Invoke-Api -Method GET -Path "/api/users/search?query=$otherUsername"
 Assert-That ($afterRequest[0].relation -eq 1) 'После отправки заявки связь — исходящая'
@@ -648,6 +725,21 @@ $script:token = $ownerToken
 $mine = Invoke-Api -Method GET -Path '/api/friends'
 Assert-That ((@($mine.friends).Count) -eq 1) 'Отправитель тоже видит друга'
 Assert-That ($mine.friends[0].username -eq $otherUsername) 'У друга верный ник'
+
+# Профиль друга открывается: это то, ради чего в списке друзей нужна ссылка —
+# посмотреть его результаты, а не только «выучено» и «серия» в строке.
+$friendProfile = Invoke-Api -Method GET -Path "/api/users/$otherUsername/profile"
+Assert-That ($friendProfile.username -eq $otherUsername) 'Профиль друга открылся'
+Assert-That ($friendProfile.displayName.Length -gt 0) 'В профиле друга есть имя'
+Assert-That ($null -ne $friendProfile.friendsSince) 'Указано, с какого дня вы друзья'
+Assert-That ($friendProfile.friendCount -ge 1) 'В профиле друга виден счётчик друзей'
+Assert-That ($null -ne $friendProfile.memberSince) 'Указана дата регистрации друга'
+Assert-That ($friendProfile.weeklyReviews -ge 0) 'Недельные ответы посчитаны'
+
+# Свой профиль открывается тем же адресом: «это вы» вместо «друзья с такого-то».
+$ownProfile = Invoke-Api -Method GET -Path "/api/users/$newUsername/profile"
+Assert-That ($ownProfile.username -eq $newUsername) 'Свой профиль открывается по нику'
+Assert-That ($null -eq $ownProfile.friendsSince) 'В своём профиле нет даты дружбы'
 
 $profileWithFriend = Invoke-Api -Method GET -Path '/api/me'
 Assert-That ($profileWithFriend.friendCount -eq 1) 'Счётчик друзей в профиле обновился'

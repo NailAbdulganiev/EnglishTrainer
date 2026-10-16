@@ -55,6 +55,11 @@ export function stopSession() {
     // она останется висеть в заголовке после выхода из тренировки и будет
     // выглядеть как кнопка выхода из приложения.
     hideBackButton();
+
+    // Признак «идёт сессия» нужен оформлению: на телефоне экран ответа
+    // уплотняется, а заголовок страницы убирается — иначе карточка не
+    // помещается в окно и до кнопки «Проверить» приходится пролистывать.
+    document.body.classList.remove('session-active');
 }
 
 /**
@@ -98,6 +103,8 @@ function renderQuestion(card, speechAvailable) {
  */
 export function runSession(container, session, onExit) {
     stopSession();
+
+    document.body.classList.add('session-active');
 
     const run = {
         card: session.currentCard,
@@ -195,7 +202,7 @@ export function runSession(container, session, onExit) {
                        </form>
                        ${card.answerLength ? `<p class="hint">Подсказка: в слове ${card.answerLength} букв.</p>` : ''}`}
 
-                <div class="row" style="margin-top: 16px">
+                <div class="row session-actions">
                     <button type="button" class="btn btn--ghost btn--sm" id="dont-know">
                         ${icon('bulb', 'icon--sm')} Не знаю — показать ответ
                     </button>
@@ -317,6 +324,10 @@ export function runSession(container, session, onExit) {
                            </button>`
                         : ''}
                 </p>
+
+                ${result.isCorrect && result.matchedWithTypo
+                    ? `<p class="hint">Ответ зачтён с опечаткой — сверьтесь с написанием выше.</p>`
+                    : ''}
 
                 ${result.examples?.length
                     ? `<ul class="examples">

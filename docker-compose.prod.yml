@@ -42,6 +42,19 @@ x-app-environment: &app-environment
   # Без этого ссылка для сброса пароля указывала бы на внутренний адрес.
   ReverseProxy__Enabled: "true"
 
+  # Почта для ссылки сброса пароля. Пустой Email__Smtp__Host — рабочий режим:
+  # письмо выводится в журнал контейнера, а форма «забыли пароль» об этом
+  # предупреждает. Публичный адрес задаётся явно: внутренний адрес контейнера
+  # в письме бесполезен, а за прокси внешний по запросу определяется не всегда.
+  Email__Smtp__Host: ${EMAIL_SMTP_HOST:-}
+  Email__Smtp__Port: ${EMAIL_SMTP_PORT:-587}
+  Email__Smtp__User: ${EMAIL_SMTP_USER:-}
+  Email__Smtp__Password: ${EMAIL_SMTP_PASSWORD:-}
+  Email__Smtp__EnableSsl: ${EMAIL_SMTP_SSL:-true}
+  Email__From: ${EMAIL_FROM:-}
+  Email__FromName: ${EMAIL_FROM_NAME:-EnglishTrainer}
+  Email__PublicUrl: ${PUBLIC_URL:?задайте PUBLIC_URL в .env}
+
 services:
   # ── База данных ────────────────────────────────────────────────────────────
   postgres:

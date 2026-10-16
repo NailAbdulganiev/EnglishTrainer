@@ -52,6 +52,13 @@ public sealed class StudySessionService(
     /// <summary>
     /// Возвращает активную сессию, а если её нет — собирает новую.
     /// </summary>
+    /// <remarks>
+    /// Продолжается только та сессия, которая отвечает намерению запроса. Если
+    /// человек выбрал другую колоду, старая сессия закрывается: держать две
+    /// очереди одновременно нельзя (это же правило действует для избранного),
+    /// а показать вместо выбранной колоды чужую — хуже, чем потерять очередь,
+    /// которая всё равно восстанавливается из состояний карточек.
+    /// </remarks>
     public async Task<StudySessionDto> GetOrCreateSessionAsync(
         int userId, int? deckId, bool cram = false, CancellationToken ct = default)
     {
@@ -62,14 +69,15 @@ public sealed class StudySessionService(
 
         if (existing is not null)
         {
-            if (existing.Items.Count > 0)
+            // Колода не задана — значит, запрошена общая тренировка, и подходит
+            // любая активная очередь. Колода задана — подходит только своя.
+            var sameDeck = deckId is null || existing.DeckId == deckId;
+
+            // Отвеченная очередь — та же ловушка, что и пустая: возвращать её
+            // значит показывать «сессия закончена» на каждый запрос.
+            if (sameDeck && existing.Items.Any(item => !item.IsAnswered))
                 return await BuildSessionDtoAsync(existing, user, ct);
 
-            // Пустая активная сессия — след прежней ошибки: сервер сохранял сессию
-            // даже тогда, когда очередь оказывалась пустой. Такая запись перекрывала
-            // собой всё остальное: следующий запрос возвращал её же, интерфейс видел
-            // «карточек нет» и снова показывал «сессия закончена». Закрываем её,
-            // чтобы человек не оказался заперт в этом круге.
             existing.Status = StudySessionStatus.Abandoned;
             existing.CompletedAt = clock.UtcNow;
             await unitOfWork.SaveChangesAsync(ct);
@@ -93,9 +101,12 @@ public sealed class StudySessionService(
         // Вне расписания берутся карточки с самым близким сроком, даже если он ещё
         // не наступил: это осознанное желание заниматься сейчас, а не сбой алгоритма,
         // и интервалы при ответе всё равно пересчитаются.
+        //
+        // Выбранная колода ограничивает и повторения: «заниматься колодой B» не
+        // должно означать «получить слова колоды A».
         var due = cram
-            ? await cardStates.GetSoonestAsync(userId, settings.MaxCardsPerSession, ct)
-            : await cardStates.GetDueAsync(userId, nowUtc, settings.MaxCardsPerSession, ct);
+            ? await cardStates.GetSoonestAsync(userId, settings.MaxCardsPerSession, deckId, ct)
+            : await cardStates.GetDueAsync(userId, nowUtc, settings.MaxCardsPerSession, deckId, ct);
 
         // Избранные слова поднимаются в начало очереди. Алгоритм расставляет
         // приоритеты по вероятности забывания, но не знает, что завтра собеседование
@@ -311,17 +322,26 @@ public sealed class StudySessionService(
     /// Отбирает новые слова: только те, что ещё не в изучении, и не больше
     /// остатка дневного лимита.
     /// </summary>
+    /// <remarks>
+    /// Лимит ограничивает автоматический подбор, но не осознанный выбор: если
+    /// человек открыл конкретную колоду, он просит именно её слова, и ответ
+    /// «на сегодня всё» после первого же прогона выглядел бы поломкой. Введённые
+    /// слова при этом честно попадают в дневную статистику, поэтому обычная
+    /// тренировка в тот же день новых слов уже не предложит.
+    /// </remarks>
     private async Task<IReadOnlyList<Word>> SelectNewWordsAsync(
         User user, UserSettings settings, DateOnly localDate, int? deckId, CancellationToken ct)
     {
         if (settings.NewWordsPerDay <= 0)
             return [];
 
+        var chosenDeck = deckId is not null;
+
         var todayStat = await dailyStats.GetAsync(user.Id, localDate, ct);
         var alreadyStarted = todayStat?.NewWordsStarted ?? 0;
         var remaining = settings.NewWordsPerDay - alreadyStarted;
 
-        if (remaining <= 0)
+        if (!chosenDeck && remaining <= 0)
             return [];
 
         // Если колода не выбрана, берём слова из самой приоритетной системной колоды:
@@ -336,7 +356,13 @@ public sealed class StudySessionService(
         if (targetDeckId is null)
             return [];
 
-        var candidates = await words.GetNewWordsForUserAsync(user.Id, targetDeckId.Value, remaining, ct);
+        // У выбранной колоды остаток лимита не спрашивается, но и целая колода
+        // за один заход не выдаётся: за раз вводится обычная дневная норма новых
+        // слов. Иначе выбор темы превращался бы в «получить все её слова сразу» —
+        // ровно то выгорание, от которого лимит и защищает.
+        var limit = chosenDeck ? settings.NewWordsPerDay : remaining;
+
+        var candidates = await words.GetNewWordsForUserAsync(user.Id, targetDeckId.Value, limit, ct);
 
         var stat = todayStat ?? new DailyStat { UserId = user.Id, Date = localDate };
         stat.NewWordsStarted += candidates.Count;
@@ -353,7 +379,7 @@ public sealed class StudySessionService(
     public async Task<AnswerResultDto> SubmitAnswerAsync(
         int userId, SubmitAnswerRequestDto request, CancellationToken ct = default)
     {
-        var user = await users.GetByIdAsync(userId, ct)
+        var user = await users.GetWithSettingsAsync(userId, ct)
             ?? throw NotFoundException.For("Пользователь", userId);
 
         var session = await sessions.GetActiveWithItemsAsync(userId, ct)
@@ -369,7 +395,8 @@ public sealed class StudySessionService(
             ?? throw new InvalidOperationException("Слово не загружено вместе с элементом сессии.");
 
         var accepted = AcceptedAnswers(word);
-        var isCorrect = AnswerNormalizer.Matches(request.Answer, accepted);
+        var match = AnswerNormalizer.Compare(request.Answer, accepted);
+        var isCorrect = match.IsMatch;
 
         // Оценку можно прислать явно (пользователь нажал «легко»), но по умолчанию
         // она выводится из правильности — иначе данные для алгоритма будут случайными.
@@ -482,7 +509,10 @@ public sealed class StudySessionService(
             result.IntervalDays,
             result.DueAt,
             requeued,
-            nextCard);
+            nextCard,
+            // Опечатка не отменяет балл, но человек должен увидеть, как слово
+            // пишется: иначе он закрепит именно свою ошибку.
+            match.IsApproximate);
     }
 
     /// <summary>Помечает незавершённую сессию брошенной, чтобы она не блокировала новую.</summary>
@@ -687,7 +717,8 @@ public sealed class StudySessionService(
             .ToList();
     }
 
-    private async Task UpdateDailyAdHocAsync(User user, DateOnly localDate, bool isCorrect, CancellationToken ct)
+    private async Task UpdateDailyAdHocAsync(
+        User user, DateOnly localDate, bool isCorrect, CancellationToken ct)
     {
         var stat = await dailyStats.GetAsync(user.Id, localDate, ct);
         if (stat is null)
@@ -699,5 +730,11 @@ public sealed class StudySessionService(
         stat.ReviewedCount++;
         if (isCorrect)
             stat.CorrectCount++;
+
+        // Цель записывается в тот же день, к которому относится, и обновляется
+        // каждым ответом. Сегодняшний день идёт по нынешней цели (её можно
+        // поменять и добрать ответы), а прошлые уже зафиксированы и от правки
+        // настроек не зависят.
+        stat.DailyGoal = (user.Settings ?? new UserSettings()).DailyGoal;
     }
 }
