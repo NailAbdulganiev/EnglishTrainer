@@ -68,17 +68,31 @@ internal static partial class StartupTasks
         {
             logger.LogWarning(
                 "Почта не настроена: письмо со ссылкой для сброса пароля будет выводиться в журнал. " +
-                "Для отправки задайте Email:Smtp:Host, Email:From и пароль приложения " +
-                "(в развёртывании — EMAIL_SMTP_HOST, EMAIL_FROM, EMAIL_SMTP_PASSWORD).");
+                "Для отправки задайте Email:Provider (smtp или brevo), адрес отправителя Email:From " +
+                "и ключ — Email:Smtp:Host с паролем либо Email:Brevo:ApiKey.");
+
+            return;
+        }
+
+        if (email.UsesBrevo)
+        {
+            // Провайдер называется в журнале явно: «почта настроена, а письма
+            // не приходят» чаще всего означает, что работает не тот способ,
+            // который имел в виду человек.
+            logger.LogInformation(
+                "Почта: Brevo (HTTP API), отправитель {From}. Таймаут {Timeout} с.",
+                email.From,
+                email.TimeoutSeconds);
 
             return;
         }
 
         logger.LogInformation(
-            "Почта: {Host}:{Port}, отправитель {From}.",
+            "Почта: {Host}:{Port} (SMTP), отправитель {From}. Таймаут {Timeout} с.",
             email.Smtp.Host,
             email.Smtp.Port,
-            email.From);
+            email.From,
+            email.TimeoutSeconds);
     }
 
     /// <summary>

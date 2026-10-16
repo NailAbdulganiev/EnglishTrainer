@@ -147,19 +147,48 @@ function Read-LocalEmailSettings([string] $path) {
 
     # Читается регулярками, а не ConvertFrom-Json: в файле есть комментарии,
     # а Windows PowerShell 5.1 разбирать такой JSON не умеет.
+    #
+    # Осторожно с ключами, которые начинаются одинаково: «From» и «FromName».
+    # Регулярка ищет «"From"» вместе с закрывающей кавычкой, поэтому «"FromName"»
+    # под неё не попадает — на этом различии всё и держится.
     $settings = [ordered]@{
-        Host     = [regex]::Match($json, '"Host"\s*:\s*"([^"]*)"').Groups[1].Value
-        Port     = [regex]::Match($json, '"Port"\s*:\s*(\d+)').Groups[1].Value
-        User     = [regex]::Match($json, '"User"\s*:\s*"([^"]*)"').Groups[1].Value
-        Password = [regex]::Match($json, '"Password"\s*:\s*"([^"]*)"').Groups[1].Value
+        # Provider появился позже: пустое значение означает smtp, и старый файл
+        # секретов продолжает работать без правок.
+        Provider  = [regex]::Match($json, '"Provider"\s*:\s*"([^"]*)"').Groups[1].Value
+        ApiKey    = [regex]::Match($json, '"ApiKey"\s*:\s*"([^"]*)"').Groups[1].Value
+        Host      = [regex]::Match($json, '"Host"\s*:\s*"([^"]*)"').Groups[1].Value
+        Port      = [regex]::Match($json, '"Port"\s*:\s*(\d+)').Groups[1].Value
+        User      = [regex]::Match($json, '"User"\s*:\s*"([^"]*)"').Groups[1].Value
+        Password  = [regex]::Match($json, '"Password"\s*:\s*"([^"]*)"').Groups[1].Value
         EnableSsl = [regex]::Match($json, '"EnableSsl"\s*:\s*(true|false)').Groups[1].Value
-        From     = [regex]::Match($json, '"From"\s*:\s*"([^"]*)"').Groups[1].Value
-        FromName = [regex]::Match($json, '"FromName"\s*:\s*"([^"]*)"').Groups[1].Value
+        Timeout   = [regex]::Match($json, '"TimeoutSeconds"\s*:\s*(\d+)').Groups[1].Value
+        From      = [regex]::Match($json, '"From"\s*:\s*"([^"]*)"').Groups[1].Value
+        FromName  = [regex]::Match($json, '"FromName"\s*:\s*"([^"]*)"').Groups[1].Value
     }
 
-    # Настроенной почта считается только целиком: сервер и адрес отправителя
-    # обязательны, а логин без пароля приложение считает незаполненной настройкой.
-    if (-not $settings.Host -or -not $settings.From) {
+    if (-not $settings.Provider) { $settings.Provider = 'smtp' }
+
+    # Настроенной почта считается только целиком: без адреса отправителя писать
+    # некуда, а без ключа или пароля сервис отклонит отправку. Ровно по этому же
+    # правилу приложение выбирает журнальный режим — расходиться они не должны.
+    if (-not $settings.From) {
+        return $null
+    }
+
+    if ($settings.Provider -eq 'brevo') {
+        if (-not $settings.ApiKey) {
+            Write-Host 'ВНИМАНИЕ: выбран Provider=brevo, но ключ Email:Brevo:ApiKey не задан.' -ForegroundColor Yellow
+            Write-Host '         Письма будут выводиться в журнал сервера.' -ForegroundColor Yellow
+            return $null
+        }
+
+        if (-not $settings.Timeout) { $settings.Timeout = '20' }
+        if (-not $settings.FromName) { $settings.FromName = 'EnglishTrainer' }
+
+        return $settings
+    }
+
+    if (-not $settings.Host) {
         return $null
     }
 
@@ -172,6 +201,7 @@ function Read-LocalEmailSettings([string] $path) {
 
     if (-not $settings.Port) { $settings.Port = '587' }
     if (-not $settings.EnableSsl) { $settings.EnableSsl = 'true' }
+    if (-not $settings.Timeout) { $settings.Timeout = '20' }
     if (-not $settings.FromName) { $settings.FromName = 'EnglishTrainer' }
 
     return $settings
@@ -289,17 +319,9 @@ TELEGRAM_BOT_TOKEN=$BotToken
 TELEGRAM_BOT_USERNAME=$BotUsername
 "@
 
-        if ($emailSettings) {
-            $envText += @"
-EMAIL_SMTP_HOST=$($emailSettings.Host)
-EMAIL_SMTP_PORT=$($emailSettings.Port)
-EMAIL_SMTP_USER=$($emailSettings.User)
-EMAIL_SMTP_PASSWORD=$(Format-EnvValue 'EMAIL_SMTP_PASSWORD' $emailSettings.Password)
-EMAIL_SMTP_SSL=$($emailSettings.EnableSsl)
-EMAIL_FROM=$($emailSettings.From)
-EMAIL_FROM_NAME=$($emailSettings.FromName)
-"@
-        }
+        # Настройки почты здесь не дублируются: их записывает общий блок ниже —
+        # он же обновляет ключи в уже существующем .env сервера. Два места,
+        # пишущие одни и те же ключи, расходятся при первой же правке.
     }
 }
 
@@ -346,13 +368,21 @@ function Set-EnvValue([string] $text, [string] $name, [string] $value) {
 }
 
 if ($emailSettings) {
-    $envText = Set-EnvValue $envText 'EMAIL_SMTP_HOST' (Format-EnvValue 'EMAIL_SMTP_HOST' $emailSettings.Host)
-    $envText = Set-EnvValue $envText 'EMAIL_SMTP_PORT' $emailSettings.Port
-    $envText = Set-EnvValue $envText 'EMAIL_SMTP_USER' (Format-EnvValue 'EMAIL_SMTP_USER' $emailSettings.User)
-    $envText = Set-EnvValue $envText 'EMAIL_SMTP_PASSWORD' (Format-EnvValue 'EMAIL_SMTP_PASSWORD' $emailSettings.Password)
-    $envText = Set-EnvValue $envText 'EMAIL_SMTP_SSL' $emailSettings.EnableSsl
+    $envText = Set-EnvValue $envText 'EMAIL_PROVIDER' $emailSettings.Provider
+    $envText = Set-EnvValue $envText 'EMAIL_TIMEOUT_SECONDS' $emailSettings.Timeout
     $envText = Set-EnvValue $envText 'EMAIL_FROM' (Format-EnvValue 'EMAIL_FROM' $emailSettings.From)
     $envText = Set-EnvValue $envText 'EMAIL_FROM_NAME' (Format-EnvValue 'EMAIL_FROM_NAME' $emailSettings.FromName)
+
+    if ($emailSettings.Provider -eq 'brevo') {
+        $envText = Set-EnvValue $envText 'EMAIL_BREVO_API_KEY' (Format-EnvValue 'EMAIL_BREVO_API_KEY' $emailSettings.ApiKey)
+    }
+    else {
+        $envText = Set-EnvValue $envText 'EMAIL_SMTP_HOST' (Format-EnvValue 'EMAIL_SMTP_HOST' $emailSettings.Host)
+        $envText = Set-EnvValue $envText 'EMAIL_SMTP_PORT' $emailSettings.Port
+        $envText = Set-EnvValue $envText 'EMAIL_SMTP_USER' (Format-EnvValue 'EMAIL_SMTP_USER' $emailSettings.User)
+        $envText = Set-EnvValue $envText 'EMAIL_SMTP_PASSWORD' (Format-EnvValue 'EMAIL_SMTP_PASSWORD' $emailSettings.Password)
+        $envText = Set-EnvValue $envText 'EMAIL_SMTP_SSL' $emailSettings.EnableSsl
+    }
 }
 
 # .env тоже пишется в LF.
@@ -368,7 +398,12 @@ $envText = ConvertTo-UnixText $envText
 Write-Note "Адрес: $PublicUrl (порт HTTPS: $httpsPort)"
 
 if ($emailSettings) {
-    Write-Note "Почта: $($emailSettings.Host):$($emailSettings.Port), отправитель $($emailSettings.From)"
+    if ($emailSettings.Provider -eq 'brevo') {
+        Write-Note "Почта: Brevo (HTTP API), отправитель $($emailSettings.From)"
+    }
+    else {
+        Write-Note "Почта: $($emailSettings.Host):$($emailSettings.Port) (SMTP), отправитель $($emailSettings.From)"
+    }
 }
 else {
     Write-Note 'Почта не настроена: письмо со ссылкой будет выводиться в журнал сервера'

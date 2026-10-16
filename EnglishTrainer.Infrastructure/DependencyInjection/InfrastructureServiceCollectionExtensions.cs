@@ -105,11 +105,10 @@ public static class InfrastructureServiceCollectionExtensions
     /// Почта.
     /// </summary>
     /// <remarks>
-    /// Реализация выбирается по настройкам, а не по режиму запуска: приложение
-    /// должно работать и без почтового провайдера, но если он задан — письмо
-    /// со ссылкой для сброса пароля обязано уйти на адрес, а не в журнал.
-    /// Настройки читаются здесь, потому что их использует и HTTP-слой — из них
-    /// берётся адрес формы сброса и способ доставки для интерфейса.
+    /// Реализация выбирается по настройкам, а не по режиму запуска. Три исхода:
+    /// SMTP (обычный случай), HTTP API Brevo (там, где хостинг закрывает
+    /// исходящие почтовые порты) и журнал (когда не настроено ничего — тогда
+    /// письмо со ссылкой видно в журнале, а форма честно об этом говорит).
     /// </remarks>
     private static void AddEmail(IServiceCollection services, IConfiguration configuration)
     {
@@ -118,10 +117,19 @@ public static class InfrastructureServiceCollectionExtensions
 
         services.AddSingleton(Options.Create(email));
 
-        if (email.IsConfigured)
-            services.AddSingleton<IEmailSender, SmtpEmailSender>();
-        else
+        if (!email.IsConfigured)
+        {
             services.AddSingleton<IEmailSender, LogEmailSender>();
+            return;
+        }
+
+        if (email.UsesBrevo)
+        {
+            services.AddSingleton<IEmailSender, BrevoEmailSender>();
+            return;
+        }
+
+        services.AddSingleton<IEmailSender, SmtpEmailSender>();
     }
 
     private static void AddPersistence(IServiceCollection services, IConfiguration configuration)

@@ -27,8 +27,29 @@ public sealed class EmailOptions
 {
     public const string SectionName = "Email";
 
-    /// <summary>Сервер отправки.</summary>
+    /// <summary>
+    /// Способ отправки: <c>smtp</c> или <c>brevo</c>.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Два способа, а не один, потому что не всякий хостинг пускает почту:
+    /// на многих VPS закрыты все исходящие SMTP-порты (25, 465 и 587) — это
+    /// антиспам-мера провайдера, и обойти её изнутри нельзя. HTTPS при этом
+    /// открыт всегда, поэтому сервис с HTTP API остаётся единственным путём.
+    /// </para>
+    /// <para>
+    /// Выбор задаётся явно, а не угадывается по заполненным полям: настройка,
+    /// которая «сама догадалась», при заполненных сразу двух наборах ведёт себя
+    /// непредсказуемо, а причина отказа ищется в логах почтового сервиса.
+    /// </para>
+    /// </remarks>
+    public string Provider { get; set; } = "smtp";
+
+    /// <summary>Сервер отправки по SMTP.</summary>
     public SmtpOptions Smtp { get; set; } = new();
+
+    /// <summary>Отправка через HTTP API Brevo.</summary>
+    public BrevoOptions Brevo { get; set; } = new();
 
     /// <summary>Адрес отправителя. Обязателен, если почта настроена.</summary>
     public string From { get; set; } = string.Empty;
@@ -47,17 +68,49 @@ public sealed class EmailOptions
     public string PublicUrl { get; set; } = string.Empty;
 
     /// <summary>
-    /// Настроена ли отправка по SMTP.
+    /// Сколько секунд ждать почтовый сервис.
     /// </summary>
     /// <remarks>
-    /// Половина настройки хуже её отсутствия: без сервера или адреса отправителя
-    /// письмо отправить некуда, и лучше честно писать его в журнал — тогда форма
-    /// «забыли пароль» скажет человеку правду, а не «проверьте почту».
+    /// Умолчание <c>SmtpClient</c> — сто секунд, и это не теоретическая
+    /// величина: когда хостинг блокирует исходящий порт, соединение не
+    /// отвергается, а повисает до таймаута, и форма «забыли пароль» висит вместе
+    /// с ним. Человек не понимает, идёт отправка или всё сломалось. Двадцати
+    /// секунд хватает любому живому сервису, а отказ приходит быстро и с текстом.
     /// </remarks>
-    public bool IsConfigured => Smtp.IsConfigured && !string.IsNullOrWhiteSpace(From);
+    public int TimeoutSeconds { get; set; } = 20;
+
+    /// <summary>Отправка идёт через HTTP API, а не по SMTP.</summary>
+    public bool UsesBrevo => string.Equals(Provider, "brevo", StringComparison.OrdinalIgnoreCase);
+
+    /// <summary>
+    /// Настроена ли отправка.
+    /// </summary>
+    /// <remarks>
+    /// Половина настройки хуже её отсутствия: без сервера, ключа или адреса
+    /// отправителя письмо отправить некуда, и лучше честно писать его в журнал —
+    /// тогда форма «забыли пароль» скажет человеку правду, а не «проверьте почту».
+    /// </remarks>
+    public bool IsConfigured =>
+        !string.IsNullOrWhiteSpace(From)
+        && (UsesBrevo ? Brevo.IsConfigured : Smtp.IsConfigured);
 
     /// <summary>Способ доставки письма для интерфейса.</summary>
     public string Delivery => IsConfigured ? "email" : "log";
+}
+
+/// <summary>Параметры отправки через HTTP API Brevo.</summary>
+public sealed class BrevoOptions
+{
+    /// <summary>
+    /// Ключ API Brevo (начинается с <c>xkeysib-</c>).
+    /// </summary>
+    /// <remarks>
+    /// Секрет: в репозитории его нет, он приходит переменной окружения
+    /// <c>Email__Brevo__ApiKey</c> или из локального файла секретов.
+    /// </remarks>
+    public string ApiKey { get; set; } = string.Empty;
+
+    public bool IsConfigured => !string.IsNullOrWhiteSpace(ApiKey);
 }
 
 /// <summary>Параметры SMTP-сервера.</summary>
@@ -98,18 +151,6 @@ public sealed class SmtpOptions
     /// читает трафик.
     /// </remarks>
     public bool EnableSsl { get; set; } = true;
-
-    /// <summary>
-    /// Сколько секунд ждать ответа почтового сервера.
-    /// </summary>
-    /// <remarks>
-    /// Умолчание <c>SmtpClient</c> — сто секунд, и это не теоретическая
-    /// величина: когда хостинг блокирует исходящий порт, соединение не
-    /// отвергается, а повисает до таймаута, и форма «забыли пароль» висит вместе
-    /// с ним. Человек не понимает, идёт отправка или всё сломалось. Двадцати
-    /// секунд хватает любому живому серверу, а отказ приходит быстро и с текстом.
-    /// </remarks>
-    public int TimeoutSeconds { get; set; } = 20;
 
     /// <summary>
     /// Настроена ли отправка по SMTP.

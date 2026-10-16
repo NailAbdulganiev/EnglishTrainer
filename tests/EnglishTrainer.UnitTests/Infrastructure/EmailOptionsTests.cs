@@ -106,4 +106,65 @@ public sealed class EmailOptionsTests
         Assert.Equal("email", options.Delivery);
         Assert.False(options.Smtp.EnableSsl);
     }
+
+    [Fact]
+    public void ProviderBrevo_ReadsTheApiKeyAndIgnoresTheSmtpServer()
+    {
+        // Отправка через HTTP API — единственный путь там, где хостинг закрывает
+        // исходящие почтовые порты. Настроенным считается ключ, а не SMTP-сервер:
+        // заполненный Host без ключа письмо не отправит.
+        var options = Read(
+            ("Email:Provider", "brevo"),
+            ("Email:Brevo:ApiKey", "xkeysib-пример"),
+            ("Email:From", "you@mail.ru"),
+            ("Email:PublicUrl", "https://trainer.example.com"));
+
+        Assert.True(options.UsesBrevo);
+        Assert.True(options.IsConfigured);
+        Assert.Equal("email", options.Delivery);
+        Assert.Equal("xkeysib-пример", options.Brevo.ApiKey);
+
+        // SMTP-сервер при этом пуст, и это не ошибка настройки.
+        Assert.Equal(string.Empty, options.Smtp.Host);
+    }
+
+    [Fact]
+    public void ProviderBrevo_WithoutApiKey_CountsAsNotConfigured()
+    {
+        var options = Read(
+            ("Email:Provider", "brevo"),
+            ("Email:From", "you@mail.ru"),
+            ("Email:Smtp:Host", "smtp.mail.ru"),
+            ("Email:Smtp:User", "you@mail.ru"),
+            ("Email:Smtp:Password", "пароль-приложения"));
+
+        // Выбран HTTP-провайдер, но ключа нет: SMTP-настройки здесь ни при чём,
+        // и письмо уйдёт в журнал — так же, как при незаполненной почте вообще.
+        Assert.True(options.UsesBrevo);
+        Assert.False(options.IsConfigured);
+        Assert.Equal("log", options.Delivery);
+    }
+
+    [Fact]
+    public void ProviderSmtp_IsTheDefault()
+    {
+        // Старые настройки без Provider продолжают работать по SMTP: иначе
+        // обновление приложения молча отключило бы уже настроенную почту.
+        var options = Read(
+            ("Email:Smtp:Host", "smtp.mail.ru"),
+            ("Email:Smtp:User", "you@mail.ru"),
+            ("Email:Smtp:Password", "пароль-приложения"),
+            ("Email:From", "you@mail.ru"));
+
+        Assert.False(options.UsesBrevo);
+        Assert.True(options.IsConfigured);
+    }
+
+    [Fact]
+    public void TimeoutSeconds_IsSharedByBothProviders()
+    {
+        var options = Read(("Email:TimeoutSeconds", "45"));
+
+        Assert.Equal(45, options.TimeoutSeconds);
+    }
 }
