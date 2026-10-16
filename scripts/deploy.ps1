@@ -375,6 +375,15 @@ if ($emailSettings) {
 
     if ($emailSettings.Provider -eq 'brevo') {
         $envText = Set-EnvValue $envText 'EMAIL_BREVO_API_KEY' (Format-EnvValue 'EMAIL_BREVO_API_KEY' $emailSettings.ApiKey)
+
+        # Ключи SMTP очищаются, а не остаются «на всякий случай». Иначе переключение
+        # на HTTP-сервис не работает: в .env остаются старые EMAIL_SMTP_*, Provider
+        # по умолчанию smtp, и приложение продолжает стучаться в закрытый порт —
+        # при том что в конфиге выбран другой способ. Именно так это и выяснилось:
+        # в локальном файле brevo, а сервер писал «Почта: smtp.mail.ru:587».
+        $envText = Set-EnvValue $envText 'EMAIL_SMTP_HOST' ''
+        $envText = Set-EnvValue $envText 'EMAIL_SMTP_USER' ''
+        $envText = Set-EnvValue $envText 'EMAIL_SMTP_PASSWORD' ''
     }
     else {
         $envText = Set-EnvValue $envText 'EMAIL_SMTP_HOST' (Format-EnvValue 'EMAIL_SMTP_HOST' $emailSettings.Host)
@@ -382,6 +391,7 @@ if ($emailSettings) {
         $envText = Set-EnvValue $envText 'EMAIL_SMTP_USER' (Format-EnvValue 'EMAIL_SMTP_USER' $emailSettings.User)
         $envText = Set-EnvValue $envText 'EMAIL_SMTP_PASSWORD' (Format-EnvValue 'EMAIL_SMTP_PASSWORD' $emailSettings.Password)
         $envText = Set-EnvValue $envText 'EMAIL_SMTP_SSL' $emailSettings.EnableSsl
+        $envText = Set-EnvValue $envText 'EMAIL_BREVO_API_KEY' ''
     }
 }
 
