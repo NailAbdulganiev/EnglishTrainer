@@ -245,7 +245,17 @@ export function runSession(container, session, onExit) {
                 answer(container.querySelector('#answer').value);
             });
 
-            container.querySelector('#answer').focus();
+            const input = container.querySelector('#answer');
+
+            // Поле прокручивается в видимую часть экрана, когда получает фокус:
+            // клавиатура закрывает нижнюю половину, и без этого человек печатает
+            // «в никуда» — буквы набираются, а поля не видно. Задержка нужна,
+            // чтобы прокрутка шла уже после того, как клавиатура выехала.
+            input.addEventListener('focus', () => {
+                setTimeout(() => input.scrollIntoView({ block: 'center', behavior: 'smooth' }), 300);
+            });
+
+            input.focus();
         }
     }
 

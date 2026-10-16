@@ -15,8 +15,17 @@
     окружения Telegram__BotToken или из appsettings.Local.json. Без токена раздел
     пропускается с явным сообщением — подпись initData иначе проверить нечем.
 
-    Совместим с Windows PowerShell 5.1 (в нём нет -SkipHttpErrorCheck,
-    а строковое тело запроса искажает кириллицу, поэтому тело кодируется в байты).
+    Скрипт запускается и в Windows PowerShell 5.1, и в PowerShell 7 — в CI это
+    pwsh, на машине разработчика обычно 5.1. Различия между ними проверены
+    на практике, и о двух стоит помнить:
+
+      * значений заголовков в ответе: в 5.1 это строка, в 7 — массив строк,
+        поэтому заголовок берётся как @(...)[0];
+      * тела запроса: в 5.1 нет -SkipHttpErrorCheck, а строковое тело искажает
+        кириллицу, поэтому тело кодируется в байты.
+
+    По той же причине Assert-That принимает не только логическое значение:
+    сравнение вида «коллекция -like шаблон» возвращает коллекцию, а не «да/нет».
 
     ВАЖНО: файл должен оставаться в UTF-8 с BOM. Без BOM Windows PowerShell 5.1
     читает его как ANSI, кириллица превращается в мусор, и скрипт перестаёт
@@ -58,8 +67,19 @@ function Write-Step([string] $title) {
     Write-Host "--- $title" -ForegroundColor Cyan
 }
 
-function Assert-That([bool] $condition, [string] $message) {
-    if ($condition) {
+# Проверка «да/нет».
+#
+# Параметр намеренно не [bool], а любой: в PowerShell 7 значения заголовков
+# приходят массивом, а сравнение вида «коллекция -like шаблон» возвращает
+# не логическое значение, а отфильтрованную коллекцию. С [bool] это падало
+# бы на преобразовании аргумента — с сообщением про System.Object[], по
+# которому невозможно понять, какая именно проверка сломалась. Здесь массив
+# трактуется как «есть ли в нём хотя бы один элемент», что и означает
+# непустой результат фильтрации.
+function Assert-That($condition, [string] $message) {
+    $result = if ($condition -is [System.Array]) { @($condition).Count -gt 0 } else { [bool] $condition }
+
+    if ($result) {
         $script:passed++
         Write-Host "   OK      $message" -ForegroundColor Green
     }
@@ -917,7 +937,13 @@ Assert-That ($avatarUser.avatarUrl -like '/avatars/*') "Профиль верн�
 
 $avatarFile = Invoke-WebRequest -Uri "$BaseUrl$($avatarUser.avatarUrl)" -UseBasicParsing
 Assert-That ($avatarFile.StatusCode -eq 200) 'Аватар отдаётся статикой'
-Assert-That ($avatarFile.Headers['Content-Type'] -like 'image/*') "Тип содержимого — изображение ($($avatarFile.Headers['Content-Type']))"
+
+# Заголовок берётся как первое значение: в Windows PowerShell 5.1 это строка,
+# а в PowerShell 7 — массив строк, и сравнение массива с шаблоном вернуло бы
+# коллекцию, а не «да/нет». В CI скрипт идёт под pwsh, поэтому проверка должна
+# работать в обоих.
+$avatarType = @($avatarFile.Headers['Content-Type'])[0]
+Assert-That ($avatarType -like 'image/*') "Тип содержимого — изображение ($avatarType)"
 
 $firstAvatarUrl = $avatarUser.avatarUrl
 $replaced = Send-AvatarFile -Bytes $pngBytes -FileName 'avatar2.png' -ContentType 'image/png'
@@ -994,6 +1020,26 @@ else {
     $afterUnlink = Get-StatusCode -Method POST -Path '/api/auth/telegram' -Anonymous -Body @{ initData = $initData }
     Assert-That ($afterUnlink -eq 403) "После отвязки вход в мини-апп снова недоступен (код $afterUnlink)"
 }
+
+# --- Версия и «Что нового» -------------------------------------------------
+Write-Step 'Версия и что нового'
+
+# Версия берётся из сборки: по ней человек понимает, обновилось ли приложение,
+# и о какой версии он читает список правок.
+$appVersion = Invoke-Api -Method GET -Path '/api/version' -Anonymous
+Assert-That ($appVersion.version -match '^\d+\.\d+\.\d+$') "Версия приложения отдаётся: $($appVersion.version)"
+
+# Страница правок — обычная статика. Проверяется, что её вообще отдают: список
+# правок бесполезен, если файл не доехал до сервера.
+$updatesPage = Get-StatusCode -Method GET -Path '/js/pages/updates.js' -Anonymous
+Assert-That ($updatesPage -eq 200) "Страница «Что нового» отдаётся (код $updatesPage)"
+
+# Список правок и версия в нём должны совпадать: расхождение означает, что
+# выложили новую версию, а запись о ней забыли — и страница рассказывает
+# о правках, которых в приложении нет.
+$updatesBody = (Invoke-WebRequest -Uri "$BaseUrl/js/pages/updates.js" -UseBasicParsing -TimeoutSec 15).Content
+Assert-That ($updatesBody -match [regex]::Escape("version: '$($appVersion.version)'")) `
+    "Последняя запись в списке правок — про v$($appVersion.version)"
 
 # --- Итог ------------------------------------------------------------------
 Write-Host ''

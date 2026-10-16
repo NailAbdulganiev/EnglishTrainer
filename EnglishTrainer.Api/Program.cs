@@ -113,21 +113,18 @@ if (trustProxy)
 // Отдельная сборка фронтенда не нужна: статические файлы отдаются как есть.
 app.UseDefaultFiles();
 
-// Решение принимается один раз при настройке, а не на каждый файл.
-var revalidateStaticFiles = app.Environment.IsDevelopment();
-
+// Перепроверка статики включена всегда, а не только в разработке.
+//
+// Без заголовка кеша браузер (и WebView мини-аппа тем более) считает файлы
+// свежими «по эвристике» и не спрашивает сервер: правка стилей или скрипта
+// выложена, сервер перезапущен, а на телефоне остаётся старая копия — и это
+// выглядит как «ничего не изменилось». Отдача при этом дешёвая: сервер отвечает
+// 304, если файл не менялся, а размер всей статики — десятки килобайт.
 app.UseStaticFiles(new StaticFileOptions
 {
     OnPrepareResponse = context =>
     {
-        // В разработке браузер обязан перепроверять файлы у сервера.
-        //
-        // Иначе получается так: стили или скрипт исправлены, сервер перезапущен,
-        // а в браузере остаётся старая копия из кеша — и правка выглядит как
-        // «ничего не изменилось». Отдача при этом дешёвая: сервер отвечает 304,
-        // если файл не менялся.
-        if (revalidateStaticFiles)
-            context.Context.Response.Headers.CacheControl = "no-cache, must-revalidate";
+        context.Context.Response.Headers.CacheControl = "no-cache, must-revalidate";
     }
 });
 
@@ -156,6 +153,7 @@ app.MapFavoriteEndpoints();
 app.MapFriendEndpoints();
 app.MapStudyEndpoints();
 app.MapStatsEndpoints();
+app.MapVersionEndpoints();
 
 app.MapGet("/health", () => Results.Ok(new HealthResponse("ok", DateTime.UtcNow)))
     .WithTags("Служебное")
