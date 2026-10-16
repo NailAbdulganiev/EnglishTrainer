@@ -1,0 +1,112 @@
+name: CI
+
+# Что проверяется на каждый push и pull request.
+#
+# Порядок шагов не случаен: сначала сборка (быстро и без базы), затем модульные
+# тесты, затем интеграционные на настоящем PostgreSQL и только потом сквозной
+# сценарий с запущенным API. Такой порядок даёт самый понятный сигнал: если
+# упало на первом шаге — это ошибка компиляции, и разбираться в базе не нужно.
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+
+# Прогон предыдущей ревизии на той же ветке отменяется: проверять устаревший
+# коммит бессмысленно, а очередь из них только увеличивает время отклика.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: english_trainer
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        # Без проверки живости шаги начнут работать раньше базы и упадут
+        # на применении миграций — с сообщением, которое уводит не туда.
+        options: >-
+          --health-cmd "pg_isready -U postgres -d english_trainer"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+      # Строка подключения используется и приложением, и интеграционными тестами.
+      # Тесты заменяют имя базы на english_trainer_tests и создают её сами,
+      # поэтому настоящий прогресс они не затронут.
+      ConnectionStrings__Postgres: "Host=localhost;Port=5432;Database=english_trainer;Username=postgres;Password=postgres"
+
+      # В развёртывании секрет обязателен: приложение не стартует с пустым.
+      # В CI он заведомо не секретный — это значение живёт только внутри прогона.
+      Jwt__Secret: "ci-only-signing-key-not-a-secret-but-long-enough"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+          cache: true
+          cache-dependency-path: '**/*.csproj'
+
+      - name: Восстановление пакетов
+        run: dotnet restore
+
+      - name: Сборка
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Модульные тесты
+        run: >
+          dotnet test tests/EnglishTrainer.UnitTests
+          --no-build --configuration Release
+          --logger "console;verbosity=normal"
+
+      - name: Интеграционные тесты на живой базе
+        run: >
+          dotnet test tests/EnglishTrainer.IntegrationTests
+          --no-build --configuration Release
+          --logger "console;verbosity=normal"
+
+      - name: Схема и словарь
+        run: |
+          dotnet run --project EnglishTrainer.Api --configuration Release --no-build -- migrate
+          dotnet run --project EnglishTrainer.Api --configuration Release --no-build -- seed
+
+      - name: Запуск API
+        run: |
+          # Адрес задан явно, а не взят из launchSettings.json: профиль запуска
+          # предназначен для машины разработчика, и зависеть от него в CI нельзя.
+          dotnet run --project EnglishTrainer.Api --configuration Release --no-build \
+            --urls http://localhost:5201 > api.log 2>&1 &
+          echo $! > api.pid
+
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://localhost:5201/health > /dev/null; then
+              echo "API поднялся с попытки $attempt"
+              exit 0
+            fi
+            sleep 2
+          done
+
+          echo "API не поднялся за минуту. Журнал:"
+          cat api.log
+          exit 1
+
+      - name: Сквозная проверка API
+        run: pwsh ./scripts/smoke-test.ps1
+
+      - name: Журнал API при сбое
+        if: failure()
+        run: cat api.log
