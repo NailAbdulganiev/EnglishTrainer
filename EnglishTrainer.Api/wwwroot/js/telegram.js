@@ -63,13 +63,67 @@ export function initTelegram() {
 
     document.body.classList.add('is-telegram');
 
+    // Вертикальный свайп закрывает мини-апп — это поведение клиента, а не наше.
+    // Пока человек листает карточку или тянется к полю ввода, оно выглядит как
+    // «приложение закрылось само». Отключается там, где клиент это умеет
+    // (Bot API 7.7+); на старых клиентах вызов просто ничего не делает.
+    webApp.disableVerticalSwipes?.();
+
     applyTelegramTheme();
     webApp.onEvent?.('themeChanged', applyTelegramTheme);
 
     applyViewport();
     webApp.onEvent?.('viewportChanged', applyViewport);
 
+    watchKeyboard();
+
     return true;
+}
+
+/**
+ * Следит за экранной клавиатурой.
+ *
+ * Когда клавиатура открыта, нижняя панель разделов оказывается прямо над ней —
+ * то есть там же, где поле ввода. Палец попадает по вкладке, а не по полю,
+ * и выглядит это как «в поле ничего нельзя ввести». Поэтому на время клавиатуры
+ * панель убирается (в CSS, по классу `keyboard-open`), а поле прокручивается
+ * в видимую часть экрана.
+ *
+ * Признаков два, и главный — фокус в поле ввода, а не размер окна: в WebView
+ * геометрия зависит от режима окна (adjustResize), и по одной высоте клавиатуру
+ * видно не всегда. Уменьшение видимой части берётся вторым признаком — оно нужно,
+ * чтобы прокрутить поле уже после того, как клавиатура выехала.
+ */
+function watchKeyboard() {
+    const viewport = window.visualViewport;
+
+    const isFieldFocused = () => {
+        const tag = document.activeElement?.tagName;
+
+        return tag === 'INPUT' || tag === 'TEXTAREA';
+    };
+
+    const update = () => {
+        const shrunk = viewport ? window.innerHeight - viewport.height > 120 : false;
+        const typing = isFieldFocused();
+
+        document.body.classList.toggle('keyboard-open', typing || shrunk);
+
+        if (shrunk && document.activeElement?.scrollIntoView) {
+            document.activeElement.scrollIntoView({ block: 'center' });
+        }
+    };
+
+    document.addEventListener('focusin', update);
+
+    // Небольшая задержка: при переходе между полями сначала приходит focusout
+    // и только потом focusin, и без неё панель успевает мигнуть.
+    document.addEventListener('focusout', () => setTimeout(update, 50));
+
+    if (viewport) {
+        viewport.addEventListener('resize', update);
+        viewport.addEventListener('scroll', update);
+    }
 }
 
 /** Закрывает мини-апп. Используется кнопкой «назад» на верхнем уровне. */

@@ -1166,8 +1166,22 @@ body.is-telegram .ipa { font-size: 14px; margin-bottom: 10px; }
 /* Ввод и кнопка «Проверить» стоят в одной строке: так кнопка гарантированно
    видна, а столбик из поля и кнопки добавлял к карточке целую строку. */
 body.is-telegram .answer-row { flex-direction: row; gap: 8px; margin-top: 4px; }
-body.is-telegram .answer-row input { min-width: 0; }
+
+/* 16 пикселей — не про красоту: при меньшем размере шрифта iOS сам приближает
+   страницу, когда поле получает фокус, и поле уезжает из вида. Заодно минимум
+   ширины, чтобы в поле можно было попасть пальцем даже рядом с кнопкой. */
+body.is-telegram .answer-row input { min-width: 120px; font-size: 16px; }
 body.is-telegram .answer-row .btn { padding: 10px 14px; }
+
+/*
+ * Клавиатура открыта — нижняя панель разделов убирается.
+ *
+ * Панель закреплена внизу экрана, и с открытой клавиатурой она оказывается
+ * ровно там же, где поле ввода: нажатие уходит в раздел, а не в поле, и человек
+ * решает, что ввод не работает. Класс `keyboard-open` ставит js/telegram.js.
+ */
+body.keyboard-open .sidebar { display: none; }
+body.keyboard-open .main { padding-bottom: 0; }
 
 body.is-telegram .choice { padding: 10px 12px; font-size: 15px; gap: 10px; }
 body.is-telegram .choices { gap: 8px; }
