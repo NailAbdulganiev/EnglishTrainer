@@ -67,6 +67,19 @@ $configFile = Join-Path $root 'appsettings.Local.json'
 function Write-Step($text) { Write-Host ''; Write-Host "== $text" -ForegroundColor Cyan }
 function Write-Note($text) { Write-Host "   $text" -ForegroundColor DarkGray }
 
+# Текст, который уходит на сервер, обязан быть в LF.
+#
+# Сам файл скрипта в рабочей копии — CRLF: так требует .gitattributes для *.ps1,
+# и в свежем клоне иначе нельзя. Но here-string с командами тогда содержит \r\n,
+# а bash на сервере считает \r обычным символом: «set -e» превращается в «set»
+# с неверным ключом, а «mkdir -p /opt/english-trainer» создаёт каталог, имя
+# которого заканчивается возвратом каретки. Развёртывание падает при этом
+# с «net/url: invalid control character in URL», и связь с переводами строк
+# в сообщении не видна совсем: искать начинают в конфигурации Caddy.
+function ConvertTo-UnixText([string] $text) {
+    return ($text -replace "`r`n", "`n") -replace "`r", "`n"
+}
+
 # Криптостойкая случайная строка в base64.
 #
 # Через Create()+GetBytes, а не статическим RandomNumberGenerator.Fill: Fill
@@ -342,6 +355,14 @@ if ($emailSettings) {
     $envText = Set-EnvValue $envText 'EMAIL_FROM_NAME' (Format-EnvValue 'EMAIL_FROM_NAME' $emailSettings.FromName)
 }
 
+# .env тоже пишется в LF.
+#
+# Файл читает не только docker compose (он переносит \r терпимо), но и
+# remote-setup.sh через «. ./.env» — а в bash возврат каретки остаётся частью
+# значения: PUBLIC_URL получил бы \r в конце, и Caddy искал бы домен с ним.
+# Тот же \r уехал бы в образы, потому что .env попадает в архив.
+$envText = ConvertTo-UnixText $envText
+
 [System.IO.File]::WriteAllText($envFile, $envText, [System.Text.UTF8Encoding]::new($false))
 
 Write-Note "Адрес: $PublicUrl (порт HTTPS: $httpsPort)"
@@ -352,8 +373,6 @@ if ($emailSettings) {
 else {
     Write-Note 'Почта не настроена: письмо со ссылкой будет выводиться в журнал сервера'
 }
-
-[System.IO.File]::WriteAllText($envFile, $envText, [System.Text.UTF8Encoding]::new($false))
 
 if ($freshSecrets) {
     $dbPasswordShown = [regex]::Match($envText, '(?m)^POSTGRES_PASSWORD=(.*)$').Groups[1].Value
@@ -398,6 +417,10 @@ rm -f /tmp/english-trainer-deploy.tar.gz
 cd '$RemotePath'
 bash deploy/remote-setup.sh
 "@
+
+# LF, а не CRLF: см. ConvertTo-UnixText — иначе bash получает \r в конце каждой
+# строки и развёртывание падает на первом же шаге.
+$remoteCommand = ConvertTo-UnixText $remoteCommand
 
 & ssh $Server $remoteCommand
 $exitCode = $LASTEXITCODE
