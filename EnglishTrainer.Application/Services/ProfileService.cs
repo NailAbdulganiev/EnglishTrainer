@@ -4,6 +4,7 @@ using EnglishTrainer.Application.Media;
 using EnglishTrainer.Application.Text;
 using EnglishTrainer.Domain.Abstractions;
 using EnglishTrainer.Domain.Entities;
+using EnglishTrainer.Domain.Enums;
 using EnglishTrainer.Domain.Exceptions;
 using EnglishTrainer.Domain.Repositories;
 using EnglishTrainer.Domain.Stats;
@@ -47,6 +48,72 @@ public sealed class ProfileService(
             await favorites.CountAsync(userId, ct),
             await friendships.CountAcceptedAsync(userId, ct),
             await reviewLogs.CountAsync(userId, ct));
+    }
+
+    /// <summary>
+    /// Профиль другого игрока: прогресс, который виден друзьям.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Открыть чужой профиль можно только другу, и для постороннего отвечаем
+    /// «не найдено», а не «запрещено». Разница существенна: 403 подтверждает,
+    /// что такой ник существует, и перебором адресов можно было бы составить
+    /// список пользователей сервиса.
+    /// </para>
+    /// <para>
+    /// «Сегодня», окно недели и серия считаются в поясе того, чей профиль
+    /// открывают: у друга в UTC+10 день уже начался, и его «сегодня» — правда
+    /// про него, а не про смотрящего.
+    /// </para>
+    /// <para>
+    /// Недельные показатели берутся из того же правила, что и рейтинг
+    /// (<see cref="LeaderboardRanking"/>), — иначе один и тот же экран и рейтинг
+    /// показывали бы разные числа об одном человеке.
+    /// </para>
+    /// </remarks>
+    public async Task<PublicProfileDto> GetPublicAsync(
+        int viewerId, string username, CancellationToken ct = default)
+    {
+        var user = await users.GetByUsernameAsync(UsernamePolicy.Require(username), ct)
+            ?? throw NotFoundException.For("Пользователь с ником", username);
+
+        var isMe = user.Id == viewerId;
+        Friendship? friendship = null;
+
+        if (!isMe)
+        {
+            friendship = await friendships.GetBetweenAsync(viewerId, user.Id, ct);
+
+            if (friendship is null || friendship.Status != FriendshipStatus.Accepted)
+                throw NotFoundException.For("Пользователь с ником", username);
+        }
+
+        var nowUtc = clock.UtcNow;
+        var summary = await cardStates.GetSummaryAsync(user.Id, nowUtc, ct);
+        var today = clock.TodayFor(user.TimeZoneId);
+        var recent = await dailyStats.GetRecentAsync(user.Id, StreakWindowDays, ct);
+
+        // Серия и недельные показатели считаются из одной и той же дневной
+        // статистики: второй запрос ради недели был бы лишним обращением к базе.
+        var streak = StreakCalculator.Calculate(StreakCalculator.ActiveDates(recent), today);
+        var score = LeaderboardRanking.ScoreFor(
+            recent, today.AddDays(-(LeaderboardRanking.WindowDays - 1)), today, today);
+
+        return new PublicProfileDto(
+            user.Username,
+            user.DisplayName,
+            user.AvatarUrl,
+            user.CreatedAt,
+            summary.Learned,
+            Math.Max(0, summary.Total - summary.Learned),
+            streak.Current,
+            streak.Longest,
+            recent.FirstOrDefault(stat => stat.Date == today)?.ReviewedCount ?? 0,
+            score.WeeklyWords,
+            score.WeeklyReviews,
+            await reviewLogs.CountAsync(user.Id, ct),
+            await friendships.CountAcceptedAsync(user.Id, ct),
+            friendship is null ? null : friendship.RespondedAt ?? friendship.CreatedAt);
     }
 
     /// <summary>

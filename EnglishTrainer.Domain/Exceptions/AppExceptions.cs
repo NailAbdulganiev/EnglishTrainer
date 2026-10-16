@@ -34,3 +34,14 @@ public sealed class UnauthorizedException(string message = "Требуется �
 /// в мини-апп превращался бы в выход из веб-версии.
 /// </remarks>
 public sealed class ForbiddenException(string message) : AppException(message);
+
+/// <summary>
+/// Внешний сервис не выполнил действие: письмо не ушло, Telegram не ответил.
+/// </summary>
+/// <remarks>
+/// Отдельный тип, а не внутренняя ошибка: сервер работает, отказал тот, к кому
+/// он обращался, и человеку об этом нужно сказать. Молчание здесь дороже всего —
+/// форма «забыли пароль» рапортовала бы об отправленном письме, которого нет,
+/// и человек ждал бы ссылку, которую никто не отправил.
+/// </remarks>
+public sealed class DeliveryException(string message) : AppException(message);

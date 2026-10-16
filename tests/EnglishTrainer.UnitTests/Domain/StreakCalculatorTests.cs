@@ -139,6 +139,59 @@ public sealed class StreakCalculatorTests
     }
 
     [Fact]
+    public void ActiveDates_SkipsDayWhereDailyGoalWasNotReached()
+    {
+        var goal = 30;
+        var short_ = Stat(new DateOnly(2026, 3, 1), reviewedCount: 20, dailyGoal: goal);
+        var complete = Stat(new DateOnly(2026, 3, 2), reviewedCount: goal, dailyGoal: goal);
+
+        var dates = StreakCalculator.ActiveDates([short_, complete]).ToArray();
+
+        // Двадцать ответов при цели в тридцать — день не выполнен: именно из-за
+        // этого серия раньше «давалась» раньше, чем человек заканчивал норму.
+        Assert.Equal<DateOnly>([complete.Date], dates);
+    }
+
+    [Fact]
+    public void ActiveDates_SumsRecordsOfTheSameDay()
+    {
+        var goal = 30;
+        var morning = Stat(new DateOnly(2026, 3, 1), reviewedCount: 18, dailyGoal: goal);
+        var evening = Stat(new DateOnly(2026, 3, 1), reviewedCount: 12, dailyGoal: goal);
+
+        var dates = StreakCalculator.ActiveDates([morning, evening]).ToArray();
+
+        // Ни одна запись по отдельности цели не достигает, а вместе они её выполняют.
+        Assert.Equal<DateOnly>([morning.Date], dates);
+    }
+
+    [Fact]
+    public void ActiveDates_ForRecordsWithoutFixedGoal_CountsAnyReview()
+    {
+        // Записи, созданные до появления столбца цели: правило не меняется задним
+        // числом, иначе у всех, кто занимался годами, серия обнулилась бы молча.
+        var legacy = Stat(new DateOnly(2026, 3, 1), reviewedCount: 1, dailyGoal: 0);
+
+        Assert.Equal<DateOnly>([legacy.Date], StreakCalculator.ActiveDates([legacy]).ToArray());
+    }
+
+    [Fact]
+    public void Calculate_WhenDayIsBelowGoal_BreaksCurrentStreak()
+    {
+        var goal = 30;
+        var twoDaysAgo = Stat(Today.AddDays(-2), reviewedCount: goal, dailyGoal: goal);
+        var yesterday = Stat(Today.AddDays(-1), reviewedCount: 20, dailyGoal: goal);
+        var today = Stat(Today, reviewedCount: goal, dailyGoal: goal);
+
+        var result = StreakCalculator.Calculate(StreakCalculator.ActiveDates([twoDaysAgo, yesterday, today]), Today);
+
+        // Серия считается по выполненным дням: вчерашние двадцать ответов её
+        // обрывают, и текущая серия начинается заново с сегодняшнего дня.
+        Assert.Equal(1, result.Current);
+        Assert.Equal(1, result.Longest);
+    }
+
+    [Fact]
     public void ActiveDates_FeedCalculateWithoutBreakingStreak()
     {
         var stats = new[]
@@ -158,6 +211,10 @@ public sealed class StreakCalculatorTests
     }
 
     /// <summary>Запись дневной статистики с указанным числом ответов.</summary>
-    private static DailyStat Stat(DateOnly date, int reviewedCount) =>
-        new() { Date = date, ReviewedCount = reviewedCount };
+    /// <param name="dailyGoal">
+    /// Дневная цель, действовавшая в тот день. Ноль — запись без зафиксированной
+    /// цели: так выглядят строки, созданные до появления столбца.
+    /// </param>
+    private static DailyStat Stat(DateOnly date, int reviewedCount, int dailyGoal = 0) =>
+        new() { Date = date, ReviewedCount = reviewedCount, DailyGoal = dailyGoal };
 }

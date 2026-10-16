@@ -438,8 +438,18 @@ input:focus, select:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rg
 
 .leaderboard { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
 
+/*
+ * Строка рейтинга — сетка, а не flex.
+ *
+ * Имя в рейтинге приходит от человека и бывает длинным, а подпись «слов за неделю»
+ * не должна сжиматься по буквам. Во flex столбец с именем ужимался до нуля,
+ * а неразрывное слово вылезало из него и наезжало на результат — именно это
+ * и было видно на экране. В сетке столбец имени объявлен как minmax(0, 1fr)
+ * и честно ужимается, а слово переносится внутри своего столбца.
+ */
 .leaderboard__row {
-    display: flex;
+    display: grid;
+    grid-template-columns: 26px auto minmax(0, 1fr) auto auto;
     align-items: center;
     gap: 12px;
     padding: 10px 12px;
@@ -455,7 +465,6 @@ input:focus, select:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rg
 }
 
 .leaderboard__rank {
-    flex: 0 0 26px;
     text-align: center;
     font-weight: 700;
     font-size: 15px;
@@ -464,15 +473,28 @@ input:focus, select:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rg
 
 .leaderboard__row.is-me .leaderboard__rank { color: var(--brand); }
 
-.leaderboard__name { flex: 1; min-width: 0; }
-.leaderboard__name b { display: block; font-size: 15px; }
-.leaderboard__name .hint { display: block; margin: 0; }
+.leaderboard__name { min-width: 0; }
+.leaderboard__name b { display: block; font-size: 15px; overflow-wrap: anywhere; }
+.leaderboard__name .hint { display: block; margin: 0; overflow-wrap: anywhere; }
 
-.leaderboard__score { text-align: right; }
+/* Число и подпись к нему не переносятся: «5 слов за неделю» в три строки
+   читается как поломка вёрстки, а имя рядом и так ужимается первым. */
+.leaderboard__score { text-align: right; white-space: nowrap; }
 .leaderboard__score b { display: block; font-size: 18px; line-height: 1.1; }
 .leaderboard__score .hint { margin: 0; }
 
-.leaderboard__streak { flex: 0 0 auto; font-size: 14px; color: var(--muted); }
+.leaderboard__streak { font-size: 14px; color: var(--muted); white-space: nowrap; }
+
+/*
+ * Имя человека — ссылка на его профиль.
+ *
+ * Ссылка занимает всю строку имени, а не только сам текст: попасть пальцем
+ * в две буквы на телефоне невозможно, а внешний вид остаётся прежним —
+ * подчёркивание здесь только мешало бы читать список.
+ */
+.person { display: block; min-width: 0; color: inherit; text-decoration: none; }
+.person:hover b { color: var(--brand); }
+.person:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: var(--r-sm); }
 
 /* ── Свои колоды ────────────────────────────────────────────────────────── */
 
@@ -519,9 +541,24 @@ input:focus, select:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rg
 /* Строка рейтинга и строки слов на узком экране переносятся: иначе столбцы
    сжимаются до нечитаемого, а подписи уезжают под край. */
 @media (max-width: 560px) {
-    .leaderboard__row { flex-wrap: wrap; }
-    .leaderboard__score { text-align: left; margin-left: 38px; }
-    .leaderboard__streak { margin-left: auto; }
+    /*
+     * Имя занимает всю первую строку, а число и серия уходят во вторую.
+     * Одной строкой на телефоне не обойтись: имя, «слов за неделю» и серия
+     * в 360 пикселей не помещаются, и любой из столбцов пришлось бы обрезать.
+     */
+    .leaderboard__row {
+        grid-template-columns: 24px auto minmax(0, 1fr) auto;
+        grid-template-areas:
+            "rank avatar name  name"
+            "rank avatar score streak";
+        row-gap: 4px;
+    }
+
+    .leaderboard__rank { grid-area: rank; align-self: start; }
+    .leaderboard__row > .avatar { grid-area: avatar; }
+    .leaderboard__name { grid-area: name; }
+    .leaderboard__score { grid-area: score; text-align: left; }
+    .leaderboard__streak { grid-area: streak; align-self: center; }
 }
 
 /* ── Плитки статистики ──────────────────────────────────────────────────── */
@@ -791,8 +828,8 @@ audio { width: 100%; margin-bottom: 18px; }
 .avatar-editor input[type="file"] { display: none; }
 
 .friend-row__name { flex: 1; min-width: 0; }
-.friend-row__name b { display: block; font-size: 15px; }
-.friend-row__name span { color: var(--muted); font-size: 13px; }
+.friend-row__name b { display: block; font-size: 15px; overflow-wrap: anywhere; }
+.friend-row__name span { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
 .friend-row__stats { display: flex; gap: 14px; color: var(--muted); font-size: 12.5px; text-align: right; }
 .friend-row__stats b { display: block; color: var(--ink); font-size: 16px; }
 
@@ -1082,11 +1119,84 @@ body.is-telegram .topbar {
 
 body.is-telegram .content { padding: 14px 14px 24px; }
 
+/* ── Экран ответа на телефоне ───────────────────────────────────────────── */
+
+/*
+ * Карточка должна помещаться в окно целиком.
+ *
+ * Мини-апп открывается на телефоне, где вертикального места мало: заголовок
+ * страницы, отступы карточки, подписи и кнопка «Проверить» в сумме оказывались
+ * выше экрана, и до кнопки приходилось пролистывать — при ответе на каждой
+ * карточке. Здесь убирается всё, без чего можно обойтись, и остаётся то,
+ * ради чего экран открыт.
+ *
+ * Заголовок страницы скрывается только во время сессии (body.session-active):
+ * в списке колод он нужен, а над карточкой дублирует подпись упражнения.
+ * «Прервать» остаётся — кнопка «назад» есть не во всех клиентах Telegram.
+ */
+body.is-telegram.session-active .topbar { display: none; }
+
+body.is-telegram .session-bar {
+    margin-bottom: 8px;
+    gap: 6px;
+    /* Одна строка вместо двух: переносить здесь нечего. */
+    flex-wrap: nowrap;
+}
+
+body.is-telegram .session-bar .pill {
+    padding: 4px 9px;
+    font-size: 12px;
+}
+
+/* Вид карточки («повторение», «новое слово») на узком экране не помещается
+   в строку с прогрессом и кнопкой, а знание это — приятное, не нужное. */
+body.is-telegram .session-bar .pill:nth-of-type(2) { display: none; }
+
+body.is-telegram.session-active .content { padding: 8px 10px 14px; }
+
+body.is-telegram .card-view {
+    padding: 14px;
+    border-radius: var(--r);
+}
+
+body.is-telegram .prompt-label { margin-bottom: 6px; font-size: 12px; }
+body.is-telegram .prompt { font-size: 22px; margin-bottom: 6px; }
+body.is-telegram .ipa { font-size: 14px; margin-bottom: 10px; }
+
+/* Ввод и кнопка «Проверить» стоят в одной строке: так кнопка гарантированно
+   видна, а столбик из поля и кнопки добавлял к карточке целую строку. */
+body.is-telegram .answer-row { flex-direction: row; gap: 8px; margin-top: 4px; }
+body.is-telegram .answer-row input { min-width: 0; }
+body.is-telegram .answer-row .btn { padding: 10px 14px; }
+
+body.is-telegram .choice { padding: 10px 12px; font-size: 15px; gap: 10px; }
+body.is-telegram .choices { gap: 8px; }
+
+body.is-telegram .session-actions { margin-top: 8px; }
+body.is-telegram .session-actions .btn { padding: 6px 10px; font-size: 13px; }
+
+/* Разбор ответа: примеры переносятся тише, а «Дальше» остаётся на виду. */
+body.is-telegram .examples { margin-bottom: 10px; }
+body.is-telegram .verdict { margin-bottom: 8px; }
+body.is-telegram .answer-line { font-size: 19px; margin-bottom: 10px; }
+
 /* Внутри Telegram тему диктует клиент, и переключатель только мешал бы:
    он менял бы палитру, которую тут же перезаписывает Telegram. */
 body.is-telegram .topbar__theme { display: none; }
 
 @media (max-width: 820px) {
+    /* Мобильный браузер — тот же маленький экран, что и мини-апп: карточка
+       уплотняется, а заголовок страницы во время сессии убирается, иначе
+       до кнопки «Проверить» приходится пролистывать. Правила помечены
+       «не Telegram»: у мини-аппа свои значения выше, и спорить с ними
+       одинаковой специфичностью здесь не нужно. */
+    body.session-active:not(.is-telegram) .topbar { display: none; }
+    body.session-active:not(.is-telegram) .content { padding: 10px 10px 16px; }
+    body.session-active:not(.is-telegram) .card-view { padding: 16px; }
+    body.session-active:not(.is-telegram) .prompt { font-size: 24px; }
+    body.session-active:not(.is-telegram) .session-actions { margin-top: 10px; }
+    body.session-active:not(.is-telegram) .session-actions .btn { padding: 6px 10px; font-size: 13px; }
+
     /* На узком экране в браузере меню и так становится горизонтальным,
        поэтому правила выше для него не нужны. */
     body.is-telegram .sidebar { flex-direction: row; }

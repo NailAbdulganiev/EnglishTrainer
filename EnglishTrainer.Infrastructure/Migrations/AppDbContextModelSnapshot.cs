@@ -110,6 +110,10 @@ namespace EnglishTrainer.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
+                    b.Property<int>("DailyGoal")
+                        .HasColumnType("integer")
+                        .HasColumnName("daily_goal");
+
                     b.Property<DateOnly>("Date")
                         .HasColumnType("date")
                         .HasColumnName("date");
@@ -717,7 +721,7 @@ namespace EnglishTrainer.Infrastructure.Migrations
                     b.Property<int>("DailyGoal")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasDefaultValue(30)
+                        .HasDefaultValue(10)
                         .HasColumnName("daily_goal");
 
                     b.Property<bool>("DailyReminderEnabled")

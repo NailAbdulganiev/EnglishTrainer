@@ -54,7 +54,7 @@ async function showDecks(container, context) {
                 ${statTile(summary.learnedCards, 'выучено', 'accent')}
                 ${statTile(summary.cardsInProgress, 'в работе')}
                 ${statTile(summary.dueNow, 'пора повторить')}
-                ${statTile(summary.reviewedToday, 'ответов сегодня')}
+                ${statTile(`${summary.reviewedToday} из ${summary.dailyGoal}`, 'ответов сегодня')}
                 ${statTile(`${summary.accuracyLast30Days}%`, 'удержание')}
                 ${statTile(`🔥 ${summary.currentStreak}`, 'серия дней', 'flame')}
             </div>
@@ -570,7 +570,7 @@ async function startSession(container, context, deckId, cram = false) {
         // и говорить ему «прогресс сохранён» было бы неправдой: раньше именно
         // так и получался замкнутый круг из «сессии закончена» и «ещё сессию».
         if (session.totalItems === 0) {
-            showNothingToStudy(container, context, session);
+            showNothingToStudy(container, context, session, deckId);
             return;
         }
 
@@ -585,8 +585,12 @@ async function startSession(container, context, deckId, cram = false) {
  * Экран «повторять нечего»: показывает, когда придёт следующее повторение,
  * и даёт возможность заниматься вне расписания. Без этого человек упирается
  * в тупик: карточек нет, а почему и что делать — непонятно.
+ *
+ * Колода передаётся дальше: тренировка вне расписания должна остаться той же
+ * колодой, а не превращаться в общую — иначе выбранная тема теряется ровно там,
+ * где человек её и выбрал.
  */
-function showNothingToStudy(container, context, session) {
+function showNothingToStudy(container, context, session, deckId) {
     stopSession();
 
     const next = session.nextDueAtUtc ? formatNextDue(session.nextDueAtUtc) : null;
@@ -613,7 +617,8 @@ function showNothingToStudy(container, context, session) {
             </p>
         </div>`;
 
-    container.querySelector('#cram').addEventListener('click', () => startSession(container, context, null, true));
+    container.querySelector('#cram')
+        .addEventListener('click', () => startSession(container, context, deckId ?? null, true));
     container.querySelector('#to-decks').addEventListener('click', () => showDecks(container, context));
 }
 
@@ -679,7 +684,7 @@ async function showSummary(container, context) {
                 ${statTile(summary.learnedCards, 'выучено', 'accent')}
                 ${statTile(summary.cardsInProgress, 'в работе')}
                 ${statTile(summary.dueNow, 'пора повторить')}
-                ${statTile(summary.reviewedToday, 'ответов сегодня')}
+                ${statTile(`${summary.reviewedToday} из ${summary.dailyGoal}`, 'ответов сегодня')}
                 ${statTile(`${summary.accuracyLast30Days}%`, 'удержание')}
                 ${statTile(`🔥 ${summary.currentStreak}`, 'серия дней', 'flame')}
             </div>

@@ -58,7 +58,42 @@ public static class StreakCalculator
         return new StreakResult(current, longest);
     }
 
-    /// <summary>Даты, в которые пользователь действительно занимался.</summary>
+    /// <summary>
+    /// Даты, в которые дневная цель действительно выполнена.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// День занятий — это не «зашёл и ответил один раз», а выполненная дневная
+    /// цель: при цели в 30 ответов и двадцати сделанных день серию не продлевает.
+    /// Цель берётся из самой дневной записи (<see cref="DailyStat.DailyGoal"/>),
+    /// а не из текущих настроек, поэтому прошлые дни не пересчитываются.
+    /// </para>
+    /// <para>
+    /// Записи одного дня складываются: строк может оказаться несколько (например,
+    /// при повторной синхронизации дня), и по отдельности ни одна из них цели
+    /// не достигает, а вместе они её выполняют.
+    /// </para>
+    /// </remarks>
     public static IEnumerable<DateOnly> ActiveDates(IEnumerable<DailyStat> stats) =>
-        stats.Where(stat => stat.ReviewedCount > 0).Select(stat => stat.Date);
+        stats
+            .GroupBy(stat => stat.Date)
+            .Where(IsDailyGoalReached)
+            .Select(day => day.Key);
+
+    /// <summary>Выполнена ли дневная цель в этот день.</summary>
+    private static bool IsDailyGoalReached(IGrouping<DateOnly, DailyStat> day)
+    {
+        var reviews = 0;
+        var goal = 0;
+
+        foreach (var stat in day)
+        {
+            reviews += stat.ReviewedCount;
+            goal = Math.Max(goal, stat.DailyGoal);
+        }
+
+        // Нулевая цель — запись до появления столбца: раньше день засчитывался
+        // при любом ответе, и задним числом это правило не меняется.
+        return reviews > 0 && reviews >= Math.Max(goal, 1);
+    }
 }

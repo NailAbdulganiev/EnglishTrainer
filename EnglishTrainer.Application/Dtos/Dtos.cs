@@ -30,6 +30,15 @@ public sealed record ForgotPasswordRequestDto(string Login);
 /// <summary>Установка нового пароля по ссылке из письма.</summary>
 public sealed record ResetPasswordRequestDto(string Token, string NewPassword);
 
+/// <summary>
+/// Куда уходит письмо со ссылкой для сброса пароля.
+/// </summary>
+/// <param name="Delivery">
+/// <c>email</c> — письмо отправляется почтой; <c>log</c> — выводится в журнал
+/// сервера, потому что почтовый провайдер не настроен.
+/// </param>
+public sealed record PasswordResetMethodDto(string Delivery);
+
 /// <summary>Смена пароля изнутри приложения.</summary>
 public sealed record ChangePasswordRequestDto(string CurrentPassword, string NewPassword);
 
@@ -188,6 +197,10 @@ public sealed record StudySessionDto(
 public sealed record SubmitAnswerRequestDto(int ItemId, string? Answer, ReviewRating? Rating, int? ElapsedMs);
 
 /// <summary>Результат проверки ответа.</summary>
+/// <param name="MatchedWithTypo">
+/// Ответ зачтён с опечаткой: написание отличается от эталона, но не настолько,
+/// чтобы считать ответ неверным. Интерфейс показывает эталон — оценку это не меняет.
+/// </param>
 public sealed record AnswerResultDto(
     bool IsCorrect,
     string CorrectAnswer,
@@ -199,7 +212,8 @@ public sealed record AnswerResultDto(
     DateTime DueAtUtc,
     /// <summary>Ушла ли карточка на повтор в конец той же сессии.</summary>
     bool Requeued,
-    StudyCardDto? NextCard);
+    StudyCardDto? NextCard,
+    bool MatchedWithTypo = false);
 
 // ─────────────────────────── Статистика ───────────────────────────
 
@@ -211,7 +225,9 @@ public sealed record StatsSummaryDto(
     int CurrentStreak,
     int LongestStreak,
     int ReviewedToday,
-    int AccuracyLast30Days);
+    int AccuracyLast30Days,
+    /// <summary>Дневная цель в ответах: с ней сравнивается «ответов сегодня».</summary>
+    int DailyGoal);
 
 public sealed record DailyStatDto(
     DateOnly Date,
@@ -255,6 +271,32 @@ public sealed record ProfileDto(
 /// уже накопленной дневной статистики и серии дней, поэтому это осознанное действие.
 /// </remarks>
 public sealed record UpdateTimeZoneRequestDto(string TimeZoneId);
+
+/// <summary>
+/// Профиль другого игрока: то, что видно друзьям.
+/// </summary>
+/// <remarks>
+/// Отдельный DTO, а не <see cref="ProfileDto"/>: в своём профиле есть настройки,
+/// почта и служебные поля, которых чужой видеть не должен. Здесь только прогресс —
+/// ровно те числа, ради которых профиль друга и открывают.
+/// </remarks>
+/// <param name="MemberSince">Дата регистрации: по ней видно, кто в сервисе дольше.</param>
+/// <param name="FriendsSince">Когда сложилась дружба. <c>null</c> — это свой профиль.</param>
+public sealed record PublicProfileDto(
+    string Username,
+    string DisplayName,
+    string? AvatarUrl,
+    DateTime MemberSince,
+    int LearnedCards,
+    int CardsInProgress,
+    int CurrentStreak,
+    int LongestStreak,
+    int ReviewedToday,
+    int WeeklyWords,
+    int WeeklyReviews,
+    int ReviewedTotal,
+    int FriendCount,
+    DateTime? FriendsSince);
 
 // ─────────────────────────── Избранное ───────────────────────────
 

@@ -105,6 +105,93 @@ public sealed class CardStateRepositoryTests
     }
 
     [Fact]
+    public async Task GetDueAsync_WithDeckId_ReturnsOnlyWordsOfThatDeck()
+    {
+        await using var scope = await TestDatabase.BeginAsync();
+        var repository = new CardStateRepository(scope.Context);
+
+        var user = await TestData.AddUserAsync(scope.Context);
+        var now = DateTime.UtcNow;
+
+        var mine = await AddCardAsync(scope.Context, user.Id, now.AddDays(-2), intervalDays: 3);
+        await AddCardAsync(scope.Context, user.Id, now.AddDays(-1), intervalDays: 3);
+        await AddCardAsync(scope.Context, user.Id, now.AddDays(-1), intervalDays: 3);
+
+        var deck = await TestData.AddDeckAsync(scope.Context, wordIds: [mine.WordId]);
+
+        var due = await repository.GetDueAsync(user.Id, now, limit: 10, deckId: deck.Id);
+
+        // Долг по повторениям общий для пользователя, а не для колоды: без
+        // ограничения запрос «по колоде B» приносил бы слова колоды A.
+        Assert.Single(due);
+        Assert.Equal(mine.WordId, due[0].WordId);
+    }
+
+    [Fact]
+    public async Task GetDueAsync_WithDeckId_IncludesWordSharedByTwoDecks()
+    {
+        await using var scope = await TestDatabase.BeginAsync();
+        var repository = new CardStateRepository(scope.Context);
+
+        var user = await TestData.AddUserAsync(scope.Context);
+        var now = DateTime.UtcNow;
+
+        var shared = await AddCardAsync(scope.Context, user.Id, now.AddDays(-1), intervalDays: 3);
+
+        var first = await TestData.AddDeckAsync(scope.Context, wordIds: [shared.WordId]);
+        var second = await TestData.AddDeckAsync(scope.Context, wordIds: [shared.WordId]);
+
+        // Одно слово может лежать в нескольких колодах: «колода карточки» —
+        // свойство связи, поэтому слово обязано находиться в обеих.
+        Assert.Single(await repository.GetDueAsync(user.Id, now, limit: 10, deckId: first.Id));
+        Assert.Single(await repository.GetDueAsync(user.Id, now, limit: 10, deckId: second.Id));
+    }
+
+    [Fact]
+    public async Task GetDueAsync_WithoutDeckId_ReturnsCardsOfAllDecks()
+    {
+        await using var scope = await TestDatabase.BeginAsync();
+        var repository = new CardStateRepository(scope.Context);
+
+        var user = await TestData.AddUserAsync(scope.Context);
+        var now = DateTime.UtcNow;
+
+        var first = await AddCardAsync(scope.Context, user.Id, now.AddDays(-2), intervalDays: 3);
+        var second = await AddCardAsync(scope.Context, user.Id, now.AddDays(-1), intervalDays: 3);
+
+        await TestData.AddDeckAsync(scope.Context, wordIds: [first.WordId]);
+        await TestData.AddDeckAsync(scope.Context, wordIds: [second.WordId]);
+
+        var due = await repository.GetDueAsync(user.Id, now, limit: 10);
+
+        // Общая тренировка по-прежнему берёт слова отовсюду: ограничение
+        // включается только тогда, когда колоду выбрали явно.
+        Assert.Equal(2, due.Count);
+    }
+
+    [Fact]
+    public async Task GetSoonestAsync_WithDeckId_ReturnsOnlyWordsOfThatDeck()
+    {
+        await using var scope = await TestDatabase.BeginAsync();
+        var repository = new CardStateRepository(scope.Context);
+
+        var user = await TestData.AddUserAsync(scope.Context);
+        var now = DateTime.UtcNow;
+
+        var mine = await AddCardAsync(scope.Context, user.Id, now.AddDays(5), intervalDays: 6);
+        await AddCardAsync(scope.Context, user.Id, now.AddHours(1), intervalDays: 1);
+
+        var deck = await TestData.AddDeckAsync(scope.Context, wordIds: [mine.WordId]);
+
+        var soonest = await repository.GetSoonestAsync(user.Id, limit: 10, deckId: deck.Id);
+
+        // Тренировка вне расписания не должна терять выбранную колоду: иначе
+        // «заниматься этой темой» превращается в «заниматься чем попало».
+        Assert.Single(soonest);
+        Assert.Equal(mine.WordId, soonest[0].WordId);
+    }
+
+    [Fact]
     public async Task CountDueAsync_CountsOnlyOverdue()
     {
         await using var scope = await TestDatabase.BeginAsync();

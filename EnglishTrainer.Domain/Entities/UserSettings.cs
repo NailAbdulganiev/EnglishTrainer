@@ -23,8 +23,16 @@ public class UserSettings : Entity
     /// </summary>
     public int MaxCardsPerSession { get; set; } = 60;
 
-    /// <summary>Цель по количеству ответов в день (для серии и мотивации).</summary>
-    public int DailyGoal { get; set; } = 30;
+    /// <summary>
+    /// Цель по количеству ответов в день (для серии и мотивации).
+    /// </summary>
+    /// <remarks>
+    /// Десять ответов — это одна обычная сессия: столько же новых слов даётся
+    /// в день по умолчанию. Цель выше дневного лимита означала бы, что серию
+    /// нельзя продлить в первый же день, и человек видел бы «0 дней» после
+    /// честно пройденной сессии.
+    /// </remarks>
+    public int DailyGoal { get; set; } = 10;
 
     public bool DailyReminderEnabled { get; set; } = true;
 

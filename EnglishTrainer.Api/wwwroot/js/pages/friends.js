@@ -120,8 +120,8 @@ function leaderboardRow(entry) {
             <span class="leaderboard__rank">${entry.rank}</span>
             ${avatar(entry, 'avatar--sm')}
             <span class="leaderboard__name">
-                <b>${esc(entry.displayName)}${entry.isMe ? ' <em class="muted">— вы</em>' : ''}</b>
-                <span class="hint">@${esc(entry.username)}</span>
+                ${personLink(entry, `<b>${esc(entry.displayName)}${entry.isMe ? ' <em class="muted">— вы</em>' : ''}</b>
+                    <span class="hint">@${esc(entry.username)}</span>`)}
             </span>
             <span class="leaderboard__score">
                 <b>${entry.weeklyWords}</b>
@@ -157,8 +157,8 @@ function friendRow(friend) {
         <div class="friend-row">
             ${avatar(friend)}
             <div class="friend-row__name">
-                <b>${esc(friend.displayName)}</b>
-                <span>@${esc(friend.username)} · друзья с ${new Date(friend.friendsSince).toLocaleDateString('ru-RU')}</span>
+                ${personLink(friend, `<b>${esc(friend.displayName)}</b>
+                    <span>@${esc(friend.username)} · друзья с ${new Date(friend.friendsSince).toLocaleDateString('ru-RU')}</span>`)}
             </div>
             <div class="friend-row__stats">
                 <div><b>${friend.learnedCards}</b><span>выучено</span></div>
@@ -169,6 +169,17 @@ function friendRow(friend) {
                 ${icon('close', 'icon--sm')}
             </button>
         </div>`;
+}
+
+/**
+ * Имя человека — ссылка на его профиль.
+ *
+ * Профиль открывается и из списка друзей, и из рейтинга: иначе посмотреть
+ * результаты другого игрока было бы неоткуда, а «выучено» и «серия» в строке —
+ * это уже его итоги, а не подпись к кнопке.
+ */
+function personLink(person, content) {
+    return `<a class="person" href="#/user/${encodeURIComponent(person.username)}">${content}</a>`;
 }
 
 function outgoingRow(request) {

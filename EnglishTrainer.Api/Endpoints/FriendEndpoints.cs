@@ -106,6 +106,22 @@ public static class FriendEndpoints
             "Для каждого найденного возвращается состояние связи: можно отправить заявку, " +
             "заявка уже отправлена, вас пригласили или вы уже друзья.");
 
+        // Маршрут объявлен отдельным шаблоном, а не через /api/friends: профиль
+        // открывается и из списка друзей, и из рейтинга, где человек уже друг.
+        users.MapGet("/{username}/profile", async (
+            string username,
+            HttpContext context,
+            ProfileService profiles,
+            CancellationToken ct) =>
+        {
+            var profile = await profiles.GetPublicAsync(context.User.GetUserId(), username, ct);
+            return Results.Ok(profile);
+        })
+        .WithSummary("Профиль другого игрока")
+        .WithDescription(
+            "Открыт только друзьям и самому пользователю. Для постороннего отвечает 404, " +
+            "а не 403: отказ «запрещено» подтверждал бы, что такой ник существует.");
+
         return app;
     }
 }

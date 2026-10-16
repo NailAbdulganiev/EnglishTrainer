@@ -31,6 +31,12 @@ public sealed class AppExceptionHandler(ILogger<AppExceptionHandler> logger) : I
             ValidationException => (StatusCodes.Status400BadRequest, "Некорректные данные"),
             UnauthorizedException => (StatusCodes.Status401Unauthorized, "Требуется аутентификация"),
             ForbiddenException => (StatusCodes.Status403Forbidden, "Действие запрещено"),
+
+            // 502, а не 500: сервер работает, отказал тот, к кому он обращался
+            // (почтовый сервер, Telegram). Текст показывается человеку — иначе
+            // он будет ждать письмо, которое не отправлено.
+            DeliveryException => (StatusCodes.Status502BadGateway, "Внешний сервис не ответил"),
+
             _ => (StatusCodes.Status500InternalServerError, "Внутренняя ошибка сервера")
         };
 

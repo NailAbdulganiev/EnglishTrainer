@@ -13,7 +13,7 @@ public sealed class CardStateRepository(AppDbContext context) : ICardStateReposi
         context.CardStates.FirstOrDefaultAsync(c => c.UserId == userId && c.WordId == wordId, ct);
 
     public async Task<IReadOnlyList<CardState>> GetDueAsync(
-        int userId, DateTime nowUtc, int limit, CancellationToken ct = default)
+        int userId, DateTime nowUtc, int limit, int? deckId = null, CancellationToken ct = default)
     {
         if (limit <= 0)
             return [];
@@ -22,8 +22,9 @@ public sealed class CardStateRepository(AppDbContext context) : ICardStateReposi
         // IntervalDays. Сортировка по интервалу дала бы обратный порядок:
         // давно выученные слова с большим интервалом вытеснили бы свежие.
         // Именно под этот запрос создан индекс (UserId, DueAt).
-        return await context.CardStates
-            .Where(c => c.UserId == userId && c.DueAt <= nowUtc)
+        var query = context.CardStates.Where(c => c.UserId == userId && c.DueAt <= nowUtc);
+
+        return await InDeck(query, deckId)
             .OrderBy(c => c.DueAt)
             .Take(limit)
             .ToListAsync(ct);
@@ -41,19 +42,35 @@ public sealed class CardStateRepository(AppDbContext context) : ICardStateReposi
             .FirstOrDefaultAsync(ct);
 
     public async Task<IReadOnlyList<CardState>> GetSoonestAsync(
-        int userId, int limit, CancellationToken ct = default)
+        int userId, int limit, int? deckId = null, CancellationToken ct = default)
     {
         if (limit <= 0)
             return [];
 
         // Тот же индекс (UserId, DueAt), что и у выборки просроченных: отличается
         // только отсутствие условия на срок.
-        return await context.CardStates
-            .Where(c => c.UserId == userId)
+        var query = context.CardStates.Where(c => c.UserId == userId);
+
+        return await InDeck(query, deckId)
             .OrderBy(c => c.DueAt)
             .Take(limit)
             .ToListAsync(ct);
     }
+
+    /// <summary>
+    /// Ограничивает выборку колодой, если человек выбрал её явно.
+    /// </summary>
+    /// <remarks>
+    /// Фильтр добавляется в запрос только при выбранной колоде: долг по повторениям
+    /// общий для пользователя, и общая тренировка по-прежнему берёт слова отовсюду.
+    /// Проверка идёт через <c>deck_words</c>, а не через отдельный идентификатор
+    /// в состоянии карточки: слово может лежать сразу в нескольких колодах, и
+    /// «колода карточки» — не свойство карточки, а свойство связи.
+    /// </remarks>
+    private IQueryable<CardState> InDeck(IQueryable<CardState> query, int? deckId) =>
+        deckId is { } id
+            ? query.Where(c => context.DeckWords.Any(dw => dw.DeckId == id && dw.WordId == c.WordId))
+            : query;
 
     public async Task<IReadOnlyList<CardState>> GetForWordsAsync(
         int userId, IReadOnlyCollection<int> wordIds, CancellationToken ct = default)

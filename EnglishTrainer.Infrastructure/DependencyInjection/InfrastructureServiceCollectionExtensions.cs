@@ -41,15 +41,12 @@ public static class InfrastructureServiceCollectionExtensions
         AddSecurity(services, configuration);
         AddStorage(services, configuration, contentRootPath);
         AddTelegram(services, configuration);
+        AddEmail(services, configuration);
 
         // Часы — синглтон: состояние им не хранится, а создавать объект на каждый
         // запрос незачем. Репозитории и контекст — scoped, по одному на HTTP-запрос.
         services.AddSingleton<IClock, SystemClock>();
         services.AddSingleton<IPasswordHasher, Pbkdf2PasswordHasher>();
-
-        // Письма пока уходят в журнал: своего почтового провайдера у приложения нет,
-        // а ссылку для сброса пароля администратору видно в консоли запуска.
-        services.AddSingleton<IEmailSender, LogEmailSender>();
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IWordRepository, WordRepository>();
@@ -102,6 +99,37 @@ public static class InfrastructureServiceCollectionExtensions
 
         services.AddSingleton(Options.Create(telegram));
         services.AddSingleton<ITelegramInitDataValidator, TelegramInitDataValidator>();
+    }
+
+    /// <summary>
+    /// Почта.
+    /// </summary>
+    /// <remarks>
+    /// Реализация выбирается по настройкам, а не по режиму запуска. Три исхода:
+    /// SMTP (обычный случай), HTTP API Brevo (там, где хостинг закрывает
+    /// исходящие почтовые порты) и журнал (когда не настроено ничего — тогда
+    /// письмо со ссылкой видно в журнале, а форма честно об этом говорит).
+    /// </remarks>
+    private static void AddEmail(IServiceCollection services, IConfiguration configuration)
+    {
+        var email = configuration.GetSection(EmailOptions.SectionName).Get<EmailOptions>()
+            ?? new EmailOptions();
+
+        services.AddSingleton(Options.Create(email));
+
+        if (!email.IsConfigured)
+        {
+            services.AddSingleton<IEmailSender, LogEmailSender>();
+            return;
+        }
+
+        if (email.UsesBrevo)
+        {
+            services.AddSingleton<IEmailSender, BrevoEmailSender>();
+            return;
+        }
+
+        services.AddSingleton<IEmailSender, SmtpEmailSender>();
     }
 
     private static void AddPersistence(IServiceCollection services, IConfiguration configuration)

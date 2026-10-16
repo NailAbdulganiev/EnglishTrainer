@@ -62,7 +62,7 @@ public sealed class UserSettingsConfiguration : IEntityTypeConfiguration<UserSet
 
         builder.Property(s => s.NewWordsPerDay).HasDefaultValue(10);
         builder.Property(s => s.MaxCardsPerSession).HasDefaultValue(60);
-        builder.Property(s => s.DailyGoal).HasDefaultValue(30);
+        builder.Property(s => s.DailyGoal).HasDefaultValue(10);
         builder.Property(s => s.DailyReminderEnabled).HasDefaultValue(true);
         builder.Property(s => s.ShowTranscriptionUpfront).HasDefaultValue(true);
 

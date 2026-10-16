@@ -1,5 +1,6 @@
 using EnglishTrainer.Application.Dtos;
 using EnglishTrainer.Domain.Abstractions;
+using EnglishTrainer.Domain.Entities;
 using EnglishTrainer.Domain.Exceptions;
 using EnglishTrainer.Domain.Repositories;
 using EnglishTrainer.Domain.Stats;
@@ -43,7 +44,10 @@ public sealed class StatsService(
             streak.Current,
             streak.Longest,
             today?.ReviewedCount ?? 0,
-            reviewed == 0 ? 0 : (int)Math.Round(correct * 100.0 / reviewed));
+            reviewed == 0 ? 0 : (int)Math.Round(correct * 100.0 / reviewed),
+            // Цель отдаётся вместе со сводкой: день идёт в серию только при её
+            // выполнении, и человек должен видеть, сколько ответов до неё осталось.
+            (user.Settings ?? new UserSettings()).DailyGoal);
     }
 
     public async Task<ActivityDto> GetActivityAsync(

@@ -11,6 +11,7 @@ namespace EnglishTrainer.Application.Services;
 /// <summary>Регистрация, вход и профиль пользователя.</summary>
 public sealed class AuthService(
     IUserRepository users,
+    IDailyStatRepository dailyStats,
     IUnitOfWork unitOfWork,
     IPasswordHasher passwordHasher,
     ITokenIssuer tokenIssuer,
@@ -129,6 +130,13 @@ public sealed class AuthService(
                 throw new ValidationException("Дневная цель должна быть от 1 до 1000 ответов.");
 
             settings.DailyGoal = goal;
+
+            // Сегодняшний день ещё не закончился, и новая цель применяется к нему
+            // сразу: «сделал двадцать ответов при цели тридцать, снизил цель
+            // до двадцати — серия засчиталась» должно работать без ещё одного
+            // ответа. Прошлые дни при этом не трогаются: они уже зафиксированы
+            // в своих записях, и поднятая сегодня цель их не переписывает.
+            await ApplyGoalToTodayAsync(user, ct);
         }
 
         if (request.DailyReminderEnabled is { } reminders)
@@ -162,6 +170,26 @@ public sealed class AuthService(
         user.ScheduleReminder(clock.UtcNow);
 
         await unitOfWork.SaveChangesAsync(ct);
+    }
+
+    /// <summary>
+    /// Переносит новую дневную цель в запись сегодняшнего дня.
+    /// </summary>
+    /// <remarks>
+    /// Цель хранится в дневной статистике, а не берётся из настроек при подсчёте
+    /// серии: иначе повышение плана задним числом рвало бы уже набранную серию.
+    /// За сегодняшний день беспокоиться не о чем — он ещё идёт, и человек,
+    /// поменявший цель, ждёт, что она подействует сейчас.
+    /// </remarks>
+    private async Task ApplyGoalToTodayAsync(User user, CancellationToken ct)
+    {
+        var today = clock.TodayFor(user.TimeZoneId);
+        var stat = await dailyStats.GetAsync(user.Id, today, ct);
+
+        if (stat is null)
+            return;
+
+        stat.DailyGoal = (user.Settings ?? new UserSettings()).DailyGoal;
     }
 
     /// <summary>
