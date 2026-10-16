@@ -496,6 +496,33 @@ input:focus, select:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rg
 .person:hover b { color: var(--brand); }
 .person:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: var(--r-sm); }
 
+/* Ссылка «Что нового» в шапке. Номер версии рядом: по нему видно, обновилось ли
+   приложение, — и это единственная причина, по которой ссылка вообще нужна. */
+.topbar__updates {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: var(--r-full);
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink-2);
+    font-size: 13px;
+    font-weight: 550;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: border-color .15s, color .15s;
+}
+
+.topbar__updates:hover { border-color: var(--brand); color: var(--brand); }
+.topbar__updates-version { color: var(--muted); font-weight: 500; }
+
+/* На узком экране остаётся только номер: подпись отнимает место у заголовка,
+   а сам номер и есть ответ на вопрос «обновилось ли приложение». */
+@media (max-width: 520px) {
+    .topbar__updates-text { display: none; }
+}
+
 /* ── Что нового ─────────────────────────────────────────────────────────── */
 
 /*

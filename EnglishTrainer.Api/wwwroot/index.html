@@ -269,6 +269,14 @@
             <h1 id="page-title"></h1>
             <div class="topbar-actions" id="topbar-actions"></div>
 
+            <!-- «Что нового» стоит в шапке, а не только в профиле: страницу ищут
+                 глазами, а не в настройках. Подпись прячется на узких экранах,
+                 номер версии остаётся — по нему видно, обновилось ли приложение. -->
+            <a class="topbar__updates" id="updates-link" href="#/updates" title="Что нового">
+                <span class="topbar__updates-text">Что нового</span>
+                <span class="topbar__updates-version" id="updates-version"></span>
+            </a>
+
             <!-- Переключатель темы стоит в шапке, а не в меню: он нужен на любой
                  странице, а в мини-аппе бокового меню с подписью нет вовсе. -->
             <button type="button" class="btn btn--ghost btn--icon topbar__theme" id="theme-toggle"

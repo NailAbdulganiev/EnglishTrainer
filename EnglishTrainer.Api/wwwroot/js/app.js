@@ -838,7 +838,7 @@ function renderUserChip() {
 }
 
 /**
- * Показывает версию приложения в подвале.
+ * Показывает версию приложения в подвале и в шапке.
  *
  * Номер спрашивается у сервера, а не пишется в разметке: он должен совпадать
  * с той сборкой, которая работает, иначе «v1.1» в интерфейсе ничего не значит.
@@ -848,13 +848,22 @@ function renderUserChip() {
 async function showVersion() {
     try {
         const info = await api('/api/version', { anonymous: true, quiet: true });
-        const slot = document.getElementById('app-version');
 
-        if (slot && info?.version) {
-            slot.textContent = `v${info.version}`;
+        if (!info?.version) {
+            return;
+        }
+
+        // Два места: подпись под разделами и ссылка в шапке. Номер один и тот же —
+        // он приходит из сборки, а не из разметки.
+        for (const id of ['app-version', 'updates-version']) {
+            const slot = document.getElementById(id);
+
+            if (slot) {
+                slot.textContent = `v${info.version}`;
+            }
         }
     } catch {
-        // Версии нет — ссылка остаётся, номера просто не будет.
+        // Версии нет — ссылки остаются, номера просто не будет.
     }
 }
 
