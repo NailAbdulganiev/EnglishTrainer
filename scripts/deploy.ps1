@@ -406,9 +406,23 @@ Remove-Item $tarball -Force -ErrorAction SilentlyContinue
 
 if ($exitCode -ne 0) {
     Write-Host ''
-    Write-Host 'Развёртывание завершилось с ошибкой. Журналы на сервере:' -ForegroundColor Red
-    Write-Host "  ssh $Server 'cd $RemotePath && docker compose -f docker-compose.prod.yml logs --tail 50'"
-    exit $exitCode
+    Write-Host "Развёртывание на сервере не выполнилось (ssh вернул код $exitCode)." -ForegroundColor Red
+    Write-Host ''
+    Write-Host 'Что проверить по порядку:' -ForegroundColor Yellow
+    Write-Host "  связь с сервером:  ssh -o ConnectTimeout=15 $Server 'echo connected'"
+    Write-Host "  повторный запуск:  тот же скрипт с теми же параметрами (он идемпотентен,"
+    Write-Host '                     архив копируется заново, уже собранные образы переиспользуются)'
+    Write-Host "  журналы:           ssh $Server 'cd $RemotePath && docker compose -f docker-compose.prod.yml logs --tail 50'"
+    Write-Host ''
+    Write-Host 'Если ssh не соединяется — дело не в приложении: сервер недоступен,'
+    Write-Host 'изменился ключ хоста или оборвалась сеть. Приложение на сервере при этом'
+    Write-Host 'продолжает работать на прежней версии.'
+
+    # Ошибка не «exit»-ом: скрипт запускают и содержимым
+    # (& ([scriptblock]::Create(...))), а там exit завершает не скрипт,
+    # а весь сеанс PowerShell — окно закрывается, и вместе с ним исчезает
+    # причина сбоя, которую человек как раз и собирался прочитать.
+    throw "Развёртывание прервано на шаге ssh (код $exitCode)."
 }
 
 Write-Host ''
