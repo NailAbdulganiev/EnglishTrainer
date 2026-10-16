@@ -153,6 +153,7 @@ app.MapFavoriteEndpoints();
 app.MapFriendEndpoints();
 app.MapStudyEndpoints();
 app.MapStatsEndpoints();
+app.MapVersionEndpoints();
 
 app.MapGet("/health", () => Results.Ok(new HealthResponse("ok", DateTime.UtcNow)))
     .WithTags("Служебное")

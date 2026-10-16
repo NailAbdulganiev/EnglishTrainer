@@ -995,6 +995,26 @@ else {
     Assert-That ($afterUnlink -eq 403) "После отвязки вход в мини-апп снова недоступен (код $afterUnlink)"
 }
 
+# --- Версия и «Что нового» -------------------------------------------------
+Write-Step 'Версия и что нового'
+
+# Версия берётся из сборки: по ней человек понимает, обновилось ли приложение,
+# и о какой версии он читает список правок.
+$appVersion = Invoke-Api -Method GET -Path '/api/version' -Anonymous
+Assert-That ($appVersion.version -match '^\d+\.\d+\.\d+$') "Версия приложения отдаётся: $($appVersion.version)"
+
+# Страница правок — обычная статика. Проверяется, что её вообще отдают: список
+# правок бесполезен, если файл не доехал до сервера.
+$updatesPage = Get-StatusCode -Method GET -Path '/js/pages/updates.js' -Anonymous
+Assert-That ($updatesPage -eq 200) "Страница «Что нового» отдаётся (код $updatesPage)"
+
+# Список правок и версия в нём должны совпадать: расхождение означает, что
+# выложили новую версию, а запись о ней забыли — и страница рассказывает
+# о правках, которых в приложении нет.
+$updatesBody = (Invoke-WebRequest -Uri "$BaseUrl/js/pages/updates.js" -UseBasicParsing -TimeoutSec 15).Content
+Assert-That ($updatesBody -match [regex]::Escape("version: '$($appVersion.version)'")) `
+    "Последняя запись в списке правок — про v$($appVersion.version)"
+
 # --- Итог ------------------------------------------------------------------
 Write-Host ''
 Write-Host ('-' * 60)

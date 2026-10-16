@@ -24,12 +24,17 @@ import * as friends from './pages/friends.js';
 import * as settings from './pages/settings.js';
 import * as profile from './pages/profile.js';
 import * as player from './pages/user.js';
+import * as updates from './pages/updates.js';
 
 /*
  * Разделы меню. Адрес профиля игрока — единственный с переменной частью
  * (#/user/ник), и в меню он не показывается: это не раздел, а экран, который
  * открывается из списка друзей и из рейтинга. Активным при этом остаётся
  * «Друзья» — nav указывает, какой пункт подсвечивать.
+ *
+ * «Что нового» тоже не пункт меню: в мини-аппе нижняя панель рассчитана на пять
+ * разделов, и шестой отнял бы место у остальных. Страница открывается из профиля,
+ * а в браузере — ещё и из подписи под списком разделов.
  */
 const routes = [
     { path: 'study', title: 'Тренировка', icon: 'book', page: study },
@@ -37,7 +42,8 @@ const routes = [
     { path: 'friends', title: 'Друзья', icon: 'users', page: friends, badge: 'friends' },
     { path: 'settings', title: 'Настройки', icon: 'settings', page: settings },
     { path: 'profile', title: 'Профиль', icon: 'user', page: profile },
-    { path: 'user', title: 'Профиль игрока', page: player, nav: 'friends', menu: false }
+    { path: 'user', title: 'Профиль игрока', page: player, nav: 'friends', menu: false },
+    { path: 'updates', title: 'Что нового', page: updates, nav: 'profile', menu: false }
 ];
 
 /** Элементы разметки адресуются по id, поэтому короткая ссылка читается легче. */
@@ -818,9 +824,38 @@ function renderUserChip() {
                 <span>@${esc(user.username)}</span>
             </div>
             <button type="button" class="star" id="logout" title="Выйти">${icon('logout')}</button>
-        </div>`;
+        </div>
+
+        <!-- Ссылка на «Что нового» вместе с версией: в мини-аппе этого блока нет
+             (там подвал скрыт), и вход на страницу остаётся в профиле. -->
+        <a class="foot-link" href="#/updates">
+            ${icon('refresh', 'icon--sm')} <span>Что нового</span>
+            <span class="foot-link__version" id="app-version"></span>
+        </a>`;
 
     document.getElementById('logout').addEventListener('click', logout);
+    showVersion();
+}
+
+/**
+ * Показывает версию приложения в подвале.
+ *
+ * Номер спрашивается у сервера, а не пишется в разметке: он должен совпадать
+ * с той сборкой, которая работает, иначе «v1.1» в интерфейсе ничего не значит.
+ * Ошибка запроса молча оставляет номер пустым — версия не то, ради чего стоит
+ * показывать сообщение об ошибке.
+ */
+async function showVersion() {
+    try {
+        const info = await api('/api/version', { anonymous: true, quiet: true });
+        const slot = document.getElementById('app-version');
+
+        if (slot && info?.version) {
+            slot.textContent = `v${info.version}`;
+        }
+    } catch {
+        // Версии нет — ссылка остаётся, номера просто не будет.
+    }
 }
 
 /** Выход из аккаунта: токен и данные пользователя стираются, показывается вход. */

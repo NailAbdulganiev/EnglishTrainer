@@ -111,8 +111,25 @@ export async function render(container, context) {
                 <div id="telegram-code-slot"></div>
             </div>
 
-            <div class="section-title">${icon('settings', 'icon--sm')} Изменить</div>
+            <div class="section-title">${icon('refresh', 'icon--sm')} Приложение</div>
 
+            <div class="card">
+                <div class="row" style="align-items: center; gap: 12px; flex-wrap: wrap">
+                    <div style="flex: 1; min-width: 200px">
+                        <b>Что нового</b>
+                        <p class="hint" style="margin-top: 4px">
+                            Что исправлено и что появилось — по версиям.
+                        </p>
+                    </div>
+
+                    <button type="button" class="btn btn--ghost" id="to-updates">
+                        ${icon('refresh', 'icon--sm')} Открыть
+                        <span class="muted" id="app-version"></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="section-title">${icon('settings', 'icon--sm')} Изменить</div>
             <form class="card" id="profile-form">
                 <div class="form-grid">
                     <label class="field">
@@ -149,6 +166,20 @@ export async function render(container, context) {
         container.querySelector('#reload').addEventListener('click', () => render(container, context));
 
         container.querySelector('#logout')?.addEventListener('click', context.logout);
+
+        container.querySelector('#to-updates').addEventListener('click', () => context.navigate('updates'));
+
+        // Версия спрашивается у сервера: номер в интерфейсе должен совпадать
+        // с той сборкой, которая работает. Не ответил — кнопка остаётся без номера.
+        api('/api/version', { anonymous: true, quiet: true })
+            .then((info) => {
+                const slot = container.querySelector('#app-version');
+
+                if (slot && info?.version) {
+                    slot.textContent = `v${info.version}`;
+                }
+            })
+            .catch(() => { });
 
         bindAvatar(container, context);
         bindTelegram(container, context);
